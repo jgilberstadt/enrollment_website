@@ -1,0 +1,799 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="./formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>QUALITY OF LIFE - Case Report Form (CRF)</h2>
+            </div>
+            
+        </ui:define>
+        
+        <ui:define name="form_content">
+
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                    <b>Quality of Life Date: </b>
+                    <p:calendar id="qualityOfLifeDate" class="calendar" value="#{controller.qualityOfLifeForm.qualityOfLifeDate}" requiredMessage="#{msgs.qualityOfLifeDate}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </p:calendar>
+                </div>
+            </div>
+            <p:message for="qualityOfLifeDate" />
+
+            <br/>
+            <div>          
+                <div class="sectionFirstHeading">
+                    <b>SECTION 1</b>
+                    <u>Modified Medical Research Council Dyspnea Scale</u>
+                </div>
+                <div>
+                    <div>
+                    <b>Please circle the grade that best fits your usual condition these days. Only circle one grade.</b>
+                    </div>
+                    <div>
+                        Grade  Symptoms
+                    </div>
+                </div>
+                
+                <div class="question-radioButton">
+                    <b>Grade  Symptoms </b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_mmrcds_ques1" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolMmrcdsQues1}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="0" itemLabel="0 Not troubled with breathlessness except with strenuous exercise"/>
+                            <f:selectItem itemValue="1" itemLabel="1 Troubled by shortness of breath when hurrying on the level or walking up a slight hill" /> 
+                            <f:selectItem itemValue="2" itemLabel="2 Walks slower than people of the same age on the level because of breathlessness or has to stop for breath when walking at own pace on the level" /> 
+                            <f:selectItem itemValue="3" itemLabel="3 Stop for breath after walking about 100 yards or after a few minutes on the level" /> 
+                            <f:selectItem itemValue="4" itemLabel="4 Too breathless to leave the house or breathless when dressing or undressing" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+
+                
+                
+                <div class="sectionSecondHeading">
+                    <b>SECTION 2</b>
+                    <u>ST. GEORGE’S RESPIRATORY QUESTIONNAIRE</u>
+                    <b>For COPD patients (SGRQ-C)</b>
+                </div>
+                <div class="longStringQuestion">
+                    This questionnaire is designed to help us learn much more about how your breathing is troubling you and how it affects your life.
+                </div>
+                <div class="longStringQuestion">
+                    We are using it to find out which aspects of your illness cause you most problems, rather than what the doctors and nurses think your problems are.
+                </div>
+                <div class="longStringQuestion">
+                    Please read the instructions carefully and ask if you do not understand anything. Do not spend too long deciding about your answers.
+                </div>
+                <div class="question-radioButton">
+                    Please select one to show how you describe your <b>current health</b>:
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ch" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcCurrentHealth}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="very good" itemLabel="Very good"/>
+                            <f:selectItem itemValue="good" itemLabel="Good" /> 
+                            <f:selectItem itemValue="fair" itemLabel="Fair" /> 
+                            <f:selectItem itemValue="poor" itemLabel="Poor" /> 
+                            <f:selectItem itemValue="very poor" itemLabel="Very poor" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                
+                <div class="longStringQuestion">
+                    <b>Questions about how much respiratory trouble you have.</b>
+                </div>
+                <div class="longStringQuestion">
+                    <b>Please check ONE box for each question:</b>
+                </div>
+       
+                <div class="question-radioButton">
+                    <b>1.</b> I <b>cough:</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques1" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues1}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="most days a week" itemLabel="most days a week"/>
+                            <f:selectItem itemValue="several days a week" itemLabel="several days a week" /> 
+                            <f:selectItem itemValue="only with respiratory infections" itemLabel="only with respiratory infections" /> 
+                            <f:selectItem itemValue="not at all" itemLabel="not at all" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>2.</b> I bring up <b>phlegm (sputum):</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques2" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues2}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="most days a week" itemLabel="most days a week"/>
+                            <f:selectItem itemValue="several days a week" itemLabel="several days a week" /> 
+                            <f:selectItem itemValue="only with respiratory infections" itemLabel="only with respiratory infections" /> 
+                            <f:selectItem itemValue="not at all" itemLabel="not at all" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>3.</b> I have <b>shortness of breath:</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques3" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues3}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="most days a week" itemLabel="most days a week"/>
+                            <f:selectItem itemValue="several days a week" itemLabel="several days a week" /> 
+                            <f:selectItem itemValue="not at all" itemLabel="not at all" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>4.</b> I have attacks of <b>wheezing:</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques4" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues4}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="most days a week" itemLabel="most days a week"/>
+                            <f:selectItem itemValue="several days a week" itemLabel="several days a week" /> 
+                            <f:selectItem itemValue="a few days a month" itemLabel="a few days a month" /> 
+                            <f:selectItem itemValue="only with respiratory infections" itemLabel="only with respiratory infections" /> 
+                            <f:selectItem itemValue="not at all" itemLabel="not at all" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>5.</b> How many attacks of <b>respiratory attacks</b> did you have during this last year?
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques5" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues5}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="3 or more attacks" itemLabel="3 or more attacks"/>
+                            <f:selectItem itemValue="1 or 2 attacks" itemLabel="1 or 2 attacks" /> 
+                            <f:selectItem itemValue="none" itemLabel="none" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>6.</b> How often do you have good days <b>(with few respiratory problems)</b>?
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques6" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues6}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="no good days" itemLabel="no good days"/>
+                            <f:selectItem itemValue="a few good days" itemLabel="a few good days" /> 
+                            <f:selectItem itemValue="most days are good" itemLabel="most days are good" /> 
+                            <f:selectItem itemValue="every day is good" itemLabel="every day is good" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>7.</b> If you have a <b>wheeze</b>, is it worse in the morning?
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques7" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues7}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="no" itemLabel="No" /> 
+                            <f:selectItem itemValue="yes" itemLabel="Yes" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>8. How would you describe your respiratory problems?</b> (Please select one)
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques8" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues8}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="Causes me a lot of problems" itemLabel="Causes me a lot of problems or is the most important problem I have" /> 
+                            <f:selectItem itemValue="Causes me a few problem" itemLabel="Causes me a few problem" /> 
+                            <f:selectItem itemValue="Causes no problem" itemLabel="Causes no problem" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-inputText">
+                    <b>9. Questions about what activities usually make you feel breathless.</b>
+                    For each statement please select <b>the box</b> that applies to you <b>these days:</b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques9a" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues9a}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Getting washed or dressed" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques9b" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues9b}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Walking around the home" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques9c" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues9c}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Walking outside on level ground" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques9d" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues9d}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Walking up a flight of stairs" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques9e" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues9e}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Walking up hills" />
+                    </h:panelGrid>
+                </div>
+
+                
+                <div class="question-inputText">
+                    <b>10. Some more question about your cough and breathlessness (if you have either).</b>
+                    For each statement please select <b>the box</b> that applies to you <b>these days:</b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques10a" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues10a}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="My cough hurts" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques10b" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues10b}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="My cough make me tired" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques10c" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues10c}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I am breathless when I talk" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques10d" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues10d}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I am breathless when I bend over" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques10e" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues10e}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="My cough or breathing disturbs my sleep" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques10f" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues10f}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I get exhausted easily" />
+                    </h:panelGrid>
+                </div>
+
+               
+                <div class="question-inputText">
+                    <b>11. Questions about other effects that your respiratory problems (if you have it) may have on you.</b>
+                    For each statement please select <b>the box</b> that applies to you <b>these days:</b>
+                </div> 
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques11a" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues11a}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="My cough or breathing is embarrassing in public" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques11b" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues11b}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="My respiratory problems are a nuisance to my family, friends, and neighbors" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques11c" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues11c}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I get afraid or panic when I cannot get my breath" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques11d" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues11d}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I feel like I am not in control of my respiratory problems" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques11e" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues11e}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I have become frail or an invalid because of my respiratory problems" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques11f" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues11f}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Exercise is not safe for me" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques11g" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues11g}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Everything seems too much of an effort" />
+                    </h:panelGrid>
+                </div>
+                
+               
+                <div class="question-inputText">
+                    <b>12. These questions about how your activities might be affected by your respiratory problems.</b>
+                    For each statement please select <b>the box</b> that applies to you <b>because of your breathing:</b>
+                </div> 
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12a" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12a}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I take a long time to get washed or dressed" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12b" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12b}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I cannot take a bath or shower, or I take a long time to do it" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12c" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12c}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I walk slower than other people, or I stop to rest" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12d" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12d}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Jobs such as housework take a long time, or I have to stop to rest" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12e" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12e}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="If I walk up one flight of stairs, I have to go slowly or stop" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12f" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12f}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="If I hurry or walk fast, I have to stop or slow down" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12g" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12g}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="My breathing make it difficult to do things such as walk up hills, carrying things up stairs, light gardening such as weeding, dance, bowl or play golf" />
+                    </h:panelGrid>
+                </div>
+                
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques12h" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues12h}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="My breathing make it difficult to do things such as carry heavy loads, dig the garden or shovel snow, jog or walk briskly (5 miles per hour), play tennis or swim" />
+                    </h:panelGrid>
+                </div>
+                
+                
+                <div class="question-inputText">
+                    <b>13. We would like to know how your respiratory problems <u>usually</u> affect your daily life.</b>
+                    For each statement please select <b>the box</b> that applies to you <b>because of your respiratory problems:</b>
+                </div> 
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques13a" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues13a}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I cannot play sports or other physical activities" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques13b" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues13b}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I cannot go out for entertainment or recreation" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques13c" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues13c}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I cannot go out of the house to do the shopping" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques13d" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues13d}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I cannot do household chores" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qol_sgrqc_ques13e" class="yesnoanswers" value="#{controller.qualityOfLifeForm.qolSgrqcQues13e}" disabled="#{controller.qualityOfLifeForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="True"/>
+                            <f:selectItem itemValue="false" itemLabel="False" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="I cannot move far from my bed or chair" />
+                    </h:panelGrid>
+                </div>
+
+
+                 <div class="question-radioButton">
+                    <b>14. How do your respiratory problems affect you?</b> (Please select one)
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_sgrqc_ques14" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolSgrqcQues14}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="It does not stop me from doing anything" itemLabel="It does not stop me from doing anything I would like to do" /> 
+                            <f:selectItem itemValue="It stops me from doing one or two things" itemLabel="It stops me from doing one or two things I would like to do" /> 
+                            <f:selectItem itemValue="It stops me from doing most of the things" itemLabel="It stops me from doing most of the things I would like to do" /> 
+                            <f:selectItem itemValue="It stops me from doing everything " itemLabel="It stops me from doing everything I would like to do" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                
+                
+                <div class="sectionSecondHeading">
+                    <b>SECTION 3</b>
+                    <b><u>DYSPNEA-12 (D-12) Questionnaire</u></b>
+                </div>
+                <div class="longStringQuestion">
+                    This questionnaire is designed to help us learn more about how your breathing is troubling you.
+                </div>
+                <div class="longStringQuestion">
+                    •	Please read each statement and CLICK the box that best matches your breathing these days.
+                </div>
+                <div class="longStringQuestion">
+                    •	If you do not experience what the statement describes, then tick the ‘‘none’’ box.
+                </div>
+                <div class="longStringQuestion">
+                    •	Please respond to each of the 12 statements.
+                </div>
+                <div class="question-radioButton">
+                    <b>1. My breath does not go in all the way</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques1" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques1}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                
+                <div class="question-radioButton">
+                    <b>2. My breathing requires more work</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques2" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques2}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>3. I feel short of breath</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques3" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques3}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>4. I have difficulty catching my breath</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques4" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques4}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                
+                <div class="question-radioButton">
+                    <b>5. I cannot get enough air</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques5" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques5}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>6. My breathing is uncomfortable</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques6" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques6}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>7. My breathing is exhausting</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques7" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques7}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                
+                <div class="question-radioButton">
+                    <b>8. My breathing makes me feel depressed</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques8" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques8}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>9. My breathing makes me feel miserable</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques9" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques9}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                 <div class="question-radioButton">
+                    <b>10. My breathing is distressing</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques10" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques10}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                
+                <div class="question-radioButton">
+                    <b>11. My breathing makes me agitated</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques11" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques11}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                <div class="question-radioButton">
+                    <b>12. My breathing is irritating</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_d12_ques12" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolD12Ques12}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="none" itemLabel="None"/>
+                            <f:selectItem itemValue="mild" itemLabel="Mild" /> 
+                            <f:selectItem itemValue="moderate" itemLabel="Moderate" /> 
+                            <f:selectItem itemValue="severe" itemLabel="Severe" /> 
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+
+                
+                
+                <div class="sectionSecondHeading">
+                    <b>SECTION 4</b>
+                    <b><u>EQ-5D-5L</u></b>
+                </div>
+                <div class="longStringQuestion">
+                    <b>Please check the ONE box that best describes your health TODAY.</b>
+                </div>
+                <div class="question-radioButton">
+                    <b>Mobility</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_eq5d5l_ques1" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolEq5d5lQues1}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="I have no problems walking" itemLabel="I have no problems walking"/>
+                            <f:selectItem itemValue="I have slight problems walking" itemLabel="I have slight problems walking" /> 
+                            <f:selectItem itemValue="I have moderate problems walking" itemLabel="I have moderate problems walking" /> 
+                            <f:selectItem itemValue="I have severe problems walking" itemLabel="I have severe problems walking" /> 
+                            <f:selectItem itemValue="I am unable to walk" itemLabel="I am unable to walk" />
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                
+                <div class="longStringQuestion">
+                    <b>Please check the ONE box that best describes your health TODAY.</b>
+                </div>
+                <div class="question-radioButton">
+                    <b>Self-Care</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_eq5d5l_ques2" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolEq5d5lQues2}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="I have no problems washing or dressing myself" itemLabel="I have no problems washing or dressing myself"/>
+                            <f:selectItem itemValue="I have slight problems washing or dressing myself" itemLabel="I have slight problems washing or dressing myself" /> 
+                            <f:selectItem itemValue="I have moderate problems washing or dressing myself" itemLabel="I have moderate problems washing or dressing myself" /> 
+                            <f:selectItem itemValue="I have severe problems washing or dressing myself" itemLabel="I have severe problems washing or dressing myself" /> 
+                            <f:selectItem itemValue="I am unable to wash or dress myself" itemLabel="I am unable to wash or dress myself" />
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+               
+                <div class="longStringQuestion">
+                    <b>Please check the ONE box that best describes your health TODAY.</b>
+                </div>
+                <div class="question-radioButton">
+                    <b>Usual Activities</b> (e.g. work, study, housework, family, or leisure activities)
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_eq5d5l_ques3" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolEq5d5lQues3}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="I have no problems doing my usual activities" itemLabel="I have no problems doing my usual activities"/>
+                            <f:selectItem itemValue="I have slight problems doing my usual activities" itemLabel="I have slight problems doing my usual activities" /> 
+                            <f:selectItem itemValue="I have moderate problems doing my usual activities" itemLabel="I have moderate problems doing my usual activities" /> 
+                            <f:selectItem itemValue="I have severe problems doing my usual activities" itemLabel="I have severe problems doing my usual activities" /> 
+                            <f:selectItem itemValue="I am unable to do my usual activities" itemLabel="I am unable to do my usual activities" />
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+               
+                <div class="longStringQuestion">
+                    <b>Please check the ONE box that best describes your health TODAY.</b>
+                </div>
+                <div class="question-radioButton">
+                    <b>Pain/Discomfort</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_eq5d5l_ques4" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolEq5d5lQues4}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="I have no pain or discomfort" itemLabel="I have no pain or discomfort"/>
+                            <f:selectItem itemValue="I have slight pain or discomfort" itemLabel="I have slight pain or discomfort" /> 
+                            <f:selectItem itemValue="I have moderate pain or discomfort" itemLabel="I have moderate pain or discomfort" /> 
+                            <f:selectItem itemValue="I have severe pain or discomfort" itemLabel="I have severe pain or discomfort" /> 
+                            <f:selectItem itemValue="I extreame pain or discomfort" itemLabel="I extreame pain or discomfort" />
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+               
+                <div class="longStringQuestion">
+                    <b>Please check the ONE box that best describes your health TODAY.</b>
+                </div>
+                <div class="question-radioButton">
+                    <b>Anxiety/Depression</b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="qol_eq5d5l_ques5" class="question-multipleRadioButton" value="#{controller.qualityOfLifeForm.qolEq5d5lQues5}" disabled="#{controller.qualityOfLifeForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="I am not anxious or depressed" itemLabel="I am not anxious or depressed"/>
+                            <f:selectItem itemValue="I am slightly anxious or depressed" itemLabel="I am slightly anxious or depressed" /> 
+                            <f:selectItem itemValue="I am moderately anxious or depressed" itemLabel="I am moderately anxious or depressed" /> 
+                            <f:selectItem itemValue="I am severely anxious or depressed" itemLabel="I am severely anxious or depressed" /> 
+                            <f:selectItem itemValue="I am extremely anxious or depressed" itemLabel="I am extremely anxious or depressed" />
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+               
+                <div class="longStringQuestion">
+                    <b>Thank you for your completing the questionnaires for the ECP study!</b>
+                </div>
+                <div class="longStringQuestion">
+                    <b>Please return the tablet to the research team!</b>
+                </div>
+                <div class="longStringQuestion">
+                    <b>Have a great day!</b>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+    
+</html>

@@ -1,0 +1,603 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="../formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>SERIOUS ADVERSE EVENT FORM</h2>
+                <div>
+                    <h2><h:outputText value="#{controller.selectedForm.title}" /></h2>
+                </div>
+           </div>
+
+        </ui:define>
+       
+        <ui:define name="form_content">
+
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                    Participant ID: <h:outputText value="#{aEController.participantID}"/>
+                </div>
+                <div>
+                    <br/>
+                    <div>Title of Adverse Event (AE)(Diagnosis):  
+                        <div style="background-color: white;"> <!-- Extra white div makes text readable when textarea is disabled -->
+                            <p:inputTextarea id="title" value="#{aEController.adverseEventWorksheetSAEForm.aeTitle}" required="true" requiredMessage="#{msgs.saeTitle}" rows="2" maxlength="64" validator="#{aEController.validateTitle}" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" class="saeTitle">
+                                <f:ajax execute="title ques1 ques2 ques3a ques3b ques3c ques3d ques3e ques3f ques3g ques3h ques4" render="form" event="mouseout" />
+                            </p:inputTextarea>
+                        </div>
+                        <h:message for="title" style="color:red;"/>
+                    </div>
+                    <br/>
+                    <b>Current Date: </b>
+                    <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.currentDate}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" converter="strictDateTimeConverter" >
+                        <p:ajax event="dateSelect" update="@form" process="@form"/>
+                    </p:calendar>
+                </div>
+                <div>
+                    <h:panelGrid columns="4" >
+                        <b>Onset Date: </b>
+                        <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.onsetDate}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" converter="strictDateTimeConverter" >
+                            <p:ajax event="dateSelect" update="@form" process="@form"/>
+                        </p:calendar>
+                        <b>&nbsp;&nbsp;Time: </b>
+                        <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.onsetTime}" mode="popup" showOn="button" showButtonPanel="false" pattern="HH:mm" navigator="true" timeOnly="true" size="8" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" >
+                            <p:ajax event="dateSelect" update="@form" process="@form"/>
+                        </p:calendar>
+                    </h:panelGrid>
+                </div>
+                <!--
+                <div class="resolution">
+                    <b>Resolution Date: </b>
+                    <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.resolutionDate}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10">
+                        <p:ajax event="dateSelect" update="form"/>
+                    </p:calendar>
+                    <b>Or ongoing (checkbox): </b>
+                    <h:selectBooleanCheckbox id="quesOngoing" value="#{aEController.adverseEventWorksheetSAEForm.ongoing}"  >
+                        <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                    </h:selectBooleanCheckbox>
+                </div>
+                -->
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+            </div>
+            <br/>
+            
+            <h:panelGroup id="section1" >          
+                <div class="sectionFirstHeading">
+                    SECTION I. BASIC INFORMATION FOR ADVERSE EVENT
+                </div>
+                <div class="question-radioButton">
+                    <h:panelGrid columns="3" >
+                        <h:outputText value="1. Was the event fatal? " style="display: block; width: 160px;" rendered="true" />
+                        <h:selectOneRadio id="ques1" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" value="#{aEController.adverseEventWorksheetSAEForm.fatal}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="ques1" render="form"/>
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        (if yes, notify IRB, CCC, and submit completed AE/SAE form within 24 hours)
+                    </h:panelGrid>
+                        <h:message for="ques1"  style="color: red;"/>
+                </div>
+                <div class="question-radioButton">
+                    <h:panelGrid columns="3" >
+                        <h:outputText value="2. Was the event life-threatening? " style="display: block; width: 240px;" rendered="true" />
+                        <h:selectOneRadio id="ques2" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" value="#{aEController.adverseEventWorksheetSAEForm.lifeThreatening}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES" />
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form"/>
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        (if yes, notify IRB, CCC, and submit completed AE/SAE form within 24 hours)
+                    </h:panelGrid>
+                        <h:message for="ques2" style="color:red;"/>
+                </div>
+                <div class="question-inputTextAE">
+                    <b>3. Which of the following criteria apply to this event? </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3a" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.seriousInjury}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="ques3a" render="form" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Resulted in persistent or significant disability/incapacity (serious injury)" />
+                    </h:panelGrid>
+                        <h:message for="ques3a" style="color:red;"/>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3b" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.hospitalAdmission}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Resulted in hospital admission or prolongation of hospitalization" />
+                    </h:panelGrid>
+                        <h:message for="ques3b" style="color:red;"/>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3c" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.pregnancyAbortion}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Resulted in pregnancy abortion" />
+                    </h:panelGrid>
+                        <h:message for="ques3c" style="color:red;"/>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3d" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.congenitalAnomaly}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Resulted in congenital anomaly or birth defect in baby born to subject" />
+                    </h:panelGrid>
+                        <h:message for="ques3d" style="color:red;"/>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3e" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.cancerNeonateInfant}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Cancer in a neonate/infant born to female subject" />
+                    </h:panelGrid>
+                        <h:message for="ques3e" style="color:red;"/>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3f" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.aggressiveMedicalIntervention}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Required aggressive medical/surgical intervention to prevent serious injury" />
+                    </h:panelGrid>
+                        <h:message for="ques3f" style="color:red;"/>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3g" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.seriouslyJeopardizedHealth}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax  execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Seriously jeopardized subject's health" />
+                    </h:panelGrid>
+                        <h:message for="ques3g" style="color:red;"/>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3h" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.emergencyDepartmentVisit}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Resulted in emergency department visit or activation of acute response team" />
+                    </h:panelGrid>
+                        <h:message for="ques3h" style="color:red;"/>
+                </div>
+                <ui:insert name="dvtPeQuestions" />
+                
+                <h:panelGrid rendered="#{aEController.qualifyingSAE}" >
+                <div class="paragraph" style="color: red;">
+                    <b>This event is a Serious Adverse Event (SAE). Please immediately complete Sections I, II and III of this form, submit the signed Case Report Form, upload the relevant source documents, and notify your CCC coordinator, and follow your local IRB's guidelines.)</b>
+                </div>
+                </h:panelGrid>
+                
+                <h:panelGrid rendered="#{aEController.seriousAdverseEvent and !aEController.qualifyingSAE}" >
+                <div class="paragraph" style="color: red;">
+                    <b>This event is a Serious Adverse Event (SAE). Please <u>immediately</u> complete Sections I and II of this form and follow your local IRB’s guidelines for SAE reporting. (Depending on your responses in Section II, you may also have to complete Section III.)</b>
+                </div>
+                </h:panelGrid>
+                
+                <div class="question-radioButton">
+                    <h:panelGrid columns="3" >
+                        <b>4. Do ALL THREE of the following criteria apply to this event? </b>
+                        <h:selectOneRadio id="ques4" required="true" value="#{aEController.adverseEventWorksheetSAEForm.isUnanticipatedProblem}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                        <h:message for="ques4" style="color:red;"/>
+                </div>
+                <div class="paragraph-indent">
+                    <b>a. This event is unexpected (<ui:insert name='saeProtocolLink' />); <u>and</u></b>
+                </div>
+                <div class="paragraph-indent">
+                    <b>b. This event is related or possibly related to study participation (<ui:insert name='saeProtocolLink' />); <u>and</u></b>
+                </div>
+                <div class="paragraph-indent">
+                    <b>c. This event suggests that the research places subjects or others at a greater risk of harm (physical, psychological, economic, or social harm) than was previously known or recognized.</b>
+                </div>
+
+                <p></p>
+            </h:panelGroup>
+            
+            <br/>
+            <h:panelGroup id="section2" rendered="#{aEController.SAESectionRendered}">          
+                <div class="sectionFirstHeading">
+                    SECTION II. BASIC INFORMATION FOR SERIOUS ADVERSE EVENT OR UNANTICIPATED PROBLEM
+                </div>
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <b>Report Type: </b>
+                        <h:selectOneRadio id="quesRT" class="radioReportType" value="#{aEController.adverseEventWorksheetSAEForm.reportType}" required="true" requiredMessage="#{msgs.saeReportType}" style="display: inline-table; padding-left: 10px;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="initial" itemLabel="Initial"/>
+                            <f:selectItem itemValue="followup" itemLabel="Follow-up" /> 
+                            <f:selectItem itemValue="final" itemLabel="Final"/>
+                            <f:ajax execute="section2" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                    <h:message for="quesRT" style="color:red;"/>
+                </div>
+                <div class="question-radioButton" >
+                    <h:panelGrid columns="2" >
+                        <b>Date of participant enrollment in study: </b>
+                        <h:outputText value="#{controller.selectedParticipant.enrolledDate}" rendered="true" style="display: block; width:380px;" >
+                            <f:convertDateTime pattern="MM-dd-yyyy"/>
+                        </h:outputText>
+<!--                        <p:calendar id="dateEnrolled" class="calendar" required="true" value="#{aEController.adverseEventWorksheetSAEForm.dateParticipantEnrollment}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="8" >
+                            <p:ajax event="dateSelect" update="dateEnrolled dateKnown timeKnown quesWasEventFatal" process="@form" />  
+                            <p:ajax event="dateSelect" update="@form" process="@form" />
+                        </p:calendar> 
+-->
+                    </h:panelGrid>
+<!--                    <h:message for="dateEnrolled" style="color:red;"/>  -->
+                </div>
+                <div class="question-radioButton" >
+                    <h:panelGrid id="dateTimeSerious" columns="4" >
+                        <b>Date event became serious (for SAE only): </b>
+                        <p:calendar id="dateSerious" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.dateEventSerious}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="8" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" converter="strictDateTimeConverter" />
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Time: </b>
+                        <p:calendar id="timeSerious" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.timeEventSerious}" mode="popup" showOn="button" showButtonPanel="false" pattern="HH:mm" navigator="true" timeOnly="true" size="8" disabled="#{controller.adverseEventWorksheetSAEForm.locked}"/>
+                    </h:panelGrid>
+                </div>
+                <div class="question-radioButtonSAE" >
+                    <h:panelGrid id="dateTimeKnown" columns="4" >
+                        <h:outputText value="Date event became known to investigator or study team member: " rendered="true" style="display: block; width:290px;" />
+                        <p:calendar id="dateKnown" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.dateEventKnown}" required="true" requiredMessage="#{msgs.saeDate}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="7" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" converter="strictDateTimeConverter" >
+<!--
+                            If you want validation to work, use required="true" instead of the f:validateRequired 
+                            The following p:ajax event command beclow can be used to save the date as soon as you enter the date and leave the date box.
+                            Another way to save not only the date but to save all dates and times for Section 2 is to add the following f:ajax command after each f:ajax execute="section3" command below in Section 3.
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+-->
+                            <p:ajax event="dateSelect" update="@form" process="@form" /> 
+                        </p:calendar>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Time: </b>
+                        <p:calendar id="timeKnown" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.timeEventKnown}" required="true" requiredMessage="#{msgs.saeTime}" mode="popup" showOn="button" showButtonPanel="false" pattern="HH:mm" navigator="true" timeOnly="true" size="7" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <p:ajax event="dateSelect" update="@form" process="@form" /> 
+                        </p:calendar>
+                    </h:panelGrid>
+                    <h:message for="dateKnown" style="color:red;"/>
+                    <p></p>
+                    <h:message for="timeKnown" style="color:red;"/>
+                </div>
+
+                <div class="question-radioButtonSAE" >
+                    <h:panelGrid id="dateTimeCompletion" columns="6">
+                        <b>Date of completion of last ECP procedure: </b>
+                        <p:calendar id="dateLastECPProcedure" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.dateLastECPProcedure}" disabled="#{aEController.adverseEventWorksheetSAEForm.ecpProcedureNotRelated == true or controller.adverseEventWorksheetSAEForm.locked}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="7"  converter="strictDateTimeConverter" >
+                        </p:calendar>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Time: </b>
+                        <p:calendar id="timeLastECPProcedure" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.timeLastECPProcedure}" disabled="#{aEController.adverseEventWorksheetSAEForm.ecpProcedureNotRelated == true or controller.adverseEventWorksheetSAEForm.locked}" mode="popup" showOn="button" showButtonPanel="false" pattern="HH:mm" navigator="true" timeOnly="true" size="7" >
+                        </p:calendar>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Not Applicable: </b>
+                        <h:selectBooleanCheckbox id="quesNotRelated" value="#{aEController.adverseEventWorksheetSAEForm.ecpProcedureNotRelated}" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" >
+                            <!-- The p:ajax statement below causes the date and time to immediately reset the values and disable the date/time calendars. --> 
+                            <p:ajax update="dateTimeCompletion" resetValues="true" />
+                        </h:selectBooleanCheckbox>
+                    </h:panelGrid>
+                    <h:message for="dateLastECPProcedure" style="color:red;"/>
+                    <p></p>
+                    <h:message for="timeLastECPProcedure" style="color:red;"/>
+                </div>
+
+                <div class="question-radioButtonSAE" >
+                    <h:panelGrid id="dateTimeResolved" columns="6" >
+                        <b>Date event resolved: </b>
+                        <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.dateEventResolved}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="8" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" converter="strictDateTimeConverter" />
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Time: </b>
+                        <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.timeEventResolved}" mode="popup" showOn="button" showButtonPanel="false" pattern="HH:mm" navigator="true" timeOnly="true" size="8" disabled="#{controller.adverseEventWorksheetSAEForm.locked}"/>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Or ongoing: </b>
+                        <h:selectBooleanCheckbox id="quesOngoing2" value="#{aEController.adverseEventWorksheetSAEForm.eventOngoing}" disabled="#{controller.adverseEventWorksheetSAEForm.locked}" >
+                            <!-- The p:ajax statement below causes the date and time to immediately reset the values and disable the date/time calendars. --> 
+                            <p:ajax update="dateTimeResolved" resetValues="true" />
+                        </h:selectBooleanCheckbox>
+                    </h:panelGrid>
+                </div>
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="1. Was this event fatal?" />
+                        <h:outputLabel id="eventFatalSection2" class="" value="#{aEController.adverseEventWorksheetSAEForm.fatalAnswer}" style="padding-left: 10px;"  />
+                    </h:panelGrid>
+                </div>
+                <div class="question-radioButtonSAEindent">
+                        <b>If YES: </b>                   
+                    <h:panelGrid id="dateTimeOfDeath" columns="6" >
+                        <b>a. Date of death: </b>
+                        <p:calendar id="dateOfDeathDate" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.dateOfDeath}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="8" disabled="#{aEController.adverseEventWorksheetSAEForm.fatal == 'false' or controller.adverseEventWorksheetSAEForm.locked}" converter="strictDateTimeConverter" />
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Time: </b>
+                        <p:calendar id="dateOfDeathTime" class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.timeOfDeath}" mode="popup" showOn="button" showButtonPanel="false" pattern="HH:mm" navigator="true" timeOnly="true" size="8" disabled="#{aEController.adverseEventWorksheetSAEForm.fatal == 'false' or controller.adverseEventWorksheetSAEForm.locked}"/>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Or unknown: </b>
+                        <h:selectBooleanCheckbox id="q1a" value="#{aEController.adverseEventWorksheetSAEForm.dateOfDeathUnknown}" disabled="#{aEController.adverseEventWorksheetSAEForm.fatal == 'false' or controller.adverseEventWorksheetSAEForm.locked}" >
+                            <!-- The p:ajax statement below causes the date and time to immediately reset the values and disable the date/time calendars. --> 
+                            <p:ajax update="dateTimeOfDeath" resetValues="true" />
+                        </h:selectBooleanCheckbox>
+                    </h:panelGrid>
+                </div>
+                <div class="question-radioButtonSAEindentMore">
+                    b. Cause of death:  <h:inputText id="causeOfDeath" value="#{aEController.adverseEventWorksheetSAEForm.causeOfDeath}" size="70" disabled="#{aEController.adverseEventWorksheetSAEForm.fatal == 'false' or controller.adverseEventWorksheetSAEForm.locked}"/>
+                </div>
+                <div class="question-radioButtonSAEindent">
+                    <h:panelGrid columns="3" >
+                        <h:outputLabel value="c. Is a copy of autopsy report attached, if performed?" />
+                        <h:selectOneRadio id="autopsyReport" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.autopsyPerformed}" style="display: inline-table;" disabled="#{aEController.adverseEventWorksheetSAEForm.fatal == 'false' or controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="2. Was the event life-threatening?" />
+                        <h:outputLabel id="eventLifeThreateningSection2" class="" value="#{aEController.adverseEventWorksheetSAEForm.lifeThreateningAnswer}" style="padding-left: 10px;"  />
+                    </h:panelGrid>
+                </div>
+
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="3. Was this event related or possibly related to the use of ECP?" />
+                        <h:selectOneRadio id="s2ques3" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.wasEventRelatedToUseECP}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="s2ques3 s2ques4 s2ques5 s2ques6a s2ques6b" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                        <h:message for="s2ques3" style="color:red;"/>
+                    </h:panelGrid>
+                </div>
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="4. Did this event occur or begin during or within 6 hours after ECP?" />
+                        <h:selectOneRadio id="s2ques4" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.didEventOccurWithinECP}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="s2ques3 s2ques4 s2ques5 s2ques6a s2ques6b" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                        <h:message for="s2ques4" style="color:red;"/>
+                </div>
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="5. Was this event related or possibly related to a central venous catheter that was placed for the purpose of performing ECP?" />
+                        <h:selectOneRadio id="s2ques5" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.wasEventRelatedToCatheterUse}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="s2ques3 s2ques4 s2ques5 s2ques6a s2ques6b" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                        <h:message for="s2ques5" style="color:red;"/>
+                </div>
+                <div class="question-radioButton">
+                    <h:panelGrid columns="3" >
+                        <h:outputLabel value="6. Was this event possibly, probably, definitely related to the use of methoxsalen: " />
+                        <h:selectOneRadio id="s2ques6a" class="yesnoanswers2" value="#{aEController.adverseEventWorksheetSAEForm.wasEventRelatedToMethoxsalenUse}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="s2ques3 s2ques4 s2ques5 s2ques6a s2ques6a s2ques6b" render="form" listener="#{aEController.clearMethoxsalenListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                        <h:message for="s2ques6a" style="color:red;"/>
+                    <h:panelGrid columns="1" >
+                        <h:selectOneRadio id="s2ques6b" class="radioReportMethoxsalen" value="#{aEController.adverseEventWorksheetSAEForm.methoxsalen}" required="#{aEController.adverseEventWorksheetSAEForm.wasEventRelatedToMethoxsalenUse == 'true'}" requiredMessage="#{msgs.saeRelatedToMethosalenUse}" disabled="#{aEController.adverseEventWorksheetSAEForm.methoxsalenUsed == false or controller.adverseEventWorksheetSAEForm.locked}" layout="lineDirection">
+                            <f:selectItem itemValue="possibly" itemLabel="Possibly" /> 
+                            <f:selectItem itemValue="probably" itemLabel="Probably" /> 
+                            <f:selectItem itemValue="definitely" itemLabel="Definitely" /> 
+                            <c:if test="false">
+                                <f:selectItem itemValue="" itemLabel="Not Applicable" />
+                            </c:if>
+                            <f:ajax execute="section2" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                        <h:message for="s2ques6b" style="color:red;"/>
+                </div>
+                <ui:insert name="relatedToParticipation" />
+                
+            </h:panelGroup>
+            
+            <h:panelGroup id="section3" rendered="#{aEController.SAEDetailSectionRendered}">
+                <div class="sectionSecondHeading">
+                    SECTION III. DETAILED INFORMATION FOR SERIOUS ADVERSE EVENT OR UNANTICIPATED PROBLEM
+                </div>
+
+                <div class="question-radioButton" >
+                    <h:panelGrid columns="2" >
+                        <div>
+                            <h:outputLabel value="A. Full chronological description - include body site/system, setting (e.g. hospital, home), specific signs and symptoms: " />
+                        </div>
+                        <div>
+                            <h:inputTextarea id="qA" value="#{aEController.adverseEventWorksheetSAEForm.fullChronologicalDescription}" required="true" requiredMessage="#{msgs.saeFullChronDescription}" cols="80" rows="14" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                                <f:ajax execute="section3" render="form" listener="#{aEController.updateListener}" />
+                                <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                            </h:inputTextarea>
+                        </div>
+                    </h:panelGrid>
+                    <h:message for="qA" style="color:red;"/>
+                </div>
+                
+<!--                <div class="question-radioButton">
+                    <h:panelGrid columns="4" >
+                        B. Specific diagnosis of event:  
+                        <h:inputText value="#{aEController.adverseEventWorksheetSAEForm.specificDiagnosis}" size="35"/>
+                        <b>Or, no change since last report: </b>
+                        <h:selectBooleanCheckbox id="quesSpecifyDiagnosisEvent" value="#{aEController.adverseEventWorksheetSAEForm.specificDiagnosisNoChange}"  />
+                    </h:panelGrid>
+                </div>-->
+                
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="B. Expectedness (see Protocol Section 6.4)?" />
+                        <h:selectOneRadio id="qB" class="yesnoanswers-expectedness" value="#{aEController.adverseEventWorksheetSAEForm.expectedness}" required="true" requiredMessage="#{msgs.saeExpectedness}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="Unexpected" itemLabel="Unexpected"/>
+                            <f:selectItem itemValue="Expected" itemLabel="Expected" /> 
+                            <f:ajax execute="section3" render="form" listener="#{aEController.updateListener}" />
+                                <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                    <h:message for="qB" style="color:red;"/>
+                </div>
+
+                <div class="question-radioButtonSAE" >
+                    <h:panelGroup id="dateLastAdminMethoxsalen" >
+                        <h:panelGrid columns="3" >
+                            <h:outputLabel class="adminMethoxsalen" value="C. Date of last administration of methoxsalen before event: " />
+                            <h:outputLabel class="adminMethoxsalenCheckbox" value="Not Applicable: " />
+                            <h:selectBooleanCheckbox id="qC" class="" value="#{aEController.adverseEventWorksheetSAEForm.notApplicable}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                                <!-- The p:ajax statement below causes the date and time to immediately reset the values and disable the date/time calendars. --> 
+                                <p:ajax update="dateLastAdminMethoxsalen" resetValues="true" />
+                            </h:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <h:panelGrid id="dateTimeLastAdminMethoxsalen" columns="4" >
+                            <h:outputLabel class="" value="Date: " style="padding-left: 20px;"/>
+                            <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.dateLastAdminMethoxsalen}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="8" disabled="#{aEController.adverseEventWorksheetSAEForm.notApplicable == true or controller.adverseEventWorksheetSAEForm.locked}" converter="strictDateTimeConverter" />
+                            <h:outputLabel class="" value="Time: " style="padding-left: 20px;"/>
+                            <p:calendar class="calendar" value="#{aEController.adverseEventWorksheetSAEForm.timeLastAdminMethoxsalen}" mode="popup" showOn="button" showButtonPanel="false" pattern="HH:mm" navigator="true" timeOnly="true" size="8" disabled="#{aEController.adverseEventWorksheetSAEForm.notApplicable == true or controller.adverseEventWorksheetSAEForm.locked}"/>
+                        </h:panelGrid>                    
+                        <h:panelGrid columns="2" >
+                            <h:outputLabel id="doseLastAdminMethoxsalen" class="" value="Dose: " style="padding-left: 20px;"  />
+                            <h:inputText value="#{aEController.adverseEventWorksheetSAEForm.methoxsalenDose}" disabled="#{aEController.adverseEventWorksheetSAEForm.notApplicable == true or controller.adverseEventWorksheetSAEForm.locked}" size="40" />
+                        </h:panelGrid>                    
+                    </h:panelGroup>
+                </div>
+
+                <div class="question-radioButton9">
+                    <b>D. Treatment given: </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qD1" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.noTreatment}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="1. None" />
+                    </h:panelGrid>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qD2" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.nonInvasiveTreatment}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="2. Non-invasive treatment (e.g. medical therapy#{noninvasiveTreatmentAdditions})" />
+                    </h:panelGrid>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qD3" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.minimallyInvasiveTreatment}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="3. Minimally-Invasive Treatment (e.g. catheter-based or endoscopic procedure#{minimalTreatmentAdditions})" />
+                    </h:panelGrid>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="qD4" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.openSurgery}" style="display: inline-table;" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="4. Open Surgery" />
+                    </h:panelGrid>
+                </div>
+                <ui:insert name="otherTreatmentGiven" />`
+                <div class="paragraph">
+                    <b>Please specify, if the answers to question D2, D3, and/or D4 are YES:</b>
+                    <h:panelGrid columns="2" >
+                        <h:inputTextarea value="#{aEController.adverseEventWorksheetSAEForm.treatmentGivenSpecify}" cols="80" rows="7" disabled="#{controller.adverseEventWorksheetSAEForm.locked}"/>
+                    </h:panelGrid>                    
+                </div>
+                <div class="question-radioButton">
+                    E. Relevant medical history:  
+                    <h:panelGrid columns="2" >
+                        <h:inputTextarea value="#{aEController.adverseEventWorksheetSAEForm.relevantMedicalHistory}" cols="80" rows="7" disabled="#{controller.adverseEventWorksheetSAEForm.locked}"/>
+                    </h:panelGrid>
+                </div>
+                <div class="question-radioButton">
+                    F. Relevant lab/imaging findings:  
+                    <h:panelGrid columns="2" >
+                        <h:inputTextarea value="#{aEController.adverseEventWorksheetSAEForm.relevantLabImageFindings}" cols="80" rows="5" disabled="#{controller.adverseEventWorksheetSAEForm.locked}"/>
+                    </h:panelGrid>
+                </div>
+
+                <div class="question-radioButton">
+                    <h:panelGrid columns="1" >
+                        <h:outputLabel value="G. Outcome at time of report: " />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" >
+                        <h:selectOneRadio id="qG" class="radioReportOutcome" value="#{aEController.adverseEventWorksheetSAEForm.outcome}" layout="lineDirection" disabled="#{controller.adverseEventWorksheetSAEForm.locked}">
+                            <f:selectItem itemValue="death" itemLabel="Death"/>
+                            <f:selectItem itemValue="notYetRecovered" itemLabel="Not Yet Recovered" />
+                            <f:selectItem itemValue="recoveredWithSequalae" itemLabel="Recovered With Sequalae" /> 
+                            <f:selectItem itemValue="recoveredWithoutSequalae" itemLabel="Recovered Without Sequalae" /> 
+                            <f:ajax execute="section3" render="form" listener="#{aEController.updateListener}" />
+                            <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                    <h:message for="qG" style="color:red;"/>
+                </div>
+                <p></p>
+                
+                <div class="question-radioButton">
+                    <b>H. Comments: </b>
+                    <h:inputTextarea value="#{aEController.adverseEventWorksheetSAEForm.comment}" rows="2" cols="80" disabled="#{aEController.adverseEventWorksheetSAEForm.commentLocked}" style="margin-left: 17px;"/>
+                </div>
+
+                <div class="paragraph" style="color:red;">
+                    <b>After submitting this worksheet, please open the Serious Adverse Event (SAE) Form then print the SAE form, sign and date it.  Then upload the signed SAE form and other relevant source document into the SAE form, and notify your CCC coordinator.</b>
+                </div>
+                <div class="paragraph">
+                    <b>Investigator Signature __________________________________	Date __________________</b>
+                </div>
+                <div class="paragraph">
+                    <b>Name of Investigator __________________________________</b>
+                </div>
+            </h:panelGroup>
+            
+        </ui:define>
+    </ui:composition>
+
+</html>

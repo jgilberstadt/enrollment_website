@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+            <h:panelGrid columns="4">
+                <h:link value="All-Sites Summary > " outcome="/index.xhtml" rendered="#{securityManager.canViewAllSites()}"/>
+                <h:link value="Site Summary - nBOS > " outcome="/site.xhtml"/>
+                <h:link value="Participant Summary > " outcome="/participant.xhtml"/>
+                <h:outputText value="Event Summary" />
+            </h:panelGrid>
+            
+<!--            <h:panelGrid columns="2" class="center_content">
+                <a href="http://ecpregistry.wustl.edu" > <button>Home</button></a>
+                <h:button value="Investigator Resources" outcome="siteResources" />
+            </h:panelGrid>
+-->
+            <h3>Event Summary</h3>
+            
+            <h:form id="eventForm">
+
+                <table>
+                    <tr><td>Site Name - ID:</td><td><h:outputText value="#{controller.selectedSite.name} - #{controller.selectedSite.siteID}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Type:</td><td><h:outputText value="#{controller.selectedEvent.type.name}"/></td></tr>
+                    <tr><td>Participant ID:</td><td><h:outputText value="#{controller.selectedParticipant.participantID}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Title:</td><td><h:outputText value="#{controller.selectedEvent.name}"/></td></tr>
+                    <tr><td>Study Arm:</td><td><h:outputText value="#{controller.selectedParticipant.studyArmStatus.name}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Label:</td><td><h:outputText value="#{controller.selectedEvent.label}"/></td></tr>
+                    <tr><td>Participant Status:</td><td><h:outputText value="#{controller.selectedParticipant.status}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Status:</td><td><h:outputText value="#{controller.selectedEvent.status}"/></td></tr>
+                    <tr><td>Enrolled Date:</td><td><h:outputText value="#{controller.selectedParticipant.enrolledDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Date:</td><td><h:outputText value="#{controller.selectedEvent.actualDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td></tr>
+                </table>
+
+                <h:dataTable id="formTable" value="#{controller.forms}" var="form" rowClasses="odd-row,even-row" headerClass="header-class" styleClass="datatable-class" cellspacing="5px">
+                    <h:column>
+                        <f:facet name="header">Form Type</f:facet>
+                        <h:outputText value="#{form.type}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Form Title</f:facet>
+                        <h:outputText value="#{form.title}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                         <h:outputText value="#{form.status}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Form Creation Date</f:facet>
+                        <h:outputText value="#{form.date}"  >
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Form Last Submitted Date</f:facet>
+                        <h:outputText value="#{form.lastSubmittedDate}"  >
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="View" action="#{controller.viewFormAction(form)}"/>
+                    </h:column>
+                </h:dataTable>
+                <p></p>
+                <h:commandButton value="Add SAE Follow-up Form..." onclick="PF('addFormDlg').show()" type="button" rendered="#{controller.renderAddFormButton()}"/>
+                
+            </h:form>
+            
+            <p:dialog id="dlg" header="Add SAE Follow-up Form" widgetVar="addFormDlg" modal="true">
+                <h:form id="addFormForm">
+                    <p:panel id="panelId">
+                    <h:messages  style="color:red;margin:8px;" />
+                    <table>
+                        <tr>
+                            <td style="vertical-align:center"><h:outputLabel for="formType" value="Form Type: " /></td>
+                            <td>
+                                <h:selectOneListbox id="formType" value="#{addFormBean.formType}" required='true' requiredMessage="Select type of form to add.">
+                                    <f:selectItems value="#{addFormBean.formTypes}" var="ftype" itemLabel="#{ftype.name}" itemValue="#{ftype}"/>
+                                </h:selectOneListbox>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><h:outputLabel for="occuranceDate" value="Form Date: " /></td>
+                            <td><p:calendar id="occuranceDate" class="calendar" value="#{addFormBean.dateOfOccurance}" required="true" requiredMessage="Select the form's date." mode="popup" 
+                                            showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <table>
+                                    <tr>
+                                        <td><p:commandButton value="Cancel" type="submit" 
+                                                             update="addFormForm" 
+                                                             immediate="true"
+                                                             resetValues="true"
+                                                             oncomplete="PF('addFormDlg').hide()"/>
+                                        </td>
+<!--                                        <td><p:commandButton value="Submit" action="#{addFormBean.addFormAction()}" type="submit"
+                                                             update=":eventForm:formTable"
+                                                             oncomplete="if(args &amp;&amp; !args.validationFailed) PF('addFormDlg').hide()"/>
+                                        </td>-->
+                                        <td><p:commandButton value="Submit" action="#{addFormBean.addFormAction()}" type="submit"
+                                                             ajax="false"
+                                                             oncomplete="if(args &amp;&amp; !args.validationFailed) PF('addFormDlg').hide()"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>About</title>
+    </h:head>
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+
+            <h1><font size="6">About the ECP Registry Software</font></h1>
+
+            <p style="width: 750px; font-size: medium;">
+                The Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis
+                Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts software 
+                was developed to assist sites participating in the ECP Registry Study to input their 
+                participant's information into a centralized database.
+            </p>
+ 
+            <p style="font-size: medium;">
+                Software Release Date:  <h:outputText value="#{versionControl.softwareReleaseDate}" >
+                                            <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                                        </h:outputText>
+
+            </p>
+            <p style="font-size: medium;">
+                Software Version: <h:outputText value="#{versionControl.softwareVersionNumber}" />
+            </p>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

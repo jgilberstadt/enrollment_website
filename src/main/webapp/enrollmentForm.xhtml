@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <h:form>
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>ENROLLMENT ASSESSMENT</h2>
+            </div>
+
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                    <b>Current Date: </b>
+                    <p:calendar id="enrollmentDate" class="calendar" value="#{calcController.enrollmentForm.enrollmentDate}" required="true" requiredMessage="#{msgs.enrollmentDate}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </p:calendar>
+                    <p:message for="enrollmentDate" />
+                </div>
+            </div>
+
+            <div>          
+                <div class="confelig-question">
+                    1. INCLUSION CRITERIA - all answers must be "YES" for subject to be eligible:
+                </div>
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques1" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.age}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Age 18 years or greater" />
+                </h:panelGrid>
+                <p:message for="ques1" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques2" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.medicare}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Medicare-eligible" />
+                </h:panelGrid>
+                <p:message for="ques2" />
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques3" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.lungTransplant}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Lung transplant recipient" />
+                </h:panelGrid>
+                <p:message for="ques3" />
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques5" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.fiveFEV1sPostTrans}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Has had at least 5 recorded FEV1 values post-transplant all within the last 6 months, separated by at least one week, of which one FEV1 value was recorded on or within one week prior to the day of enrollment" />
+                </h:panelGrid>
+                <p:message for="ques5" />
+                
+                <p></p>
+                <div class="confelig-question">
+                    2. EXCLUSION CRITERIA - all answers must be "NO" for subject to be eligible for study inclusion:
+                </div>
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques6" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.anotherTrial}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Participant in another clinical treatment trial with an investigational agent" />
+                </h:panelGrid>
+                <p:message for="ques6" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques7" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.interfereCondition}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Has condition that may interfere with subject's ability to perform pulmonary function testing" />
+                </h:panelGrid>
+                <p:message for="ques7" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques8" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.knownAllergy}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Known allergy or hypersensitivity to pharmacologic agents used during ECP" />
+                </h:panelGrid>
+                <p:message for="ques8" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques9" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.acuteCondition}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Has acute condition that contraindicates ECP, including but not limited to new or evolving myocardial infarction or central nervous system disorder, hemodynamic instability or hypovolemia, acute bleeding, or respiratory distress; or other condition that poses unacceptable risk for study-related complications as judged by the referring clinician" />
+                </h:panelGrid>
+                <p:message for="ques9" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques10" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.otherCondition}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Has other condition that would significantly interfere with ability to adhere to the protocol or affect interpretability of the study results" />
+                </h:panelGrid>
+                <p:message for="ques10" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques11" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.aphakia}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Aphakia or absence of ocular lenses" />
+                </h:panelGrid>
+                <p:message for="ques11" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques12" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.pregnancy}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Pregnancy (confirmed by a positive pregancy test)" />
+                </h:panelGrid>
+                <p:message for="ques12" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques13" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.noInformedConsent}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Inability to provide informed consent or to comply with study treatments or assessments (e.g. due to cognitive impairment or geographic distance)" />
+                </h:panelGrid>
+                <p:message for="ques13" />
+                
+                <p></p>
+                <div class="clear"></div>
+
+                <p></p>
+                <div class="confelig-question">
+                    3. CONFIRMATION OF ENROLLMENT
+                </div>
+
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="A. Date the approved Informed Consent Form was signed by the subject " />
+                    </div>
+                    <div class="cal">
+                        <p:calendar id="dateInformedConsentSigned" class="calendar" value="#{calcController.enrollmentForm.dateInformedConsentSigned}" required="true" requiredMessage="#{msgs.dateInformedConsentSigned}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter"/>
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateInformedConsentSigned" />
+                </div>
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="B. Informed Consent Form Version Date" />
+                    </div>
+                    <div class="cal">
+                        <p:calendar id="dateInformedConsentVersion" class="calendar" value="#{calcController.enrollmentForm.dateInformedConsentVersion}" required="true" requiredMessage="#{msgs.dateInformedConsentVersion}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter"/>
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateInformedConsentVersion" />
+                </div>
+                <p></p>
+            </div>
+            
+            <h:panelGrid columns="2">
+                <h:commandButton value="Determine Enrollment..." action="#{calcController.determineEnrollmentAction()}" />
+                <h:commandButton value="Cancel" action="#{calcController.cancelEnrollmentAction()}" immediate="true"/>
+            </h:panelGrid>
+            
+            </h:form>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>

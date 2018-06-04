@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+            <h:panelGrid columns="3">
+                <h:link value="All-Sites Summary > " outcome="/index.xhtml" rendered="#{securityManager.canViewAllSites()}"/>
+                <h:outputText value="Site Summary - New BOS (nBOS)" />
+            </h:panelGrid>
+
+            <h3>Site Summary - nBOS</h3>
+            
+            <h:form>
+
+                <h:outputText  value="Site Name - ID: #{controller.selectedSite.name} - #{controller.selectedSite.siteID}" /> <br/><br/>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="header-class">Participant ID</th>
+                            <th class="header-class">Enrolled Date</th>
+                            <th class="header-class">nBOS Study Arm</th>
+                            <th class="header-class">Status</th>
+                            <ui:repeat value="#{controller.eventStatus}" var="estatus" >
+                                <th class="header-class">#{estatus.name}</th>
+                            </ui:repeat>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{controller.participants}" var="participant" varStatus="rowStatus">
+                            <h:panelGroup rendered="#{rowStatus.odd}" >
+                                <tr class="odd-row">
+                                    <td><h:outputText value="#{participant.participantID}" /></td>
+                                    <td><h:outputText value="#{participant.enrolledDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td>
+                                    <td><h:outputText value="#{participant.studyArmStatus.name}" /></td>
+                                    <td><h:outputText value="#{participant.status}" /></td>
+                                    <ui:repeat value="#{controller.eventStatus}" var="estatus" >
+                                        <td style="text-align: center"><h:outputText value="#{controller.getEventCount(participant, estatus)}" /></td>
+                                    </ui:repeat>
+                                    <td>
+                                        <h:commandButton value="View" action="#{controller.viewParticipantAction(participant)}"/>
+                                    </td>
+                                </tr>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="${rowStatus.even}" >
+                                <tr class="even-row">
+                                    <td><h:outputText value="#{participant.participantID}" /></td>
+                                    <td><h:outputText value="#{participant.enrolledDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td>
+                                    <td><h:outputText value="#{participant.studyArmStatus.name}" /></td>
+                                    <td><h:outputText value="#{participant.status}" /></td>
+                                    <ui:repeat value="#{controller.eventStatus}" var="estatus" >
+                                        <td style="text-align: center"><h:outputText value="#{controller.getEventCount(participant, estatus)}" /></td>
+                                    </ui:repeat>
+                                    <td>
+                                        <h:commandButton value="View" action="#{controller.viewParticipantAction(participant)}"/>
+                                    </td>
+                                </tr>
+                            </h:panelGroup>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+                
+<!--                <h:commandButton value="Add Participant" action="$????????{controller.addParticipantAction()}" /> Get rid of question marks to make it run again -->
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>

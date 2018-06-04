@@ -1,0 +1,459 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="../formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>CROSSOVER SAFETY CHECK - Case Report Form (CRF)</h2>
+                <div>
+                    <h2><center><h:outputText value="#{controller.selectedForm.title}" /></center></h2>
+                </div>
+            </div>
+            <div>
+                <p style="width: 750px; font-size: medium; color: red; font-weight: bold">
+                    <u>Important and Time-Sensitive:</u> Please answer the question below and then PRINT this participant's Crossover Safety Check (CSC) Form, have an authorized physician investigator sign and date the CSC form, and scan and upload the signed CSC.  Per <ui:insert name='preTreatmentAssessmentsProtocolLink' />, submission of this signed CSC Form is required before ECP or any study-related invasive procedure (e.g. central venous catheter placement) may be performed.
+                </p>
+            </div>
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                    <b>1. A Signed Crossover Safety Check Form must be uploaded</b>
+                </div>
+            </div>
+        </ui:define>
+        
+        <ui:define name="form_content">
+
+         
+            <div class="sectionSecondHeading">
+                <u>Safety Check</u>
+            </div>
+
+            <div class="crossoverSafetyCheckQues1">
+                <div class="crossoverSafetyCheckQues1-inputText">
+                    <b>1. Is the patient clinically worsening to where the site physician and/or PI believe additional therapy beyond that permitted by the current treatment arm is needed?</b>
+                </div>
+
+                <div class="crossoverSafetyCheckQues1-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1" class="yesnoanswers" requiredMessage="#{msgs.crossoverSafetyCheckQues1}" value="#{controller.crossoverSafetyForm.patientClinicallyWorsening}" disabled="#{controller.crossoverSafetyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <p:message for="ques1" />
+            </div>
+            
+            <div class="crossoverSafetyCheckQues1">
+                <div class="crossoverSafetyCheckQues1-inputText">
+                    <b>2. Does the patient have <b>no</b> contraindications to the treatment allowed in the other arm? (Please review the <ui:insert name='contraindicationProtocolLink' /> for conditions that may apply.) </b>
+                </div>
+
+                <div class="crossoverSafetyCheckQues1-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques2" class="yesnoanswers" requiredMessage="#{msgs.crossoverSafetyCheckQues1}" value="#{controller.crossoverSafetyForm.safeToCrossover}" disabled="#{controller.crossoverSafetyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <p:message for="ques2" />
+            </div>
+
+            <div class="crossoverSafetyCheckQues1">
+                <div class="crossoverSafetyCheckQues1-inputText">
+                    <b>3. Has the site physician and/or PI reviewed the study protocol and requested to cross over this patient to the other treatment arm?</b>
+                </div>
+
+                <div class="crossoverSafetyCheckQues1-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques3" class="yesnoanswers" requiredMessage="#{msgs.crossoverSafetyCheckQues1}" value="#{controller.crossoverSafetyForm.crossoverRequested}" disabled="#{controller.crossoverSafetyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <p:message for="ques3" />
+            </div>
+            
+            <div class="crossoverSafetyCheckQues1">
+                <div class="crossoverSafetyCheckQues1-inputText">
+                    <b>4. Have all FEV-1s this patient has had been entered into the case report forms and provided source documentation?</b>
+                </div>
+
+                <div class="crossoverSafetyCheckQues1-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques4" class="yesnoanswers" requiredMessage="#{msgs.crossoverSafetyCheckQues1}" value="#{controller.crossoverSafetyForm.allFev1sEntered}" disabled="#{controller.crossoverSafetyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <p:message for="ques4" />
+            </div>
+            
+            <div class="crossoverSafetyCheckQues1">
+                <div class="crossoverSafetyCheckQues1-inputText">
+                    <b>5. Do the site physician and/or PI understand that the patient will still be followed in the study, and have outcome assessments and data reported per the study protocol?</b>
+                </div>
+
+                <div class="crossoverSafetyCheckQues1-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques5" class="yesnoanswers" requiredMessage="#{msgs.crossoverSafetyCheckQues1}" value="#{controller.crossoverSafetyForm.patientStaysInProtocol}" disabled="#{controller.crossoverSafetyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <p:message for="ques5" />
+            </div>
+
+            <p></p>
+            <div class="crossoverSafetyCheckQues2">
+                <div class="crossoverSafetyCheckQues2-inputText">
+                    <h:outputLabel class="" value="6. Has the signed Crossover Safety Check CRF been uploaded?" />
+                </div>
+                <h:selectOneRadio id="ques6" class="yesnoanswers" required="true" requiredMessage="#{msgs.wasCrossoverSafetyCheckFormUploaded}" value="#{controller.crossoverSafetyForm.wasCrossoverSafetyCheckUploaded}" style="display: inline-table;" disabled="#{controller.crossoverSafetyForm.commentLocked}" >
+                    <f:selectItem itemValue="true" itemLabel="YES"/>
+                    <f:selectItem itemValue="false" itemLabel="NO" /> 
+                </h:selectOneRadio>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('wasCrossoverSafetyCheckUploaded')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="Was Crossover Safety Check CRF Uploaded: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType4d" value="#{controller.crossoverSafetyForm.wasCrossoverSafetyCheckUploadedVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.crossoverSafetyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.crossoverSafetyForm.wasCrossoverSafetyCheckUploadedDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6" />
+            </div> 
+            
+            <div class="clear"></div>
+
+            
+            <p></p>
+            <div class="crossoverSafetyCheckQues3-inputText">
+                <b>7. The following FEV1 values were used to calculate the Crossover Confirmation of Eligibility for this participant. </b>
+            </div>
+            <div class="clear"></div>
+
+            <table cellspacing="10px" style="margin-left: 25px">
+                    
+                <tr>
+                    <td >
+                        <b><h:outputText value="A. Date "/></b>
+                        <p:calendar id="dateOfFEV11" class="calendar" value="#{controller.crossoverSafetyForm.date1}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td >
+                        <b>FEV1 </b>
+                        <h:inputText id="fev11" value="#{controller.crossoverSafetyForm.fev11}" disabled="true" size="3" validatorMessage="FEV1 ranges between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </td>
+                    <td >
+                        <b>FVC </b>
+                        <h:inputText id="fvc1" value="#{controller.crossoverSafetyForm.fvc1}" disabled="true"  size="3" validatorMessage="FVC ranges between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="B. Date "/></b>
+                        <p:calendar id="dateOfFEV12" class="calendar" value="#{controller.crossoverSafetyForm.date2}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev12" value="#{controller.crossoverSafetyForm.fev12}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc2" value="#{controller.crossoverSafetyForm.fvc2}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="C. Date "/></b>
+                        <p:calendar id="dateOfFEV13" class="calendar" value="#{controller.crossoverSafetyForm.date3}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev13" value="#{controller.crossoverSafetyForm.fev13}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc3" value="#{controller.crossoverSafetyForm.fvc3}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="D. Date "/></b>
+                        <p:calendar id="dateOfFEV14" class="calendar" value="#{controller.crossoverSafetyForm.date4}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev14" value="#{controller.crossoverSafetyForm.fev14}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc4" value="#{controller.crossoverSafetyForm.fvc4}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="E. Date " style="margin-left: 1px;"/></b>
+                        <p:calendar id="dateOfFEV15" class="calendar" value="#{controller.crossoverSafetyForm.date5}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev15" value="#{controller.crossoverSafetyForm.fev15}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc5" value="#{controller.crossoverSafetyForm.fvc5}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="F. Date "/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date6}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 2px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev16}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc6}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+                
+                <tr>
+                    <td>
+                        <b><h:outputText value="G. Date "/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date7}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev17}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc7}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="H. Date "/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date8}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev18}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc8}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="I. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date9}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev19}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc9}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="J. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date10}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev110}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc10}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="K. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date11}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev111}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc11}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="L. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date12}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev112}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc12}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="M. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date13}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev113}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc13}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="N. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date14}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev114}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc14}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="O. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{controller.crossoverSafetyForm.date15}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fev115}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{controller.crossoverSafetyForm.fvc15}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+            </table>
+                <p></p>
+
+
+            <div>
+                <p></p>
+                <div class="confelig-question">
+                    INVESTIGATOR ATTESTATION
+                </div>
+                <p style="width: 750px; margin-left: 25px;">I have reviewed and confirmed that the information recorded on this CRF Page is accurate.  I attest that this patient meets all study eligibility criteria and is appropriate to enroll in the ECP Registry</p>
+                <br/>
+                <div class="confirmeligquestions">
+                    <div class="investname">
+                        <h:outputLabel class="investname" value="Investigator Name (please print)" />
+                    </div>
+                    <div class="print">
+                        <h:outputText value="____________________________________________"  />
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <p></p>
+                <div class="confirmeligquestions">
+                    <div class="investsign">
+                        <h:outputLabel class="investsign" value="Investigator Signature" />
+                    </div>
+                    <div class="sign">
+                        <h:outputText value="________________________________  Date: _______________"  />
+                    </div>
+                </div> 
+            </div>
+            <p></p>
+            
+        </ui:define>
+    </ui:composition>
+    
+</html>

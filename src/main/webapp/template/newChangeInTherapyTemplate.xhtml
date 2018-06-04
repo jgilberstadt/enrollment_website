@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="../formTemplate.xhtml">
+        <ui:define name="form_title">
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            <ui:insert name="form_title_insert"/>
+        </ui:define>
+        
+        <ui:define name="form_content">
+            <h:panelGroup id="changeOfTherapyForm" >
+                <div id="crfcenterparticipantidsdate">
+                    <div>
+                    <b>Change in Therapy Date: </b>
+                    <p:calendar id="changeTherapyDate" class="calendar" value="#{controller.changeTherapyForm.changeTherapyDate}" requiredMessage="#{msgs.changeTherapyDate}" disabled="#{controller.changeTherapyForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        <p:ajax event="dateSelect" update="@form" process="@form" /> 
+                    </p:calendar>
+                    </div>
+                </div>
+
+                <p:message for="changeTherapyDate" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('changeTherapyDate')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Change in Therapy Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType1" value="#{controller.changeTherapyForm.changeTherapyDateVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.changeTherapyDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <br/>
+
+                <div class="question-inputText-immunodrug">
+                    <b>1. Check all immunosuppressive drugs that are <u>currently being used</u> by the participant: </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="5" >
+                        <h:selectOneRadio id="tacrolimus" class="yesnoanswers" requiredMessage="#{msgs.tacrolimusCurrent}" value="#{controller.changeTherapyForm.tacrolimusCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Tacrolimus" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio id="tacrolimusDosage" value="#{controller.changeTherapyForm.tacrolimusCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.tacrolimusCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="tacrolimus" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('tacrolimusCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Tacrolimus Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType2" value="#{controller.changeTherapyForm.tacrolimusCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.tacrolimusCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+		<h:panelGroup rendered="#{controller.renderVerificationPanel('tacrolimusCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Tacrolimus Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType3" value="#{controller.changeTherapyForm.tacrolimusCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.tacrolimusCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="alemtuzumab" class="yesnoanswers" requiredMessage="#{msgs.alemtuzumabCurrent}" value="#{controller.changeTherapyForm.alemtuzumabCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Alemtuzumab" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.alemtuzumabCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.alemtuzumabCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="alemtuzumab" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('alemtuzumabCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Alemtuzumab Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType4" value="#{controller.changeTherapyForm.alemtuzumabCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.alemtuzumabCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('alemtuzumabCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Alemtuzumab Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType5" value="#{controller.changeTherapyForm.alemtuzumabCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.alemtuzumabCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="sirolimus" class="yesnoanswers" requiredMessage="#{msgs.sirolimusCurrent}" value="#{controller.changeTherapyForm.sirolimusCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Sirolimus (Rapamycin)" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.sirolimusCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.sirolimusCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="sirolimus" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('sirolimusCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Sirolimus Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType6" value="#{controller.changeTherapyForm.sirolimusCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.sirolimusCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('sirolimusCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Sirolimus Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType7" value="#{controller.changeTherapyForm.sirolimusCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.sirolimusCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="everolimus" class="yesnoanswers" requiredMessage="#{msgs.everolimusCurrent}" value="#{controller.changeTherapyForm.everolimusCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Everolimus" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.everolimusCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.everolimusCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="everolimus" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('everolimusCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Everolimus Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType8" value="#{controller.changeTherapyForm.everolimusCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.everolimusCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('everolimusCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Everolimus Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType9" value="#{controller.changeTherapyForm.everolimusCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.everolimusCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="azathioprine" class="yesnoanswers" requiredMessage="#{msgs.azathioprineCurrent}" value="#{controller.changeTherapyForm.azathioprineCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Azathioprine" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.azathioprineCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.azathioprineCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="azathioprine" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('azathioprineCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Azathioprine Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType10" value="#{controller.changeTherapyForm.azathioprineCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.azathioprineCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('azathioprineCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Azathioprine Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType11" value="#{controller.changeTherapyForm.azathioprineCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.azathioprineCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="cyclosporineA" class="yesnoanswers" requiredMessage="#{msgs.cyclosporineACurrent}" value="#{controller.changeTherapyForm.cyclosporineACurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Cyclosporine A" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.cyclosporineACurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.cyclosporineACurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="cyclosporineA" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('cyclosporineACurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Cyclosporine A Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType12" value="#{controller.changeTherapyForm.cyclosporineACurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.cyclosporineACurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+				<h:panelGroup rendered="#{controller.renderVerificationPanel('cyclosporineACurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Cyclosporine A Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType13" value="#{controller.changeTherapyForm.cyclosporineACurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.cyclosporineACurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="methotrexate" class="yesnoanswers" requiredMessage="#{msgs.methotrexateCurrent}" value="#{controller.changeTherapyForm.methotrexateCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Methotrexate" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.methotrexateCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.methotrexateCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="methotrexate" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('methotrexateCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Methotrexate Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType14" value="#{controller.changeTherapyForm.methotrexateCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.methotrexateCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('methotrexateCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Methotrexate Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType15" value="#{controller.changeTherapyForm.methotrexateCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.methotrexateCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="macrolideAntibiotic" class="yesnoanswers" requiredMessage="#{msgs.macrolideAntibioticCurrent}" value="#{controller.changeTherapyForm.macrolideAntibioticCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Macrolide Antibiotic, Azithromycin" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.macrolideAntibioticCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.macrolideAntibioticCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="macrolideAntibiotic" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('macrolideAntibioticCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Macrolide Antibiotic Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType16" value="#{controller.changeTherapyForm.macrolideAntibioticCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.macrolideAntibioticCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('macrolideAntibioticCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Macrolide Antibiotic Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType17" value="#{controller.changeTherapyForm.macrolideAntibioticCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.macrolideAntibioticCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="mycophenolateMofetil" class="yesnoanswers" requiredMessage="#{msgs.mycophenolateMofetilCurrent}" value="#{controller.changeTherapyForm.mycophenolateMofetilCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Mycophenolate Mofetil (Cellcept or Myfortic)" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.mycophenolateMofetilCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.mycophenolateMofetilCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="mycophenolateMofetil" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('mycophenolateMofetilCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Mycophenolate Mofetil Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18" value="#{controller.changeTherapyForm.mycophenolateMofetilCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.mycophenolateMofetilCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('mycophenolateMofetilCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Mycophenolate Mofetil Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType19" value="#{controller.changeTherapyForm.mycophenolateMofetilCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.mycophenolateMofetilCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="antiThymocyteGlobulin" class="yesnoanswers" requiredMessage="#{msgs.antiThymocyteGlobulinCurrent}" value="#{controller.changeTherapyForm.antiThymocyteGlobulinCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Anti-Thymocyte Globulin - ATG (Thymoglobulin or Atgam)" />
+
+                        <h:outputLabel value="Dosage: " style="margin-left:10px;" />
+                        <h:selectOneRadio value="#{controller.changeTherapyForm.antiThymocyteGlobulinCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.antiThymocyteGlobulinCurrent == false}" style="margin-left:10px; width: 360px;">
+                            <f:selectItem itemValue="increased" itemLabel="Increased"/>
+                            <f:selectItem itemValue="decreased" itemLabel="Decreased" /> 
+                            <f:selectItem itemValue="nochange" itemLabel="No Change" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+                </div>
+                <p:message for="antiThymocyteGlobulin" />
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('antiThymocyteGlobulinCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Anti Thymocyte Globulin Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType20" value="#{controller.changeTherapyForm.antiThymocyteGlobulinCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.antiThymocyteGlobulinCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+				<h:panelGroup rendered="#{controller.renderVerificationPanel('antiThymocyteGlobulinCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Anti Thymocyte Globulin Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType21" value="#{controller.changeTherapyForm.antiThymocyteGlobulinCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.antiThymocyteGlobulinCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1m" class="yesnoanswers" requiredMessage="#{msgs.totalLymphoidIrradiationCurrent}" value="#{controller.changeTherapyForm.totalLymphoidIrradiationCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Total Lymphoid Irradiation" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques1m" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('totalLymphoidIrradiationCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Total Lymphoid Irradiation Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType22" value="#{controller.changeTherapyForm.totalLymphoidIrradiationCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.totalLymphoidIrradiationCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('otherDrugsCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Total Lymphoid Irradiation Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType23" value="#{controller.changeTherapyForm.otherDrugsCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.otherDrugsCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="otherDrugs" class="yesnoanswers" value="#{controller.changeTherapyForm.otherDrugsCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Other Drug(s)" />
+                    </h:panelGrid>
+                </div>
+                <div>
+                    <h:panelGrid style="margin-left:203px; width: 450px;">
+                        <h:outputLabel style="font-weight: bold; border: 0px solid black;" value="If YES for Other Drug(s), please provide the drug name(s) and whether the dosage went up or down: " />
+                    </h:panelGrid>
+                    <h:panelGrid >
+                        <h:inputTextarea style="margin-left:203px;" value="#{controller.changeTherapyForm.otherDrugNamesCurrent}" cols="60" rows="2" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.otherDrugsCurrent == false}"/>
+                    </h:panelGrid>
+                </div>
+
+		<h:panelGroup rendered="#{controller.renderVerificationPanel('otherDrugNamesCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Other Drug Names Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType24" value="#{controller.changeTherapyForm.otherDrugNamesCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.otherDrugNamesCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="2. Is the patient taking prednisone?" />
+                        <h:selectOneRadio id="ques1bprednisone" class="yesnoanswers" requiredMessage="#{msgs.prednisoneCurrent}" value="#{controller.changeTherapyForm.prednisoneCurrent}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="question-inputText-other">
+                    <b>A. If yes, enter daily dose: </b>
+                    <h:inputText id="ques1bDose" value="#{controller.changeTherapyForm.prednisoneCurrentDosage}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.prednisoneCurrent == false}" size="4" validatorMessage="Validation Error: Prednisone dose ranges between 0 and 150 mg.">
+                        <f:validateLongRange minimum="0" maximum ="150"/>
+                    </h:inputText>
+                    <b> mg (input range: 0-150)</b>
+                    <p:message for="ques1bDose" />
+                </div>
+                <div class="question-inputText-other">
+                    <b>B. Number of changes in dose: </b>
+                    <h:inputText id="ques1cDose" value="#{controller.changeTherapyForm.prednisoneDosageChanges}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.prednisoneCurrent == false}" size="4" validatorMessage="Validation Error: Prednisone dose changes cannot be less than 0.">
+                        <f:validateLongRange minimum="0" />
+                        <f:ajax execute="changeOfTherapyForm" render="@form" />
+                    </h:inputText>
+                    <p:message for="ques1cDose" />
+                </div>
+                <div class="question-inputText-other">
+                    <b>C. If dose changed, dose range: </b><br/>
+                    Lowest Dose: <h:inputText id="ques1dDose" value="#{controller.changeTherapyForm.prednisoneLowestDose}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.prednisoneCurrent == false || controller.changeTherapyForm.prednisoneDosageChanges == null || controller.changeTherapyForm.prednisoneDosageChanges == 0}" size="4" validatorMessage="Validation Error: Prednisone dose ranges between 0 and 150 mg.">
+                        <f:validateLongRange minimum="0" maximum ="150" />
+                    </h:inputText>
+                    mg (input range: 0-150)<br/>
+                    <br/>Highest Dose: <h:inputText id="ques1eDose" value="#{controller.changeTherapyForm.prednisoneHighestDose}" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.prednisoneCurrent == false || controller.changeTherapyForm.prednisoneDosageChanges == null || controller.changeTherapyForm.prednisoneDosageChanges == 0}" size="4" validatorMessage="Validation Error: Prednisone dose ranges between 0 and 150 mg.">
+                        <f:validateLongRange minimum="0" maximum ="150" />
+                    </h:inputText>
+                    mg (input range: 0-150)
+                    <p:message for="ques1dDose" />
+                </div>
+                <p:message for="ques1bprednisone" />
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('prednisoneCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Prednisone Current: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType25" value="#{controller.changeTherapyForm.prednisoneCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.prednisoneCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('prednisoneCurrentDosage')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Prednisone Current Dosage: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType26" value="#{controller.changeTherapyForm.prednisoneCurrentDosageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.prednisoneCurrentDosageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('prednisoneDosageChanges')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Prednisone Dosage Changes: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType27" value="#{controller.changeTherapyForm.prednisoneDosageChangesVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.prednisoneDosageChangesDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('prednisoneLowestDose')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Prednisone Lowest Dose: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType28" value="#{controller.changeTherapyForm.prednisoneLowestDoseVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.prednisoneLowestDoseDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('prednisoneHighestDose')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Prednisone Highest Dose: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType29" value="#{controller.changeTherapyForm.prednisoneHighestDoseVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.prednisoneHighestDoseDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="3. Is the participant taking an anticoagulant drug?" />
+                        <h:selectOneRadio id="ques2anticoagulants" class="yesnoanswers" requiredMessage="#{msgs.onAntiCoagulant}" value="#{controller.changeTherapyForm.onAntiCoagulant}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="question-inputText-other">
+                    <b>If yes, list drugs: </b><br/>
+                    Name anticoagulant 1: <h:inputText id="ques2anticoag1" value="#{controller.changeTherapyForm.antiCoagulantName1}" size="30" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.onAntiCoagulant == false}" /><br/><br/>
+                    Name anticoagulant 2: <h:inputText id="ques2anticoag2" value="#{controller.changeTherapyForm.antiCoagulantName2}" size="30" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.onAntiCoagulant == false}" /><br/><br/>
+                    Name anticoagulant 3: <h:inputText id="ques2anticoag3" value="#{controller.changeTherapyForm.antiCoagulantName3}" size="30" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.onAntiCoagulant == false}" /><br/>
+                </div>
+                <p:message for="ques2anticoagulants" />
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('onAntiCoagulant')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Anti Coagulant: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType30" value="#{controller.changeTherapyForm.onAntiCoagulantVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.onAntiCoagulantDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="3" >
+                        <h:outputLabel class="treatment-parameters-questions" value="4. Is the participant taking an anti-platelet drug?" />
+                        <h:selectOneRadio id="ques3antiplatelets" class="yesnoanswers" requiredMessage="#{msgs.onAntiPlatelet}" value="#{controller.changeTherapyForm.onAntiPlatelet}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="question-inputText-other">
+                    <b>If yes, list drugs: </b><br/>
+                    Name anti-platelet 1: <h:inputText id="ques2antiplat1" value="#{controller.changeTherapyForm.antiPlateletName1}" size="30" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.onAntiPlatelet == false}" /><br/><br/>
+                    Name anti-platelet 2: <h:inputText id="ques2antiplat2" value="#{controller.changeTherapyForm.antiPlateletName2}" size="30" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.onAntiPlatelet == false}" /><br/><br/>
+                    Name anti-platelet 3: <h:inputText id="ques2antiplat3" value="#{controller.changeTherapyForm.antiPlateletName3}" size="30" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.onAntiPlatelet == false}" /><br/>
+                </div>
+                <p:message for="ques3antiplatelets" />
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('onAntiPlatelet')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Anti Platelet: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType31" value="#{controller.changeTherapyForm.onAntiPlateletVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.onAntiPlateletDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="5. Has ECP therapy been discontinued? " />
+                        <h:selectOneRadio id="ques4ecpdiscontinued" class="" requiredMessage="#{msgs.ecpTreatmentDiscontinued}" value="#{controller.changeTherapyForm.ecpTherapyDiscontinued}" disabled="#{controller.changeTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:selectItem itemValue="na" itemLabel="Not Applicable" /> 
+                            <f:ajax execute="changeOfTherapyForm" render="@form" listener="#{controller.clearChangeTherapyDrugDosageIfNoListener}" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques4ecpdiscontinued" />
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('ecpTherapyDiscontinued')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="ECP Therapy Discontinued: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType32" value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                 <div class="change-therapy-ques4-indent">
+                    <b>a. If yes, date of discontinuation </b>
+                    <p:calendar class="calendar" value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedDate}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.ecpTherapyDiscontinued == false}"  converter="strictDateTimeConverter"/>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('ecpTherapyDiscontinuedDate')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="ECP Therapy Discontinued Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType33" value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedDateVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+               <div class="change-therapy-ques4-indent">
+                    <b>b. If yes, reason for discontinuation: </b>
+                    <h:inputTextarea id="ques4ecpdiscontinuedreason" value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedReason}" rows="2" cols="80" disabled="#{controller.changeTherapyForm.locked || controller.changeTherapyForm.ecpTherapyDiscontinued == false}" />
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('ecpTherapyDiscontinuedReason')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="ECP Therapy Discontinued Reason: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType34" value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedReasonVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.changeTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.changeTherapyForm.ecpTherapyDiscontinuedReasonDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+
+                <div class="question-radioButton">
+                    <b>6. Comments: </b>
+                    <h:inputTextarea value="#{controller.changeTherapyForm.comment}" rows="2" cols="80" disabled="#{controller.changeTherapyForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+
+            </h:panelGroup>
+
+            
+        </ui:define>
+    </ui:composition>
+
+</html>

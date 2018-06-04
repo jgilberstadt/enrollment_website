@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            <h:form>
+
+                <h:outputText value="Center: #{controller.selectedSite.name}" /> <br/>
+                <h:outputText value="Participant ID: #{controller.selectedParticipant.participantID}" /> <br/>
+                <h:outputText value="Event Name: #{controller.selectedEvent.name}" /> <br/><br/>
+                
+                <h:outputText value="A Simple Form" /> <br/>
+
+                <h:outputText value="Status: #{controller.selectedForm.status}" /> <br/>
+                
+                <h:outputText value="First Name: " />
+                <h:inputText value="#{controller.selectedSimpleForm.firstName}" /> 
+                <h:outputText value="Verified: " />
+                <h:selectBooleanCheckbox value="#{controller.selectedSimpleForm.firstNameVerified}"  disabled="#{controller.selectedForm.verificationDisabled}"/> <br/>
+                <h:outputText value="Last Name: " />
+                <h:inputText value="#{controller.selectedSimpleForm.lastName}" /> <br/>
+                
+                <span id="buttonBar">
+                <h:commandButton value="Save" action="#{controller.saveFormAction}"/>
+                <h:commandButton value="Submit" action="#{controller.submitFormAction}"/>
+                <h:commandButton value="Clear" action="#{controller.clearFormAction}"/>
+                </span>
+                
+                <br/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>
+

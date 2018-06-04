@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            <div>
+                <h:panelGrid columns="5">
+                    <h:link value="All-Sites Summary > " outcome="/index.xhtml" rendered="#{securityManager.canViewAllSites()}"/>
+                    <h:link value="Site Summary - nBOS > " outcome="/site.xhtml"/>
+                    <h:link value="Participant Summary > " outcome="/participant.xhtml"/>
+                    <h:link value="Event Summary > " outcome="/event.xhtml"/>
+                    <h:outputText value="#{controller.selectedForm.title}" />
+                </h:panelGrid>
+<!--                <h:panelGrid columns="2" class="center_content">
+                <a href="http://ecpregistry.wustl.edu" > <button>Home</button></a>
+                <h:button value="Investigator Resources" outcome="siteResources" />
+                </h:panelGrid> -->
+            </div>
+            <h3 style="text-align: left">Form Summary</h3>
+                        
+            <table>
+                <tr><td>Site Name - ID:</td><td><h:outputText value="#{controller.selectedSite.name} - #{controller.selectedSite.siteID}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Type:</td><td><h:outputText value="#{controller.selectedEvent.type.name}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Form Type:</td><td><h:outputText value="#{controller.selectedForm.type}"/></td></tr>
+                <tr><td>Participant ID:</td><td><h:outputText value="#{controller.selectedParticipant.participantID}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Title:</td><td><h:outputText value="#{controller.selectedEvent.name}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Form Title:</td><td><h:outputText value="#{controller.selectedForm.title}"/></td></tr>
+                <tr><td>Study Arm:</td><td><h:outputText value="#{controller.selectedParticipant.studyArmStatus.name}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Label:</td><td><h:outputText value="#{controller.selectedEvent.label}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Form Creation Date:</td><td><h:outputText value="#{controller.selectedForm.date}"> <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td></tr>
+                <tr><td>Participant Status:</td><td><h:outputText value="#{controller.selectedParticipant.status}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Status:</td><td><h:outputText value="#{controller.selectedEvent.status}"/></td><td>&nbsp;&nbsp;&nbsp;</td><td>Form Status:</td><td><h:outputText value="#{controller.selectedForm.status}"/></td></tr>
+                <tr><td>Enrolled Date:</td><td><h:outputText value="#{controller.selectedParticipant.enrolledDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td><td>&nbsp;&nbsp;&nbsp;</td><td>Event Date:</td><td><h:outputText value="#{controller.selectedEvent.actualDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td><td>&nbsp;&nbsp;&nbsp;</td><td>Last Submitted Date:</td><td><h:outputText value="#{controller.selectedForm.lastSubmittedDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy" timeZone="CST"/> </h:outputText></td></tr>
+            </table>
+
+            <h:form id="sourceDocs" target="">
+                <div id="form_title" class="center_content">
+                    <ui:insert name="form_title">Form Header and CRF Name Goes Here</ui:insert>
+                </div>
+                <h:panelGroup rendered="#{controller.selectedForm.requiresSourceDoc}">
+                    <h:dataTable value="#{controller.documents}" var="doc" rowClasses="odd-row,even-row" headerClass="header-class" styleClass="datatable-class">
+                        <h:column>
+                            <f:facet name="header">Source Document Type</f:facet>
+                            <h:outputText value="#{doc.sourceDocumentType}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"></f:facet>
+                            <h:outputText value="" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Document Name</f:facet>
+                            <h:outputText value="#{doc.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"></f:facet>
+                            <h:outputText value="" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Submission Date</f:facet>
+                            <h:outputText value="#{doc.submissionDate}" >
+                                <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <!-- <h:commandButton value="View" action="#{controller.viewDocumentAction(doc)}" onclick="this.form.target='_blank'" onblur="this.form.target='_self'"/> -->
+                            <!-- BalusC helped PKC with the ajax and onclick options to make the View work: http://stackoverflow.com/questions/19306884/applying-pcommandbutton-style-to-pcommandlink-because-i-basically-need-p -->
+                            <p:commandButton value="View" action="#{controller.viewDocumentAction(doc)}" ajax="false" onclick="form.target='_blank'" onblur="form.target='_self'"/>
+                        </h:column>
+                        <h:column>
+                            <!-- <h:commandButton value="Delete" action="#{controller.deleteDocumentAction(doc)}" rendered="#{controller.renderSourceDocumentDeleteButton}"/> -->
+                            <p:commandButton value="Delete" action="#{controller.deleteDocumentAction(doc)}" oncomplete="PF('deletePdfFileDlg').show()" rendered="#{controller.renderSourceDocumentDeleteButton}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+
+            </h:form>
+            
+            <h:panelGroup rendered="#{controller.selectedForm.requiresSourceDoc}">
+                <h:form id="uploadForm" enctype="multipart/form-data">
+                    <h:outputLabel value="Select Source Document Type " rendered="true"/>
+                    <h:selectOneMenu id="verifyType1" value="#{controller.selectedForm.sourceDocumentType}" rendered="true">
+                        <f:selectItems value="#{controller.selectedForm.sourceDocumentTypes}" />
+                    </h:selectOneMenu>
+                    <div style="margin-top: 10px;">
+                        <h:outputText value="Attach Source Document: "/>
+                        <h:inputFile id="srcDoc" value="#{controller.sourceDocument}" />
+                        <h:commandButton value="Upload" action="#{controller.uploadFileAction}" style="margin-left: 10px;"/>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+
+            <br/>
+
+            <h:form id="form">
+                
+                <span id="buttonBar">
+                    <h:commandButton id="saveForm1" value="Save" action="#{controller.saveFormAction}" rendered="#{controller.renderSaveFormButton}"/>
+                    <h:commandButton id="doSubmitForm1" value="#{controller.selectedForm.submitButtonName}" action="#{controller.submitFormAction}" rendered="#{controller.renderSubmitFormButton}">
+                        <c:if test="#{ controller.selectedForm.requiresValidation}">
+                            <f:param name="VALIDATE" value="true" />   <!-- The f:param name VALIDATE set to true is used by many of the CRFs to disable validation <f:validateRequired disabled="#{!param['VALIDATE']}" />  -->              
+                        </c:if>
+                    </h:commandButton>
+<!--                    <h:commandButton id="clearForm" value="Clear" action="# {controller.clearFormAction}"/>  -->
+                </span>
+
+                <div id="form_content" class="center_content">
+                    <ui:insert name="form_content">Form Content</ui:insert>
+                </div>
+
+                <span id="buttonBar">
+                    <h:commandButton id="saveForm2" value="Save" action="#{controller.saveFormAction}" rendered="#{controller.renderSaveFormButton}"/>
+                    <h:commandButton id="doSubmitForm2" value="#{controller.selectedForm.submitButtonName}" action="#{controller.submitFormAction}" rendered="#{controller.renderSubmitFormButton}">
+                        <c:if test="#{ controller.selectedForm.requiresValidation}">
+                            <f:param name="VALIDATE" value="true" />   <!-- The f:param name VALIDATE set to true is used by many of the CRFs to enable validation <f:validateRequired disabled="#{!param['VALIDATE']}" />  -->                    
+                        </c:if>
+                    </h:commandButton>
+<!--                    <h:commandButton id="clearForm" value="Clear" action="# {controller.clearFormAction}"/>  -->
+<!--
+                The following data missing code would be used with the baselineTherapy.java code that was written to test out the idea of allowing
+                data to be missing from a CRF.  The Data Missing checkbox would allow the validation of the question(s) to be turned off so the
+                CRF can be submitted without inputting data.
+                    <h:selectBooleanCheckbox id="dataMissingCheckBox" value="# {controller.baselineTherapyForm.dataMissing}" >
+                        <f:ajax listener="# {controller.baselineTherapyForm.dataMissingListener}" render=""/>
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel for="dataMissingCheckBox" value="Data Missing" />
+-->
+                </span>
+                
+                <br/>
+                <div style="width: 800px; text-align: center;" >
+                    CRF Version <h:outputText value="#{controller.selectedForm.crfVersion}" /> 
+                    (<h:outputText value="#{controller.selectedForm.irbSubmittedDate}" >
+                        <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                    </h:outputText>)
+                    
+                    <!-- The following hidden input value is used to cause the new version control information to be input into the
+                         versioncontrol table the first time a form is selected. -->
+                    <input type="hidden" name="versionControlNumber" value="#{versionControl.crfVersionNumber}" />
+                    
+<!--                    CRF Version <h:outputText value="#{versionControl.crfVersionNumber}" /> 
+                    (<h:outputText value="#{versionControl.protocolDate}" >
+                        <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                    </h:outputText>)
+-->
+                </div>
+
+            </h:form>
+
+            <p:dialog id="dlg" header="Delete PDF File" widgetVar="deletePdfFileDlg" modal="true">
+                <h:form id="deletePdfForm">
+                    <p:panel id="panelId">
+<!--                    <h:messages  style="color:red;margin:8px;" />  -->
+                    <table>
+                        <tr>
+                            <td style="vertical-align:center"><h:outputLabel value="Are you sure you want to delete the PDF file?" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <table>
+                                    <tr>
+                                        <td><p:commandButton value="Yes" action="#{controller.deleteDocumentAction()}" type="submit"
+                                                             update=":sourceDocs"
+                                                             immediate="true"
+                                                             oncomplete="PF('deletePdfFileDlg').hide()"/>
+                                        </td>
+                                        <td><p:commandButton value="No" type="submit" 
+                                                             update="deletePdfForm" 
+                                                             immediate="true"
+                                                             resetValues="true"
+                                                             oncomplete="PF('deletePdfFileDlg').hide()"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+
+            
+<!--            <p:growl id="submissionGrowl" showDetail="true" sticky="true" />  -->
+                     
+        </ui:define>
+    </ui:composition>
+    
+</html>

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <h:panelGrid rendered="#{calcController.ecpTreatmentArmEligible}">
+                <h2>This patient is eligible for enrollment into the "ECP Treatment Arm" of the study.</h2>
+                <p>
+                    <h:outputText value="Slope = #{calcController.slope} ml / month"/>
+                    <h:outputText value="P-Value = #{calcController.PValue}"/>
+                    <h:outputText value="Minimum FEV1 = #{calcController.minFev} ml"/>
+                </p>
+                <h:form >
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Enroll into the ECP Treatment Arm..." action="#{calcController.enrollParticipantIntoECPTreatmentArmAction}" />
+<!--                        <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" /> -->
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGrid>
+            
+            <h:panelGrid  rendered="#{calcController.observationalArmEligible}">
+                <h2>This patient is NOT eligible for the study currently,</h2>
+                <h2>But if their FEV1 values continue to decline please try again at that time.</h2>
+                <p>
+                    Eligibility failed on the following criterion:
+                    <h:outputText value="#{calcController.rule}"/>
+                </p>
+                <p>
+                    <h:outputText value="Slope = #{calcController.slope} ml / month"/>
+                    <h:outputText value="P-Value = #{calcController.PValue}"/>
+                    <h:outputText value="Minimum FEV1 = #{calcController.minFev} ml"/>
+                </p>
+                <h:form >
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Enroll Into Observational Arm..." action="#{calcController.enrollIntoObservationalArmAction}" />
+<!--                        <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" /> -->
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGrid>
+            
+            
+        </ui:define>
+    </ui:composition>
+    
+</html>

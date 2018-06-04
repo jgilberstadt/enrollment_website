@@ -1,0 +1,1211 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="../formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>DEMOGRAPHICS/MEDICAL HISTORY - Case Report Form (CRF)</h2>
+            </div>
+            <ui:insert name="sourceDocuments" />
+        </ui:define>
+        
+        <ui:define name="form_content">
+
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                    <b>Date of Participant Enrollment in Study: </b>
+                    <p:calendar id="enrollmentDate" class="calendar" value="#{controller.demoMedHistForm.enrollmentDate}" requiredMessage="#{msgs.enrollmentDate}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </p:calendar>
+                </div>
+            </div>
+            <p:message for="enrollmentDate" />
+
+            <br/>
+            <div>          
+                <div class="sectionFirstHeading">
+                    <u>SECTION A. Demographic Information</u>
+                </div>
+                <div class="question-inputText">
+                    <h:outputText value="1. Age: " />
+                    <h:inputText id="ques1" value="#{controller.demoMedHistForm.age}" requiredMessage="#{msgs.age}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Age ranges between 18 and 99 years">
+                        <f:validateLongRange minimum="18" maximum ="99"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </h:inputText>
+                    
+                </div>
+                <p:message for="ques1" />
+                <div >
+                    <h:outputText class="textGender" value="2. Gender: " />
+                    <h:selectOneRadio id="ques2" class="radioGender" requiredMessage="#{msgs.gender}" value="#{controller.demoMedHistForm.gender}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                        <f:selectItem itemValue="male" itemLabel="Male"/>
+                        <f:selectItem itemValue="female" itemLabel="Female" /> 
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </h:selectOneRadio>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('gender')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q2: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType2" value="#{controller.demoMedHistForm.genderVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.genderDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques2" />
+                
+                <div class="question-radioButton">
+                    <b>3. Race: </b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="ques3" class="question-multipleRadioButton" requiredMessage="#{msgs.race}" value="#{controller.demoMedHistForm.race}" disabled="#{controller.demoMedHistForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="white" itemLabel="White"/>
+                            <f:selectItem itemValue="black" itemLabel="Black or African-American" /> 
+                            <f:selectItem itemValue="asian" itemLabel="Asian" /> 
+                            <f:selectItem itemValue="american indian" itemLabel="American Indian" /> 
+                            <f:selectItem itemValue="alaska native" itemLabel="Alaska Native" /> 
+                            <f:selectItem itemValue="pacific islander" itemLabel="Native Hawaiian or Other Pacific Islander" /> 
+                            <f:selectItem itemValue="other" itemLabel="Other" /> 
+                            <f:selectItem itemValue="no response" itemLabel="No Response" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                <p:message for="ques3" />
+
+                <div class="question-radioButton">
+                    <h:panelGrid columns="2" >
+                        <b>4. Are you of Hispanic or Latino origin: </b>
+                        <h:selectOneRadio id="ques4" class="yesnoanswers" requiredMessage="#{msgs.origin}" value="#{controller.demoMedHistForm.origin}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques4" />
+
+                <div class="sectionSecondHeading">
+                    <u>SECTION B. Previous Medical History and Pulmonary Function Testing Results</u>
+                </div>
+                <ui:insert name="lungTransplantationCause" />
+                <div class="question-inputText-other">
+                    <b>If other, please describe: </b>
+                    <h:inputTextarea value="#{controller.demoMedHistForm.lungTransplantationOther}" rows="2" cols="80" disabled="#{controller.demoMedHistForm.locked}" />
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('lungTransplantationCause')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q5: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType5" value="#{controller.demoMedHistForm.lungTransplantationCauseVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.lungTransplantationCauseDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                
+                <div class="question-inputText">
+                    <b>6. Date of lung transplantation: </b>
+                    <p:calendar id="ques6" class="calendar" value="#{controller.demoMedHistForm.lungTransplantationDate}" requiredMessage="#{msgs.lungTransplantationDate}" disabled="#{controller.demoMedHistForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('lungTransplantationDate')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType6" value="#{controller.demoMedHistForm.lungTransplantationDateVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.lungTransplantationDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6" />
+                
+                <div class="question-radioButton">
+                    <b>7. Operation performed: </b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="ques7" class="question-multipleRadioButton" requiredMessage="#{msgs.operationPerformed}" value="#{controller.demoMedHistForm.operationPerformed}" disabled="#{controller.demoMedHistForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="single" itemLabel="Single"/>
+                            <f:selectItem itemValue="bilateral" itemLabel="Bilateral"/>
+                            <f:selectItem itemValue="heart-lung" itemLabel="Heart-lung"/>
+                            <f:selectItem itemValue="other" itemLabel="Other" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                <div class="question-inputText-other">
+                    <b>If other, please describe: </b>
+                    <h:inputTextarea value="#{controller.demoMedHistForm.operationPerformedOther}" rows="2" cols="80" disabled="#{controller.demoMedHistForm.locked}" />
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('operationPerformed')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q7: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType7" value="#{controller.demoMedHistForm.operationPerformedVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.operationPerformedDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques7" />
+                
+                <ui:insert name="heightWeightAtTransplant" />
+                
+                <div class="question-inputText">
+                    <b>10. Medical History - Co-Morbid Conditions at any time prior to enrollment: </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10a" class="yesnoanswers" requiredMessage="#{msgs.hypertension}" value="#{controller.demoMedHistForm.hypertension}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Hypertension" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10a" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10b" class="yesnoanswers" requiredMessage="#{msgs.diabetes}" value="#{controller.demoMedHistForm.diabetes}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Diabetes" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10b" />
+                <div class="answer-radioButtonMedicalHistory">
+                    <h:panelGroup id='gerd'>
+                    <div class="yesnoanswersgerd" >
+                        <h:selectOneRadio id="ques10c" class="yesnoanswers" requiredMessage="#{msgs.gerd}" value="#{controller.demoMedHistForm.gerd}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            <f:ajax execute="gerd" render="gerd" />
+                            <f:ajax render="ques10c2" resetValues="true" /> <!-- Clear gerdTreatment radio button -->
+                        </h:selectOneRadio>
+                    </div>
+                    <div class="gerd">
+                        <h:outputLabel value="GERD - if yes, treatment: " />
+                    </div>
+                    <div class="gerdTreatment">
+                        <h:selectOneRadio id="ques10c2" value="#{controller.demoMedHistForm.gerdTreatment}" disabled="#{controller.demoMedHistForm.locked || controller.demoMedHistForm.gerd == false}" style="display: inline-table;">
+                            <f:selectItem itemValue="medical therapy" itemLabel="medical therapy"/>
+                            <f:selectItem itemValue="fundoplication" itemLabel="fundoplication" /> 
+                        </h:selectOneRadio>                        
+                    </div>
+                    </h:panelGroup>
+                </div>
+                <p:message for="ques10c" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10d" class="yesnoanswers" requiredMessage="#{msgs.highCholesterol}" value="#{controller.demoMedHistForm.highCholesterol}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="High Cholesterol" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10d" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10e" class="yesnoanswers" requiredMessage="#{msgs.currentSmoker}" value="#{controller.demoMedHistForm.currentSmoker}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Current Smoker" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10e" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10f" class="yesnoanswers" requiredMessage="#{msgs.previousSmoker}" value="#{controller.demoMedHistForm.previousSmoker}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Previous Smoker" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10f" />
+                <div class="answer-radioButtonMedicalHistory">
+                    <h:panelGroup id='coronary'>
+                    <div class="yesnoanswersgerd" >
+                        <h:selectOneRadio id="ques10g" class="yesnoanswers" requiredMessage="#{msgs.coronaryArteryDisease}" value="#{controller.demoMedHistForm.coronaryArteryDisease}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            <f:ajax execute="coronary" render="coronary" />
+                            <f:ajax render="ques10g2" resetValues="true" /> <!-- Clear coronaryArteryDiseaseType radio button -->
+                        </h:selectOneRadio>
+                    </div>
+                    <div class="coronaryArteryDisease">
+                        <h:outputLabel value="Coronary Artery Disease - if yes: " />
+                    </div>
+                    <div class="coronaryArteryDiseaseType">
+                        <h:selectOneRadio id="ques10g2" value="#{controller.demoMedHistForm.coronaryArteryDiseaseType}" disabled="#{controller.demoMedHistForm.locked || controller.demoMedHistForm.coronaryArteryDisease == false}" style="display: inline-table;">
+                            <f:selectItem itemValue="angina" itemLabel="angina"/>
+                            <f:selectItem itemValue="myocardial infarction" itemLabel="myocardial infarction" /> 
+                        </h:selectOneRadio>                        
+                    </div>
+                    </h:panelGroup>
+                </div>
+                <p:message for="ques10g" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10h" class="yesnoanswers" requiredMessage="#{msgs.congestiveHeartFailure}" value="#{controller.demoMedHistForm.congestiveHeartFailure}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Congestive Heart Failure" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10h" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10i" class="yesnoanswers" requiredMessage="#{msgs.chronicKidneyDisease}" value="#{controller.demoMedHistForm.chronicKidneyDisease}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Chronic Kidney Disease" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10i" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10j" class="yesnoanswers" requiredMessage="#{msgs.stroke}" value="#{controller.demoMedHistForm.stroke}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Stroke" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10j" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10k" class="yesnoanswers" requiredMessage="#{msgs.neurologicDisorder}" value="#{controller.demoMedHistForm.neurologicDisorder}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Neurologic Disorder" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10k" />
+                 <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques10m" class="yesnoanswers" requiredMessage="#{msgs.otherActiveConditions}" value="#{controller.demoMedHistForm.otherActiveConditions}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Other Active Conditions" />
+                    </h:panelGrid>
+                </div>
+                <div class="question-inputText-other">
+                    <b>If other active conditions, please describe: </b>
+                    <h:panelGrid columns="2" >
+                        <h:inputTextarea value="#{controller.demoMedHistForm.otherActiveConditionsDescribe}" cols="80" rows="7" disabled="#{controller.demoMedHistForm.locked}"/>
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques10m" />
+                <ui:insert name="validateComorbidConditions" />
+           
+                <div class="question-inputText-immunodrug">
+                    <b>11. Has the patient received any anti-platelet drug(s) within the last six months: </b>
+                </div>
+                 <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques11a" class="yesnoanswers" requiredMessage="#{msgs.antiThrombotic}" value="#{controller.demoMedHistForm.antiThrombotic}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Anti-Thrombotic" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques11a" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques11b" class="yesnoanswers" requiredMessage="#{msgs.antiPlateletAgent}" value="#{controller.demoMedHistForm.antiPlateletAgent}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Anti-Platelet Agent" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques11b" />
+
+
+                <div class="question-inputText-immunodrug">
+                    <b>12. Check all drugs that were <u>previously used as maintenance immunosuppression and/or BOS prevention</u> in this participant: </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12a" class="yesnoanswers" requiredMessage="#{msgs.tacrolimus}" value="#{controller.demoMedHistForm.tacrolimus}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Tacrolimus" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12a" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12b" class="yesnoanswers" requiredMessage="#{msgs.prednisone}" value="#{controller.demoMedHistForm.prednisone}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Prednisone" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12b" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12c" class="yesnoanswers" requiredMessage="#{msgs.alemtuzumab}" value="#{controller.demoMedHistForm.alemtuzumab}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Alemtuzumab" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12c" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12d" class="yesnoanswers" requiredMessage="#{msgs.sirolimus}" value="#{controller.demoMedHistForm.sirolimus}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Sirolimus (Rapamycin)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12d" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12e" class="yesnoanswers" requiredMessage="#{msgs.everolimus}" value="#{controller.demoMedHistForm.everolimus}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Everolimus" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12e" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12f" class="yesnoanswers" requiredMessage="#{msgs.azathioprine}" value="#{controller.demoMedHistForm.azathioprine}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Azathioprine" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12f" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12g" class="yesnoanswers" requiredMessage="#{msgs.cyclosporineA}" value="#{controller.demoMedHistForm.cyclosporineA}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Cyclosporine A" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12g" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12h" class="yesnoanswers" requiredMessage="#{msgs.methotrexate}" value="#{controller.demoMedHistForm.methotrexate}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Methotrexate" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12h" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12i" class="yesnoanswers" requiredMessage="#{msgs.macrolideAntibiotic}" value="#{controller.demoMedHistForm.macrolideAntibiotic}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Macrolide Antibiotic, Azithromycin" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12i" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12j" class="yesnoanswers" requiredMessage="#{msgs.mycophenolateMofetil}" value="#{controller.demoMedHistForm.mycophenolateMofetil}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Mycophenolate Mofetil (Cellcept or Myfortic)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12j" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12k" class="yesnoanswers" requiredMessage="#{msgs.antiThymocyteGlobulin}" value="#{controller.demoMedHistForm.antiThymocyteGlobulin}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Anti-Thymocyte Globulin - ATG (Thymoglobulin or Atgam)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12k" />
+                
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques12m" class="yesnoanswers" requiredMessage="#{msgs.totalLymphoidIrradiation}" value="#{controller.demoMedHistForm.totalLymphoidIrradiation}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Total Lymphoid Irradiation" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques12m" />
+                
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="quest12n" class="yesnoanswers" value="#{controller.demoMedHistForm.otherDrugs}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Other Drug(s)" />
+                    </h:panelGrid>
+                </div>
+                <div>
+                    <h:panelGrid style="margin-left:203px; width: 500px;">
+                        <h:outputLabel style="font-weight: bold; border: 0px solid black;" value="If YES for Other Drug(s), please provide the drug name(s)" />
+                    </h:panelGrid>
+                    <h:panelGrid >
+                        <h:inputTextarea style="margin-left:203px;" value="#{controller.demoMedHistForm.otherDrugNames}" cols="60" rows="2" disabled="#{controller.demoMedHistForm.locked}"/>
+                    </h:panelGrid>
+                </div>
+                <ui:insert name="validateMaintenancePrevention" />
+
+                
+                <div class="question-inputText-immunodrug">
+                    <b>13. Check all drugs that were <u>previously used as active treatment of BOS</u> in this participant: </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13a" class="yesnoanswers" requiredMessage="#{msgs.tacrolimus}" value="#{controller.demoMedHistForm.tacrolimusActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Tacrolimus" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13a" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13b" class="yesnoanswers" requiredMessage="#{msgs.prednisone}" value="#{controller.demoMedHistForm.prednisoneActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Prednisone" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13b" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13c" class="yesnoanswers" requiredMessage="#{msgs.alemtuzumab}" value="#{controller.demoMedHistForm.alemtuzumabActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Alemtuzumab" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13c" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13d" class="yesnoanswers" requiredMessage="#{msgs.sirolimus}" value="#{controller.demoMedHistForm.sirolimusActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Sirolimus (Rapamycin)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13d" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13e" class="yesnoanswers" requiredMessage="#{msgs.everolimus}" value="#{controller.demoMedHistForm.everolimusActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Everolimus" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13e" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13f" class="yesnoanswers" requiredMessage="#{msgs.azathioprine}" value="#{controller.demoMedHistForm.azathioprineActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Azathioprine" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13f" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13g" class="yesnoanswers" requiredMessage="#{msgs.cyclosporineA}" value="#{controller.demoMedHistForm.cyclosporineAActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Cyclosporine A" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13g" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13h" class="yesnoanswers" requiredMessage="#{msgs.methotrexate}" value="#{controller.demoMedHistForm.methotrexateActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Methotrexate" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13h" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13i" class="yesnoanswers" requiredMessage="#{msgs.macrolideAntibiotic}" value="#{controller.demoMedHistForm.macrolideAntibioticActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Macrolide Antibiotic, Azithromycin" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13i" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13j" class="yesnoanswers" requiredMessage="#{msgs.mycophenolateMofetil}" value="#{controller.demoMedHistForm.mycophenolateMofetilActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Mycophenolate Mofetil (Cellcept or Myfortic)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13j" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13k" class="yesnoanswers" requiredMessage="#{msgs.antiThymocyteGlobulin}" value="#{controller.demoMedHistForm.antiThymocyteGlobulinActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Anti-Thymocyte Globulin - ATG (Thymoglobulin or Atgam)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13k" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques13m" class="yesnoanswers" requiredMessage="#{msgs.totalLymphoidIrradiation}" value="#{controller.demoMedHistForm.totalLymphoidIrradiationActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Total Lymphoid Irradiation" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques13m" />
+                
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="quest13n" class="yesnoanswers" value="#{controller.demoMedHistForm.otherDrugsActiveTreat}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Other Drug(s)" />
+                    </h:panelGrid>
+                </div>
+                <div>
+                    <h:panelGrid style="margin-left:203px; width: 500px;">
+                        <h:outputLabel style="font-weight: bold; border: 0px solid black;" value="If YES for Other Drug(s), please provide the drug name(s)" />
+                    </h:panelGrid>
+                    <h:panelGrid >
+                        <h:inputTextarea style="margin-left:203px;" value="#{controller.demoMedHistForm.otherDrugNamesActiveTreat}" cols="60" rows="2" disabled="#{controller.demoMedHistForm.locked}"/>
+                    </h:panelGrid>
+                </div>
+                <ui:insert name="validateActiveTreatment" />
+
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="14. Has the participant received prednisone therapy within the last 6 months? " />
+                        <h:selectOneRadio id="ques14" class="yesnoanswers" requiredMessage="#{msgs.prednisone}" value="#{controller.demoMedHistForm.prednisoneTherapySixMonths}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques14" />
+                <div class="treatment-parameters-string-indent">
+                    <b>If yes, daily starting dose: </b>
+                    <h:inputText id="ques14Dose" value="#{controller.demoMedHistForm.prednisoneStartingDose}" disabled="#{controller.demoMedHistForm.locked}" size="4" validatorMessage="Validation Error: Prednisone dose ranges between 0 and 150 mg." >
+                        <f:validateLongRange minimum="0" maximum ="150"/>
+                    </h:inputText>
+                    <b> mg</b>
+                </div>
+                <p:message for="ques14Dose" />
+                
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="15. During the last 6 months, has the patient required a prednisone dose escalation for any period of greater than 5 days? " />
+                        <h:selectOneRadio id="ques15" class="yesnoanswers" requiredMessage="#{msgs.prednisone}" value="#{controller.demoMedHistForm.prednisoneEscalation}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques15" />
+                <div class="treatment-parameters-string-indent">
+                    <b>If yes, to what daily dose: </b>
+                    <h:inputText id="ques15Dose" value="#{controller.demoMedHistForm.prednisoneIncreasedDailyDose}" disabled="#{controller.demoMedHistForm.locked}" size="4" validatorMessage="Validation Error: Prednisone dose ranges between 0 and 150 mg." >
+                        <f:validateLongRange minimum="0" maximum ="150"/>
+                    </h:inputText>
+                    <b> mg</b>
+                </div>
+                <p:message for="ques15Dose" />
+                <div class="treatment-parameters-string-indent">
+                    <b>Estimate average daily dose over 6 months: </b>
+                    <h:inputText id="ques15AverageDose" value="#{controller.demoMedHistForm.prednisoneAverageDose}" disabled="#{controller.demoMedHistForm.locked}" size="4" >
+                        <f:validateLongRange minimum="0" maximum ="150"/>
+                    </h:inputText>
+                    <b> mg</b>
+                </div>
+                <p:message for="ques15AverageDose" />
+
+                <div class="treatment-parameters-string">
+                    <b>16. Date of diagnosis of post-transplantation BOS: </b>
+                    <p:calendar id="ques16" class="calendar" value="#{controller.demoMedHistForm.postTransBOSDiagDate}" requiredMessage="#{msgs.postTransBOSDiagDate}" disabled="#{controller.demoMedHistForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="ques16" />
+                
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="17. Post-transplant BOS stage at diagnosis: " />
+                        <h:selectOneRadio id="ques17" class="bosStage" requiredMessage="#{msgs.postTransBosStageDiag}" value="#{controller.demoMedHistForm.postTransBosStageDiag}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="0" itemLabel="0"/>
+                            <f:selectItem itemValue="0-p" itemLabel="0-p" /> 
+                            <f:selectItem itemValue="1" itemLabel="1"/>
+                            <f:selectItem itemValue="2" itemLabel="2"/>
+                            <f:selectItem itemValue="3" itemLabel="3"/>
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('postTransBosStageDiag')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q17: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType17" value="#{controller.demoMedHistForm.postTransBosStageDiagVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.postTransBosStageDiagDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques17" />
+                
+                <div class="tableBos">
+                    <table style="width:700px;" border="1px solid black" cellpadding="5" margin-left="25px">
+                        <col width="150px" />
+                        <col width="550px" />
+                        <tr>
+                            <th>Stage</th>
+                            <th>Definition</th>
+                        </tr>
+                        <tr>
+                            <td>BOS Stage 0</td>
+                            <td>FEV1 > 90% and FEF 25%-75% > 75% of baseline</td>
+                        </tr>
+                        <tr>
+                          <td>BOS Stage 0-p</td>
+                          <td>FEV1 = 81% to 90% of baseline and or FEF 25%-75%  75% of baseline</td>
+                        </tr>
+                        <tr>
+                          <td>BOS Stage 1</td>
+                          <td>FEV1 = 66% to 80% of baseline</td>
+                        </tr>
+                        <tr>
+                          <td>BOS Stage 2</td>
+                          <td>FEV1 = 51% to 65% of baseline</td>
+                        </tr>
+                        <tr>
+                          <td>BOS Stage 3</td>
+                          <td>FEV1 less than or equal to 50% of baseline</td>
+                        </tr>
+                    </table> 
+                </div>
+                <div class="longStringQuestion">
+                    <b>18. </b><ui:insert name="baselineFEV1MeasurementsQuestion" />
+                </div>
+                <div class="outputText-indented">
+                    <h:outputText value="a. Baseline FEV1 (pre-bronchodilator)(mean FEV1 values below): " />
+                    <h:inputText id="ques18a" class="inputText-baselineFEV1" requiredMessage="#{msgs.baselineFEV1}" value="#{controller.demoMedHistForm.baselineFEV1}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('baselineFEV1')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q18a: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18a" value="#{controller.demoMedHistForm.baselineFEV1VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.baselineFEV1DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques18a" />
+                
+                <div class="outputText-indented">
+                    <h:outputText value="b. First #{baselineFEV1Assessment} assessment: " />
+                </div>
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="i. Date: " />
+                    <p:calendar id="ques18bi" class="calendar" requiredMessage="#{msgs.firstComponentFEV1Date}" value="#{controller.demoMedHistForm.firstComponentFEV1Date}" disabled="#{controller.demoMedHistForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('firstComponentFEV1Date')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q18bi: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18bi" value="#{controller.demoMedHistForm.firstComponentFEV1DateVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.firstComponentFEV1DateDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques18bi" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="ii. FEV1 (pre-bronchodilator): " />
+                    <h:inputText id="ques18bii" requiredMessage="#{msgs.firstComponentFEV1}" value="#{controller.demoMedHistForm.firstComponentFEV1}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('firstComponentFEV1')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q18bii: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18bii" value="#{controller.demoMedHistForm.firstComponentFEV1VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.firstComponentFEV1DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques18bii" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="iii. FVC (pre-bronchodilator): " />
+                    <h:inputText id="ques18biii" requiredMessage="#{msgs.firstComponentFVC}" value="#{controller.demoMedHistForm.firstComponentFVC}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('firstComponentFVC')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q18biii: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18biii" value="#{controller.demoMedHistForm.firstComponentFVCVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.firstComponentFVCDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques18biii" />
+                
+                <div class="outputText-indented">
+                    <h:outputText value="c. Second #{baselineFEV1Assessment} assessment: " />
+                </div>
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="i. Date: " />
+                    <p:calendar id="ques18ci" class="calendar" requiredMessage="#{msgs.secondComponentFEV1Date}" value="#{controller.demoMedHistForm.secondComponentFEV1Date}" disabled="#{controller.demoMedHistForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('secondComponentFEV1Date')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q18ci: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18ci" value="#{controller.demoMedHistForm.secondComponentFEV1DateVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.secondComponentFEV1DateDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques18ci" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="ii. FEV1 (pre-bronchodilator): " />
+                    <h:inputText id="ques18cii" requiredMessage="#{msgs.secondComponentFEV1}" value="#{controller.demoMedHistForm.secondComponentFEV1}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('secondComponentFEV1')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q18cii: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18cii" value="#{controller.demoMedHistForm.secondComponentFEV1VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.secondComponentFEV1DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques18cii" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="iii. FVC (pre-bronchodilator): " />
+                    <h:inputText id="ques18ciii" requiredMessage="#{msgs.secondComponentFVC}" value="#{controller.demoMedHistForm.secondComponentFVC}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('secondComponentFVC')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q18ciii: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType18ciii" value="#{controller.demoMedHistForm.secondComponentFVCVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.secondComponentFVCDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques18ciii" />
+                
+                <div class="sectionSecondHeading">
+                    <u>SECTION C. Clinical Status at or Within #{clinStatusWeeksHeader} of Enrollment</u>
+                </div>
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="19. Donor specific antibody at time of study enrollment? " />
+                        <h:selectOneRadio id="ques19" class="yesnoanswers" requiredMessage="#{msgs.donorSpecificAntibody}" value="#{controller.demoMedHistForm.donorSpecificAntibody}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques19" />
+
+<!--                
+                <div class="question-inputText-immunodrug">
+                    <b>20. Check all immunosuppressive drugs that are <u>currently being used</u> by the participant: </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20a" class="yesnoanswers" requiredMessage="{msgs.tacrolimusCurrent}" value="{controller.demoMedHistForm.tacrolimusCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Tacrolimus" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20a" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="5" >
+                        <h:selectOneRadio id="ques20b" class="yesnoanswers" requiredMessage="{msgs.prednisoneCurrent}" value="{controller.demoMedHistForm.prednisoneCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions-prednizone" value="Prednisone" />
+                        <b>If yes, enter daily dose: </b>
+                        <h:inputText value="{controller.demoMedHistForm.prednisoneCurrentDose}" size="4" />
+                        <b> mg</b>
+                    </h:panelGrid>
+                </div>
+                 <p:message for="ques20b" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20c" class="yesnoanswers" requiredMessage="{msgs.sirolimusCurrent}" value="{controller.demoMedHistForm.sirolimusCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Sirolimus (Rapamycin)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20c" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20d" class="yesnoanswers" requiredMessage="{msgs.everolimusCurrent}" value="{controller.demoMedHistForm.everolimusCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Everolimus" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20d" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20e" class="yesnoanswers" requiredMessage="{msgs.azathioprineCurrent}" value="{controller.demoMedHistForm.azathioprineCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Azathioprine" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20e" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20f" class="yesnoanswers" requiredMessage="{msgs.cyclosporineACurrent}" value="{controller.demoMedHistForm.cyclosporineACurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Cyclosporine A" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20f" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20g" class="yesnoanswers" requiredMessage="{msgs.methotrexateCurrent}" value="{controller.demoMedHistForm.methotrexateCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Methotrexate" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20g" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20h" class="yesnoanswers" requiredMessage="{msgs.macrolideAntibioticCurrent}" value="{controller.demoMedHistForm.macrolideAntibioticCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Macrolide Antibiotic, Azithromycin" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20h" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20i" class="yesnoanswers" requiredMessage="{msgs.mycophenolateMofetilCurrent}" value="{controller.demoMedHistForm.mycophenolateMofetilCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Mycophenolate Mofetil (Cellcept or Myfortic)" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20i" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques20j" class="yesnoanswers" requiredMessage="{msgs.totalLymphoidIrradiationCurrent}" value="{controller.demoMedHistForm.totalLymphoidIrradiationCurrent}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Total Lymphoid Irradiation" />
+                    </h:panelGrid>
+                </div>
+                <p:message for="ques20j" />
+-->
+                
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="20. Is the participant on any anticoagulant or anti-platelet drugs?" />
+                        <h:selectOneRadio id="ques20" class="yesnoanswers" requiredMessage="#{msgs.onAntiCoagPlatelet}" value="#{controller.demoMedHistForm.onAntiCoagPlatelet}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="question-inputText-other">
+                    <b>If yes, list drugs: </b><br/>
+                    Name drug 1: <h:inputText value="#{controller.demoMedHistForm.antiCoagPlateletName1}" size="30" disabled="#{controller.demoMedHistForm.locked}" /><br/><br/>
+                    Name drug 2: <h:inputText value="#{controller.demoMedHistForm.antiCoagPlateletName2}" size="30" disabled="#{controller.demoMedHistForm.locked}" /><br/><br/>
+                    Name drug 3: <h:inputText value="#{controller.demoMedHistForm.antiCoagPlateletName3}" size="30" disabled="#{controller.demoMedHistForm.locked}" /><br/>
+                </div>
+                <p:message for="ques20" />
+
+                
+                <div class="question-inputText-vital-signs">
+                    <h:outputText value="21. Date when the following baseline vital signs were obtained (values should be obtained within #{clinStatusWeeks} prior to enrollment): " />
+                    <p:calendar id="ques21" class="calendar" requiredMessage="#{msgs.baselineVitalSignsDate}" value="#{controller.demoMedHistForm.baselineVitalSignsDate}" disabled="#{controller.demoMedHistForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="ques21" />
+                
+                <div class="question-inputText">
+                    <b>22. Weight: </b>
+                    <h:inputText id="ques22" requiredMessage="#{msgs.weight}" value="#{controller.demoMedHistForm.weight}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Weight ranges between 30 and 200 kg." >
+                        <f:validateLongRange minimum="30" maximum ="200"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    kilograms
+                </div>
+                <p:message for="ques22" />
+                
+                
+                <div class="pre-treat-assess-bloodpressure">
+                    <div class="bloodpressureQuestion">
+                    <b>23. Blood pressure: </b>
+                    </div>
+                    <div class="bloodpressureValues">
+                        <h:outputText value="systolic" />
+                    <h:inputText id="ques23a" requiredMessage="#{msgs.bloodPressureSystolic}" value="#{controller.demoMedHistForm.bloodPressureSystolic}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Systolic ranges between 80 and 240 mmHg." >
+                        <f:validateLongRange minimum="80" maximum ="240"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    mmHg
+                    </div>
+                    <div class="bloodpressureValues">
+                        <h:outputText value="diastolic" />
+                    <h:inputText id="ques23b" requiredMessage="#{msgs.bloodPressureDiastolic}" value="#{controller.demoMedHistForm.bloodPressureDiastolic}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Systolic ranges between 30 and 150 mmHg." >
+                        <f:validateLongRange minimum="30" maximum ="150"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    mmHg
+                    </div>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <p:message for="ques23a" />
+                <p:message for="ques23b" />
+                <div class="pre-treat-assess">
+                    <b>24. Heart rate: </b>
+                    <h:inputText id="ques24" requiredMessage="#{msgs.heartRate}" value="#{controller.demoMedHistForm.heartRate}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Heart ranges between 40 and 150 beats per minute." >
+                        <f:validateLongRange minimum="40" maximum ="150"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    beats per minute
+                </div>
+                <p:message for="ques24" />
+                <div class="pre-treat-assess">
+                    <b>25. Respiratory rate: </b>
+                    <h:inputText id="ques25" required="#{param['VALIDATE']}" requiredMessage="#{msgs.respiratoryRate}" value="#{controller.demoMedHistForm.respiratoryRate}" disabled="#{controller.demoMedHistForm.locked}" size="3" >
+
+                            <f:validator validatorId="edu.wustl.mir.ctt.validators.RespirValid" />
+
+                    </h:inputText>
+                    breaths per minute
+                </div>
+                <p:message for="ques25" />
+                <div class="pre-treat-assess">
+                    <b>26. Resting oxygen saturation: </b>
+                    <h:inputText id="ques26" requiredMessage="#{msgs.oxygenSaturation}" value="#{controller.demoMedHistForm.oxygenSaturation}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Oxygen saturation ranges between 80 and 100%." >
+                        <f:validateLongRange minimum="80" maximum ="100"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    %
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <p:message for="ques26" />
+
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="27. Is the participant receiving supplemental oxygen? " />
+                        <h:selectOneRadio id="ques27" class="yesnoanswers" requiredMessage="#{msgs.receivingSupplementalOxygen}" value="#{controller.demoMedHistForm.receivingSupplementalOxygen}" disabled="#{controller.demoMedHistForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="treatment-parameters-string-indent">
+                    <b>If yes, how much? </b>
+                    <h:inputText value="#{controller.demoMedHistForm.receivingSupplementalOxygenAmount}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Supplemental oxygen ranges between 0 and 100." >
+                        <f:validateLongRange minimum="0" maximum ="10"/>
+                    </h:inputText>
+                    <b> Select delivery method: </b>
+                    <h:selectOneMenu id="ques27c" value="#{controller.demoMedHistForm.receivingSupplementalOxygenDelivery}" rendered="true" disabled="#{controller.demoMedHistForm.locked}">
+                        <f:selectItems value="#{controller.demoMedHistForm.receivingSupplementalOxygenDeliveryTypes}" var="rsodt" itemValue="#{rsodt}" itemLabel="#{rsodt}"/>
+                    </h:selectOneMenu>
+            </div>
+                <p:message for="ques27" />
+                <div class="question-radioButton">
+                    <b>28. Comments: </b>
+                    <h:inputTextarea value="#{controller.demoMedHistForm.comment}" rows="2" cols="80" disabled="#{controller.demoMedHistForm.commentLocked}" style="margin-left: 27px;" />
+                </div>
+
+            </div>
+
+        </ui:define>
+    </ui:composition>
+    
+</html>

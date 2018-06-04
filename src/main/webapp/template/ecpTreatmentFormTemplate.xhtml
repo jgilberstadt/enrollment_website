@@ -1,0 +1,450 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:composition template="../formTemplate.xhtml">      
+        <ui:define name="form_title">
+
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>ECP TREATMENT VISIT - Case Report Form (CRF)</h2>
+                <div>
+                    <h2><center><h:outputText value="#{controller.selectedForm.title}" /></center></h2>
+<!--                    CRF Version Control ID: <h:outputText value="#{controller.selectedForm.versionControlId}" />  -->
+                </div>
+
+            </div>
+            <ui:insert name="sourceDocuments" />
+        </ui:define>
+
+        <ui:define name="form_content">
+            <h:panelGroup id="ecpTreatmentForm">
+            <br/>
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                    <b>ECP Treatment Visit Date: </b>
+                    <p:calendar id="treatmentDate" class="calendar" value="#{controller.ecpTreatmentForm.ecpTreatVisitDate}" disabled="#{controller.ecpTreatmentForm.locked}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </p:calendar>
+                </div>
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('ecpTreatVisitDate')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="DATE: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyTypeDate" value="#{controller.ecpTreatmentForm.ecpTreatVisitDateVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.ecpTreatVisitDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="treatmentDate" />         
+            <div class="sectionFirstHeading">
+                <u>SECTION A. Pre-Treatment Assessment</u>
+            </div>
+            <div class="question-inputText">
+                <b>1. Weight: </b>
+                <h:inputText id="ques1" value="#{controller.ecpTreatmentForm.weight}" disabled="#{controller.ecpTreatmentForm.locked}" requiredMessage="#{msgs.weight}" size="3" validatorMessage="Validation Error: Weight ranges between 30 and 200 kg." >
+                    <f:validateLongRange minimum="30" maximum ="200"/>
+                    <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                </h:inputText>
+                kilograms
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('weight')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q1: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType1" value="#{controller.ecpTreatmentForm.weightVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.weightDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques1" />
+            
+            <div class="pre-treat-assess-bloodpressure">
+                <div class="bloodpressureQuestion">
+                    <b>2. Blood pressure: </b>
+                </div>
+                <div class="bloodpressureValues">
+                    systolic
+                    <h:inputText id="ques2a" requiredMessage="#{msgs.bloodPressureSystolic}" value="#{controller.ecpTreatmentForm.bloodPressureSystolic}" disabled="#{controller.ecpTreatmentForm.locked}" size="3" validatorMessage="Validation Error: Systolic ranges between 80 and 240 mmHg." >
+                        <f:validateLongRange minimum="80" maximum ="240"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </h:inputText>
+                    mmHg
+                </div>
+                <div class="bloodpressureValues">
+                    diastolic
+                    <h:inputText id="ques2b" requiredMessage="#{msgs.bloodPressureDiastolic}" value="#{controller.ecpTreatmentForm.bloodPressureDiastolic}" disabled="#{controller.ecpTreatmentForm.locked}" size="3" validatorMessage="Validation Error: Diastolic ranges between 30 and 150 mmHg." >
+                        <f:validateLongRange minimum="30" maximum ="150"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </h:inputText>
+                    mmHg
+                </div>
+            </div>
+            <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('bloodPressureSystolic')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q2 Systolic: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType2sys" value="#{controller.ecpTreatmentForm.bloodPressureSystolicVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.bloodPressureSystolicDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('bloodPressureDiastolic')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q2 Diastolic: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType2dia" value="#{controller.ecpTreatmentForm.bloodPressureDiastolicVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.bloodPressureDiastolicDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques2a" />
+            <p:message for="ques2b" />
+            
+            <div class="pre-treat-assess">
+                <b>3. Heart rate: </b>
+                <h:inputText id="ques3" requiredMessage="#{msgs.heartRate}" value="#{controller.ecpTreatmentForm.heartRate}" disabled="#{controller.ecpTreatmentForm.locked}" size="3" validatorMessage="Validation Error: Heart ranges between 40 and 150 beats per minute." >
+                    <f:validateLongRange minimum="40" maximum ="150"/>
+                    <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                </h:inputText>
+                beats per minute
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('heartRate')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q3: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType3" value="#{controller.ecpTreatmentForm.heartRateVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.heartRateDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques3" />
+            
+            <div class="pre-treat-assess">
+                <b>4. Respiratory rate: </b>
+                <h:inputText id="ques4" requiredMessage="#{msgs.respiratoryRate}" value="#{controller.ecpTreatmentForm.respiratoryRate}" disabled="#{controller.ecpTreatmentForm.locked}" size="3" validatorMessage="Validation Error: Respiratory rate ranges between 6 and 45 breaths per minute." >
+                    <f:validateLongRange minimum="6" maximum ="45"/>
+                    <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                </h:inputText>
+                breaths per minute
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('respiratoryRate')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q4: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType4" value="#{controller.ecpTreatmentForm.respiratoryRateVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.respiratoryRateDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques4" />
+            
+            <div class="pre-treat-assess">
+                <b>5. &nbsp;&nbsp;A. Resting oxygen saturation: </b>
+                <h:inputText id="ques5" requiredMessage="#{msgs.oxygenSaturation}" value="#{controller.ecpTreatmentForm.oxygenSaturation}" disabled="#{controller.ecpTreatmentForm.locked}" size="3" validatorMessage="Validation Error: Oxygen saturation ranges between 80 and 100%." >
+                    <f:validateLongRange minimum="80" maximum ="100"/>
+                    <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                </h:inputText>
+                %
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('oxygenSaturation')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q5: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType5" value="#{controller.ecpTreatmentForm.oxygenSaturationVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.oxygenSaturationDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <div class="treatment-parameters-string-indent">
+
+                        <b>B. Is the participant receiving supplemental oxygen? </b>
+                        <h:selectOneRadio id="ques5b" class="yesnoanswers" requiredMessage="#{msgs.receivingSupplementalOxygen}" value="#{controller.ecpTreatmentForm.receivingSupplementalOxygen}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+
+                </div>
+                <div class="treatment-parameters-string-indent">
+                    <b>C. If yes, how much? </b>
+                    <h:inputText value="#{controller.ecpTreatmentForm.receivingSupplementalOxygenAmount}" disabled="#{controller.ecpTreatmentForm.locked}" size="3" validatorMessage="Validation Error: Supplemental oxygen ranges between 0 and 100." >
+                        <f:validateLongRange minimum="0" maximum ="100"/>
+                    </h:inputText>
+                    <b> Select delivery method: </b>
+                    <h:selectOneMenu id="ques5c" value="#{controller.ecpTreatmentForm.receivingSupplementalOxygenDelivery}" rendered="true" disabled="#{controller.ecpTreatmentForm.locked}">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.receivingSupplementalOxygenDeliveryTypes}" var="rsodt" itemValue="#{rsodt}" itemLabel="#{rsodt}"/>
+                    </h:selectOneMenu>
+                </div>
+            <p:message for="ques5" />
+            
+            <ui:insert name="cbc" />
+            
+            <h:panelGroup rendered="#{controller.ecpTreatmentForm.renderPrednisone}">
+                <div class="pre-treat-assess-steroid">
+                        <h:panelGrid columns="2" >
+                            <b>8. Is the patient currently receiving prednisone: </b>
+                            <h:selectOneRadio id="ques8" class="yesnoanswers" requiredMessage="#{msgs.receivingSteroidTherapy}" value="#{controller.ecpTreatmentForm.receivingSteroidTherapy}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                                <f:selectItem itemValue="true" itemLabel="YES"/>
+                                <f:selectItem itemValue="false" itemLabel="NO" /> 
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:selectOneRadio>
+                        </h:panelGrid>
+               </div>
+                    <p:message for="ques8" />
+                    <div class="pre-treat-assess-steroid-drug">
+                        <div class="steroid-drug">
+                            <b>Current daily dose </b>
+                            <h:inputText id="ques8bDose" value="#{controller.ecpTreatmentForm.steroidDailyDose}" disabled="#{controller.ecpTreatmentForm.locked}" size="3" validatorMessage="Validation Error: Current daily dose ranges between 0 and 150 mg." >
+                                <f:validateLongRange minimum="0" maximum ="150"/>
+                            </h:inputText>
+                            mg
+                        </div>
+                    </div>
+                    <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                    <p:message for="ques8bDose" />
+            </h:panelGroup>
+
+            <div class="sectionSecondHeading">
+                <u>SECTION B. Treatment Parameters</u>
+            </div>
+            <h:panelGroup id="ecpMachine">
+            <div class="treatment-parameters">
+                <h:panelGrid columns="3" >
+                    <h:outputLabel class="treatment-parameters-questions" value="#{eCPTypeMachineQuesNumber}. ECP type of machine used: " />
+                    <h:selectOneRadio id="ques9" class="uvarcellex" requiredMessage="#{msgs.ecpTypeMachine}" value="#{controller.ecpTreatmentForm.ecpTypeMachine}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                        <f:selectItem itemValue="uvar" itemLabel="UVAR"/>
+                        <f:selectItem itemValue="cellex" itemLabel="CELLEX" /> 
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        <f:ajax execute="ecpMachine" render="ecpMachineQuestions" />
+                    </h:selectOneRadio>
+                    <h:outputLabel class="treatment-parameters-questions" value="(Check only one that applies)" />
+                </h:panelGrid>
+            </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('ecpTypeMachine')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q#{eCPTypeMachineQuesNumber}: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType9" value="#{controller.ecpTreatmentForm.ecpTypeMachineVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.ecpTypeMachineDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques9" />
+            
+            <div class="treatment-parameters">
+                <h:panelGrid columns="2" >
+                    <h:outputLabel class="treatment-parameters-questions" value="#{anticoagUsedQuesNumber}. Enter the type of anticoagulant used for the procedure: " />
+                    <h:selectOneRadio id="ques10" class="typeAnticoagulant" requiredMessage="#{msgs.typeAnticoagulant}" value="#{controller.ecpTreatmentForm.typeAnticoagulant}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                        <f:selectItem itemValue="citrate" itemLabel="Citrate"/>
+                        <f:selectItem itemValue="heparin" itemLabel="Heparin" />
+                        <f:selectItem itemValue="other" itemLabel="Other" /> 
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('typeAnticoagulant')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q#{anticoagUsedQuesNumber}: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType10" value="#{controller.ecpTreatmentForm.typeAnticoagulantVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.typeAnticoagulantDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques10" />
+            
+            <h:panelGroup id="ecpMachineQuestions">
+                <div class="treatment-parameters-questions11_12">
+                    <h:panelGrid columns="2" >
+    <!-- Original wording follows as of 6/19/2015, but changed on 6/10/2015 per email approval from Suresh on 6/19/2015 at 3:44PM 
+                        <h:outputLabel class="treatment-parameters-questions" value="11. If the UVAR machine was used, have five cycles been processed? " /> -->
+                        <h:outputLabel class="" value="#{uvarMachineUsedQuesNumber}. If the UVAR machine was used, have #{uvarCycles} cycles or more been processed? " />
+                        <h:selectOneRadio id="ques11" class="yesnoanswers3" requiredMessage="#{msgs.uvarFiveCycles}" value="#{ controller.ecpTreatmentForm.uvarFiveCycles }" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.ecpTypeMachine != 'uvar'}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:selectItem itemValue="notapplicable" itemLabel="Not Applicable" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="treatment-parameters-string-indent">
+    <!-- Original wording follows as of 6/19/2015, but changed on 6/10/2015 per email approval from Suresh on 6/19/2015 at 3:44PM 
+                    <b>If not, specify the number of cycles: </b>  -->
+                    <b>Specify the number of cycles: </b>
+                    <h:inputText value="#{controller.ecpTreatmentForm.uvarNumberCycles}" size="3" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.ecpTypeMachine != 'uvar'}" />
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('uvarFiveCycles')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q#{uvarMachineUsedQuesNumber}: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType11" value="#{controller.ecpTreatmentForm.uvarFiveCyclesVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.uvarFiveCyclesDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques11" />
+                
+                <div class="treatment-parameters-questions11_12">
+                    <h:panelGrid columns="2" >
+    <!-- Original wording follows as of 6/19/2015, but changed on 6/10/2015 per email approval from Suresh on 6/19/2015 at 3:44PM 
+                        <h:outputLabel class="treatment-parameters-questions" value="12. If the CELLEX machine was used, have 1500ml whole blood been processed? " /> -->
+                        <h:outputLabel class="" value="#{cellexMachineUsedQuesNumber}. If the CELLEX machine was used, have at least 1500ml whole blood or more been processed? " />
+                        <h:selectOneRadio id="ques12" class="yesnoanswers3" requiredMessage="#{msgs.cellex1500Plasma}" value="#{controller.ecpTreatmentForm.cellex1500Plasma}" disabled="#{controller.ecpTreatmentForm.locked  || controller.ecpTreatmentForm.ecpTypeMachine != 'cellex'}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:selectItem itemValue="notapplicable" itemLabel="Not Applicable" />
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="treatment-parameters-string-indent">
+    <!-- Original wording follows as of 6/19/2015, but changed on 6/10/2015 per email approval from Suresh on 6/19/2015 at 3:44PM 
+                    <b>If not, specify the volume processed: </b>  -->
+                    <b>Specify the volume processed: </b>
+                    <h:inputText value="#{controller.ecpTreatmentForm.cellexVolumeProcessed}" disabled="#{controller.ecpTreatmentForm.locked  || controller.ecpTreatmentForm.ecpTypeMachine != 'cellex'}" size="3" />
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('cellex1500Plasma')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q#{cellexMachineUsedQuesNumber}: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType12" value="#{controller.ecpTreatmentForm.cellex1500PlasmaVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.cellex1500PlasmaDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+            <p:message for="ques12" />
+            
+            <div class="treatment-parameters-string">
+                <b>#{answerNoReasonWhyQuesNumber}. If the answer to Question 11 or 12 is NO, please describe the reason why#{andProvideSourceAbove}: </b>
+                <div class="treatment-parameters-indent">
+                    <h:inputTextarea id="ques13" value="#{controller.ecpTreatmentForm.describeReasonWhy}" rows="2" cols="80" disabled="#{controller.ecpTreatmentForm.locked}" />
+                </div>
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('describeReasonWhy')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q#{answerNoReasonWhyQuesNumber}: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType13" value="#{controller.ecpTreatmentForm.describeReasonWhyVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.describeReasonWhyDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques13" />
+            
+            <div class="treatment-parameters">
+                <h:panelGrid columns="2" >
+                    <h:outputLabel class="treatment-parameters-questions" value="#{typeVenousAccessQuesNumber}. Type of venous access: " />
+                    <h:selectOneRadio id="ques14" class="typeVenousAccess" requiredMessage="#{msgs.typeVenousAccess}" value="#{controller.ecpTreatmentForm.typeVenousAccess}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                        <f:selectItem itemValue="centralVenousCath" itemLabel="Central Venous Catheter"/>
+                        <f:selectItem itemValue="pheripheraliv" itemLabel="Peripheral IV" />
+                        <f:selectItem itemValue="ivad_port" itemLabel="IVAD (Port)" /> 
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+            </div>
+            
+            <ui:insert name="portDescription"/>
+            
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('typeVenousAccess')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q#{typeVenousAccessQuesNumber}: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType14" value="#{controller.ecpTreatmentForm.typeVenousAccessVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.ecpTreatmentForm.typeVenousAccessDccComment}" rows="2" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques14" />
+            
+            <div class="treatment-parameters">
+                <h:panelGrid columns="2" >
+                    <h:outputLabel class="treatment-parameters-questions" value="#{ecpTxCompletedQuesNumber}. Was the ECP treatment completed as planned? " />
+                    <h:selectOneRadio id="ques15" class="yesnoanswers" requiredMessage="#{msgs.ecpTreatmentCompleted}" value="#{controller.ecpTreatmentForm.ecpTreatmentCompleted}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+            </div>
+            <div class="treatment-parameters-string-indent">
+                <b>If not, please indicate the reason why: </b>
+                <h:inputTextarea value="#{controller.ecpTreatmentForm.ecpNotCompletedWhy}" rows="2" cols="80" disabled="#{controller.ecpTreatmentForm.locked}" />
+            </div>
+            <p:message for="ques15" />
+            
+            <div class="treatment-parameters">
+                <h:panelGrid columns="2" >
+                    <h:outputLabel class="treatment-parameters-questions" value="#{complicationsQuesNumber}. Were there any complications? " />
+                    <h:selectOneRadio id="ques16" class="yesnoanswers" requiredMessage="#{msgs.complications}" value="#{controller.ecpTreatmentForm.complications}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+            </div>
+            <div class="treatment-parameters-string-indent">
+                <b>If yes, please describe and complete #{seriousAE}Adverse Event CRF if applicable: </b>
+                <h:inputTextarea value="#{controller.ecpTreatmentForm.complicationDescription}" rows="2" cols="80" disabled="#{controller.ecpTreatmentForm.locked}" />
+            </div>
+            <p:message for="ques16" />
+
+            <div class="question-radioButton">
+                <b>#{commentsQuesNumber}. Comments: </b>
+                <h:inputTextarea value="#{controller.ecpTreatmentForm.comment}" rows="2" cols="80" disabled="#{controller.ecpTreatmentForm.commentLocked}" style="margin-left: 27px;" />
+            </div>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+
+</html>

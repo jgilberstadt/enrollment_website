@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+            <h:panelGrid rendered="#{calcController.eligibilityScreeningPassed}">
+                <h1 style="color:red; font-size:24px;">Enrollment Determination Results</h1>
+                <h2>This patient is now ENROLLED in the RCT Study.</h2>
+
+                <h:panelGrid rendered="#{calcController.declineScreeningPassed}">
+                    <h2>The participant identification number is ${calcController.participantID}.</h2>
+
+                    <p style="width: 850px; font-size: large; color: red; font-weight: bold">
+                        Treatment assignment will not be revealed until the Baseline Quality of Life questionnaire is confirmed.
+					</p>
+                    <p style="width: 850px; font-size: large; color: red; font-weight: bold">
+                        Please make a NOTE of the participant identification number ${calcController.participantID}.
+                        The participant identification number should be recorded on all communication with
+                        the Washington University Academic Research Organization (ARO) concerning this participant.
+                    </p>
+                    <p style="width: 850px; font-size: large; color: red; font-weight: bold">
+                        <u>Important and Time-Sensitive:</u> Please PRINT this subject's Confirmation of Eligibility (COE) Form and have
+                        an authorized physician investigator sign and date the COE form. Scan and upload the signed COE form along with 
+                        the de-identified Source Documents listed at the top of the COE Form.  Per <a href="ecpRegistryProtocol.xhtml#section3-7" target="_blank">Protocol Section 3.7</a>, submission of this signed 
+                        COE Form with DCC Verification is required before ECP or any study-related invasive procedure (e.g. central venous catheter placement) may be performed.
+                    </p>
+                    <h:form >
+                        <h:commandButton value="Click to ADVANCE to the COE Form to print and confirm QOL" action="#{controller.registryLoginAction()}" />
+                    </h:form>
+
+                </h:panelGrid>
+<!--
+                <h:form >
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Enroll Patient..." action="# {calcController.enrollParticipantIntoECPStudyAction}" />
+                        <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" />
+                    </h:panelGrid>
+                </h:form>
+ -->
+            </h:panelGrid>
+            
+            
+            
+
+
+            <h:panelGrid  rendered="#{calcController.eligibilityScreeningFailed}">
+                <h1 style="color:red; font-size:24px;">Enrollment Determination Results</h1>
+                <h2>This patient is NOT eligible for enrolling into the study currently,</h2>
+                <h2>based on their answers to the inclusion and exclusion criteria.</h2>
+                <p>
+<!--                    Eligibility failed on the following criterion:  -->
+<!--                    <h:outputText value="# {calcController.rule}"/>  -->
+                </p>
+                <p>
+<!--                    <h:outputText value="index = # {calcController.notEnrollmentEligible} "/>  -->
+                </p>
+                <h:form >
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Cancel" action="#{calcController.cancelCalculationAction()}" />
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGrid>
+            
+
+        </ui:define>
+    </ui:composition>
+    
+</html>

@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+            <h:form>
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>PULMONARY EVALUATIONS FOR STUDY ARM ELIGIBILITY CALCULATOR</h2>
+            </div>
+
+            <div>          
+                <div class="confelig-question">
+                    1. PULMONARY EVALUATIONS - Please enter up to 10 FEV1s to determine the patient's study arm eligibility:
+
+                    <h:outputLabel class="yesno-questions" value=" - A minimum of 5 recorded FEV1 values post-transplant, separated by at least one week, of which one FEV1 value was recorded on or within one week prior to the day of enrollment must be input." />
+                    <h:outputLabel class="yesno-questions" value=" - All of the FEV1 values entered must have occurred within the last six (6) months." />
+                    <h:outputLabel class="yesno-questions" value=" - Please input the FEV1 values from the oldest date at the top (ie. A. Date) to the newest date at the bottom." />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="A. Date "/></b>
+                        <p:calendar id="dateOfFEV11" class="calendar" value="#{calcController.studyArmEligibilityForm.date1}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev11" value="#{calcController.studyArmEligibilityForm.fev11}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" validatorMessage="FEV1 ranges between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc1" value="#{calcController.studyArmEligibilityForm.fvc1}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="FVC ranges between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <div>
+                    <p:message for="dateOfFEV11" />
+                    <p:message for="fev11" />
+                    <p:message for="fvc1" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="B. Date "/></b>
+                        <p:calendar id="dateOfFEV12" class="calendar" value="#{calcController.studyArmEligibilityForm.date2}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev12" value="#{calcController.studyArmEligibilityForm.fev12}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc2" value="#{calcController.studyArmEligibilityForm.fvc2}"  size="3" required="" requiredMessage="#{msgs.fvc}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV12" />
+                    <p:message for="fev12" />
+                    <p:message for="fvc2" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="C. Date "/></b>
+                        <p:calendar id="dateOfFEV13" class="calendar" value="#{calcController.studyArmEligibilityForm.date3}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev13" value="#{calcController.studyArmEligibilityForm.fev13}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc3" value="#{calcController.studyArmEligibilityForm.fvc3}"  size="3" required="" requiredMessage="#{msgs.fvc}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV13" />
+                    <p:message for="fev13" />
+                    <p:message for="fvc3" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="D. Date "/></b>
+                        <p:calendar id="dateOfFEV14" class="calendar" value="#{calcController.studyArmEligibilityForm.date4}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev14" value="#{calcController.studyArmEligibilityForm.fev14}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc4" value="#{calcController.studyArmEligibilityForm.fvc4}"  size="3" required="" requiredMessage="#{msgs.fvc}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV14" />
+                    <p:message for="fev14" />
+                    <p:message for="fvc4" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="E. Date " style="margin-left: 1px;"/></b>
+                        <p:calendar id="dateOfFEV15" class="calendar" value="#{calcController.studyArmEligibilityForm.date5}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev15" value="#{calcController.studyArmEligibilityForm.fev15}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc5" value="#{calcController.studyArmEligibilityForm.fvc5}"  size="3" required="" requiredMessage="#{msgs.fvc}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV15" />
+                    <p:message for="fev15" />
+                    <p:message for="fvc5" />
+                </div>
+
+                <div class="datefevfvc" style="margin-top:15px">
+                    <b>If additional FEV1 values have been obtained during the last 6 months, please provide:</b>
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="F. Date "/></b>
+                        <p:calendar class="calendar" value="#{calcController.studyArmEligibilityForm.date6}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 2px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fev16}" size="3" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fvc6}"  size="3" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="G. Date "/></b>
+                        <p:calendar class="calendar" value="#{calcController.studyArmEligibilityForm.date7}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fev17}" size="3" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fvc7}"  size="3" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="H. Date "/></b>
+                        <p:calendar class="calendar" value="#{calcController.studyArmEligibilityForm.date8}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fev18}" size="3" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fvc8}"  size="3" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="I. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.studyArmEligibilityForm.date9}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fev19}" size="3" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fvc9}"  size="3" />
+                        liters
+                    </div>
+                </div> 
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="J. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.studyArmEligibilityForm.date10}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fev110}" size="3" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.studyArmEligibilityForm.fvc10}"  size="3" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div class="clear"></div>
+                <p></p>
+
+            </div>
+            
+            <h:panelGrid columns="2">
+                <h:commandButton value="Determine Study Arm Eligibility..." action="#{calcController.calculateStudyArmEligibilityAction()}" />
+<!--               <h:commandButton value="Cancel" action="#{calcController.cancelCalculationAction()}" immediate="true"/> -->
+            </h:panelGrid>
+            
+            </h:form>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>

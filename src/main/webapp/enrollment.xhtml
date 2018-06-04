@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+            <f:metadata>
+                <f:viewParam name="siteId" value="#{enrollmentBean.siteId}" />
+                <f:viewParam name="participantId" value="#{enrollmentBean.participantId}" />
+                <!--<f:event type="preRenderView" listener="#{enrollmentBean.load}"/>-->
+            </f:metadata>
+            
+            <h:outputText value="Center: #{controller.selectedSite.name}" /> <br/>
+            <h:outputText value="Participant ID: #{controller.selectedParticipant.participantID}" /> <br/>
+
+            <h:outputText value="Enrollment" /> <br/>
+
+            <h:form>
+                
+                <ui:fragment rendered="#{enrollmentBean.elligible}">
+                    <h:outputText value="The candidate is eligible to enroll." /> <br/>
+                    <h:outputText value="Date of first ECP treatment (MM-dd-yyyy): " />
+                    <h:inputText value="#{enrollmentBean.firstTreatmentDate}" >
+                        <f:convertDateTime pattern="MM-dd-yyyy" />
+                    </h:inputText><br/>
+                    <h:commandButton value="Enroll" action="#{controller.enrollParticipantAction(enrollmentBean)}" />
+                    <h:commandButton value="Cancel" action="#{controller.cancelEnrollParticipantAction(enrollmentBean)}" />
+                </ui:fragment>
+                
+                <ui:fragment rendered="#{ ! enrollmentBean.elligible}">
+                    <h:outputText value="The candidate is NOT eligible to enroll." /> <br/>
+                    <h:outputText value="Because...." /> <br/>
+                    <h:commandButton value="Cancel" action="#{controller.acknowledgeIneligibleParticipantAction(enrollmentBean)}" />
+                </ui:fragment>
+                
+            </h:form>
+            
+        </ui:define>
+    </ui:composition>
+    
+</html>

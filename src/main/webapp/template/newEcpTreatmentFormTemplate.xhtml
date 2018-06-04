@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:composition template="./ecpTreatmentFormTemplate.xhtml">
+        <ui:param name="uvarCycles" value="three to five" />           
+        <ui:param name="andProvideSourceAbove" value=" and provide source above" />           
+
+        <ui:define name="sourceDocuments">
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                    <b>1. Photopheresis Procedure Note/Report</b>
+                </div>
+                <div>
+                    <b>2. CBC - Lab Report</b>
+                </div>
+                <div>
+                    <b>3. ECP Pre-Procedure Assessment Form (See Appendix)</b>
+                </div>
+                <div>
+                    <b>4. Progress Note or Clinical Note describing complication (if applicable)</b>
+                </div>
+                <div>
+                    <b>5. Source describing why whole blood processing not completed as required (if applicable)</b>
+                </div>
+            </div>
+        </ui:define>
+        
+        <ui:define name="cbc">
+             <h:panelGroup id="cbcQuestion" >
+                <div class="pre-treat-assess-2">
+                     <b>6. Complete blood count (CBC): </b><br/>
+                      <h:selectOneRadio id="cbcCollected" value="#{controller.ecpTreatmentForm.cbcCollected}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;" layout="pageDirection">
+                        <ui:insert name="cbc_questions_insert"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        <f:ajax listener="#{controller.ecpTreatmentForm.cbcCollectedListener}" render="cbcQuestion hemocytometerQuestion" />
+                    </h:selectOneRadio>
+                 </div>
+                 <h:panelGroup id="cbcCollectedVerificationPanel" rendered="#{controller.renderVerificationPanel('cbcCollected')}">
+                     <div class="selectVerificationStatusIndented">
+                         <h:outputLabel value="Q6 CBC Collection: VERIFICATION STATUS " rendered="true"/>
+                         <h:selectOneMenu id="cbcVerifyCollected" value="#{controller.ecpTreatmentForm.cbcCollectedVerificationStatus}" rendered="true">
+                             <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                         </h:selectOneMenu>
+                     </div>
+                     <div class="selectVerificationStatusIndented">
+                         <h:outputText value="DCC Query Comment: " rendered="true" />
+                         <h:inputTextarea value="#{controller.ecpTreatmentForm.cbcCollectedDccComment}" rows="1" cols="50" rendered="true" /> 
+                     </div>
+                 </h:panelGroup>
+                <p:message for="cbcCollected" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Date of CBC: </b>
+                    <p:calendar id="ques6" class="calendar" value="#{controller.ecpTreatmentForm.completeBloodCountDate}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed'}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10"  validatorMessage="Validation Error: A date is required." converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('completeBloodCountDate')}" />
+                    </p:calendar>
+                </div>
+                <h:panelGroup id="cbcDateVerificationPanel" rendered="#{controller.renderVerificationPanel('completeBloodCountDate')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="completeBloodCountDateVerifyType6" value="#{controller.ecpTreatmentForm.completeBloodCountDateVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.completeBloodCountDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>WBCs: </b>
+                    <h:inputText id="ques6a" requiredMessage="#{msgs.wbcs}" value="#{controller.ecpTreatmentForm.wbcs}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed'}" size="3" validatorMessage="Validation Error: WBC ranges between 1.0 and 40.0." >
+                        <f:validateLongRange minimum="1" maximum ="40"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('wbcs')}" />
+                    </h:inputText>
+                    (K/cumm)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('wbcs')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 WBCS: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="wbcsVerifyType6" value="#{controller.ecpTreatmentForm.wbcsVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.wbcsDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6a" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>RBCs: </b>
+                    <h:inputText id="ques6b" requiredMessage="#{msgs.rbcs}" value="#{controller.ecpTreatmentForm.rbcs}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed'}" size="3" >
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('rbcs')}" />
+                    </h:inputText>
+                    (M/cumm)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('rbcs')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 RBCS: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="rbcsVerifyType6" value="#{controller.ecpTreatmentForm.rbcsVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.rbcsDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6b" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Hemoglobin: </b>
+                    <h:inputText id="ques6c" requiredMessage="#{msgs.hemoglobin}" value="#{controller.ecpTreatmentForm.hemoglobin}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed'}" size="3" validatorMessage="Validation Error: Hemoglobin ranges between 5.0 and 17.0." >
+                        <f:validateLongRange minimum="5" maximum ="17"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('hemoglobin')}" />
+                    </h:inputText>
+                    (g/dl)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('hemoglobin')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Hemoglobin: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="hemoglobinVerifyType6" value="#{controller.ecpTreatmentForm.hemoglobinVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.hemoglobinDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6c" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Hematocrit: </b>
+                    <h:inputText id="ques6d" requiredMessage="#{msgs.hematocrit}" value="#{controller.ecpTreatmentForm.hematocrit}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed'}" size="3" validatorMessage="Validation Error: Hematocrit ranges between 20.0 and 55.0." >
+                        <f:validateLongRange minimum="20" maximum ="55"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('hematocrit')}" />
+                    </h:inputText>
+                    (%)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('hematocrit')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Hematocrit: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="hematocritVerifyType6" value="#{controller.ecpTreatmentForm.hematocritVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.hematocritDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6d" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Platelets: </b>
+                    <h:inputText id="ques6e" requiredMessage="#{msgs.platelets}" value="#{controller.ecpTreatmentForm.platelets}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed'}" size="3" validatorMessage="Validation Error: Platelets range between 25 and 1,000." >
+                        <f:validateLongRange minimum="25" maximum ="1000" for="ques6e"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('platelets')}" />
+                    </h:inputText>
+                    (K/cumm)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('platelets')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Platelets: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="plateletsVerifyType6" value="#{controller.ecpTreatmentForm.plateletsVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.plateletsDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6e" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Neutrophils: </b>
+                    <h:inputText id="ques6f" requiredMessage="#{msgs.neutrophils}" value="#{controller.ecpTreatmentForm.neutrophils}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed' || controller.ecpTreatmentForm.cbcCollected == 'diffMissed'}" size="3" validatorMessage="Validation Error: Neutrophils range between 0 and 100%." >
+                        <f:validateLongRange minimum="0" maximum ="100"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('neutrophils')}" />
+                    </h:inputText>
+                    (%)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('neutrophils')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Neutrophils VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="neutrophilsVerifyType6" value="#{controller.ecpTreatmentForm.neutrophilsVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.neutrophilsDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6f" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Lymphocytes: </b>
+                    <h:inputText id="ques6g" requiredMessage="#{msgs.lymphocytes}" value="#{controller.ecpTreatmentForm.lymphocytes}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed' || controller.ecpTreatmentForm.cbcCollected == 'diffMissed'}" size="3" validatorMessage="Validation Error: Lymphocytes range between 0 and 100%." >
+                        <f:validateLongRange minimum="0" maximum ="100"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('lymphocytes')}" />
+                    </h:inputText>
+                    (%)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('lymphocytes')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Lymphocytes VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="lymphocytesVerifyType6" value="#{controller.ecpTreatmentForm.lymphocytesVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.lymphocytesDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6g" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Monocytes: </b>
+                    <h:inputText id="ques6h" requiredMessage="#{msgs.monocytes}" value="#{controller.ecpTreatmentForm.monocytes}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed' || controller.ecpTreatmentForm.cbcCollected == 'diffMissed'}" size="3" validatorMessage="Validation Error: Monocytes range between 0 and 100%." >
+                        <f:validateLongRange minimum="0" maximum ="100"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('monocytes')}" />
+                    </h:inputText>
+                    (%)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('monocytes')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Monocytes VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="monocytesVerifyType6" value="#{controller.ecpTreatmentForm.monocytesVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.monocytesDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6h" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Eosinophils: </b>
+                    <h:inputText id="ques6i" requiredMessage="#{msgs.eosinophils}" value="#{controller.ecpTreatmentForm.eosinophils}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed' || controller.ecpTreatmentForm.cbcCollected == 'diffMissed'}" size="3" validatorMessage="Validation Error: Eosinophils range between 0 and 100%." >
+                        <f:validateLongRange minimum="0" maximum ="100"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('eosinophils')}" />
+                    </h:inputText>
+                    (%)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('eosinophils')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Eosinophils VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="eosinophilsVerifyType6" value="#{controller.ecpTreatmentForm.eosinophilsVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.eosinophilsDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6i" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Basophils: </b>
+                    <h:inputText id="ques6j" requiredMessage="#{msgs.basophils}" value="#{controller.ecpTreatmentForm.basophils}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed' || controller.ecpTreatmentForm.cbcCollected == 'diffMissed'}" size="3" validatorMessage="Validation Error: Basophils range between 0 and 100%." >
+                        <f:validateLongRange minimum="0" maximum ="100"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('basophils')}" />
+                    </h:inputText>
+                    (%)
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('basophils')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q6 Basophils VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="basophilsVerifyType6" value="#{controller.ecpTreatmentForm.basophilsVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.basophilsDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques6j" />
+            </h:panelGroup>
+            
+            <h:panelGroup id="hemocytometerQuestion" >
+                <div class="question-inputText-immunodrug">
+                    <b>7. Type of hemocytometer used to measure the CBC: </b>
+                    <h:inputText id="ques7" requiredMessage="#{msgs.hemocytometer}" value="#{controller.ecpTreatmentForm.hemocytometer}" disabled="#{controller.ecpTreatmentForm.locked || controller.ecpTreatmentForm.cbcCollected == 'cbcCollectedYesterday' || controller.ecpTreatmentForm.cbcCollected == 'cbcMissed'}" size="80" >
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or controller.ecpTreatmentForm.isAttributeOptional('hemocytometer')}" />
+                    </h:inputText>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('hemocytometer')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q7: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType7" value="#{controller.ecpTreatmentForm.hemocytometerVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.ecpTreatmentForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.ecpTreatmentForm.hemocytometerDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques7" />
+            </h:panelGroup>
+        </ui:define>
+        
+    </ui:composition>
+
+</html>

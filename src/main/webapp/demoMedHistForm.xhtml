@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="./template/demoMedHistFormTemplate.xhtml">
+        <ui:param name="clinStatusWeeksHeader" value="One Week" />
+        <ui:param name="clinStatusWeeks" value="one week" />
+        <ui:param name="baselineFEV1Assessment" value="component" />
+        
+        <ui:define name="sourceDocuments">
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                <b>1. History and Physical Or Consultation Note</b>
+                </div>
+                <div>
+                <b>2. Operative Report of Transplant Procedure</b>
+                </div>
+                <div>
+                <b>3. Pulmonary Function Test Reports (for each FEV-1 submitted)</b>
+                </div>
+            </div>
+        </ui:define>
+        
+        <ui:define name="lungTransplantationCause">
+            <div class="question-radioButton">
+                <b>5. Please provide a description of the underlying disease necessitating lung transplantation: </b>
+                <div class="question-multipleRadioButton" >
+                    <h:selectOneRadio id="ques5" class="question-multipleRadioButton" requiredMessage="#{msgs.lungTransplantationCause}" value="#{controller.demoMedHistForm.lungTransplantationCause}" disabled="#{controller.demoMedHistForm.locked}" layout="pageDirection">
+                        <f:selectItem itemValue="copd" itemLabel="Chronic Obstructive Pulmonary Disease (COPD) including Emphysema"/>
+                        <f:selectItem itemValue="interstitial lung disease" itemLabel="Interstitial Lung Disease" /> 
+                        <f:selectItem itemValue="cystic fibrosis" itemLabel="Cystic Fibrosis" /> 
+                        <f:selectItem itemValue="pulmonary hypertension" itemLabel="Pulmonary Hypertension" /> 
+                        <f:selectItem itemValue="alpha 1-antitrypsin deficiency emphysema" itemLabel="Alpha 1-Antitrypsin Deficiency Emphysema" /> 
+                        <f:selectItem itemValue="Replacing previous lung" itemLabel="Replacing previously transplanted lung that failed" /> 
+                        <f:selectItem itemValue="other" itemLabel="Other" /> 
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:selectOneRadio>
+                </div>
+                <p:message for="ques5" />
+            </div>
+        </ui:define>
+        
+        <ui:define name="heightWeightAtTransplant">
+            <div class="question-inputText">
+                <b>8. Weight at time of transplant: </b>
+                    <h:inputText id="ques8" value="#{controller.demoMedHistForm.weightAtTransplant}" requiredMessage="#{msgs.weightAtTransplant}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: Weight ranges between 30 and 200 kg." >
+                        <f:validateLongRange minimum="30" maximum ="200"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    kilograms
+                </div>
+                <p:message for="ques8" />
+                <div class="question-inputText">
+                    <b>9. Height: </b>
+                    <h:inputText id="ques9" value="#{controller.demoMedHistForm.height}" requiredMessage="#{msgs.height}" disabled="#{controller.demoMedHistForm.locked}" size="3" validatorMessage="Validation Error: height ranges between 120 and 240 cm." >
+                        <f:validateLongRange minimum="120" maximum ="240"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    Centimeters
+                </div>
+                <p:message for="ques9" />
+        </ui:define>
+        
+        <ui:define name="baselineFEV1measurementsQuestion">
+            <b>18. Please provide the baseline pulmonary function testing results using the ISHLT definition = the average of the two highest FEV1 measurements obtained 3 weeks apart after transplantation.  Also please provide the results of the two component PFT assessments used for this calculation: </b>
+        </ui:define>
+        
+    </ui:composition>
+</html>

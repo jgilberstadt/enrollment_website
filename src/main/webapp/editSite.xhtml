@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <f:metadata>
+                <f:viewParam name="siteId" value="#{siteBean.id}" />
+                <f:event type="preRenderView" listener="#{siteBean.load}"/>
+            </f:metadata>
+
+            <h:form>
+                <h3>View/Edit Site Details</h3>
+                <table>
+                    <tr>
+                        <td> <h:outputText value="Name:" /> </td>
+                        <td> <h:inputText value="#{siteBean.name}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <h:outputText value="Site ID:" /> </td>
+                        <td> <h:inputText value="#{siteBean.siteID}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <h:outputText value="Status:" /> </td>
+                        <td> <h:inputText value="#{siteBean.status}" />
+                        </td>
+                    </tr>
+                </table>
+            
+                <h:commandButton value="Submit" action="${siteBean.addSiteAction()}" />
+                <h:commandButton value="Cancel" action="${siteBean.cancelAddSiteAction()}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>
+

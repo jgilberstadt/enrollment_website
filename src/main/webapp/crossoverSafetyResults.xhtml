@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <div class="center_content">
+                <h:panelGrid columns="2" >
+<!--                <a href="http://ecpregistry.wustl.edu" > <button>Home</button></a>  -->
+<!--                <h:commandButton value="Investigator Resources" action="# {calcController.homeAction()}" />  -->
+                </h:panelGrid>
+            </div>
+
+            <h:panelGrid rendered="#{calcController.crossoverSafetyCheckForm.safeToCrossoverResultsDisplay}">
+                <h1 style="color:red; font-size:24px;">Crossover Safety Check Results</h1>
+                <p style="width: 750px; font-size:14px; font-weight: 900;">
+                    <h2>Cross Over Determination Results:  This patient remains in their current arm.  
+                        This patient may not be crossed over because you have indicated that they have 
+                        a contraindication to ECP.  Please contact your CCC nurse coordinator if you have questions.</h2>
+                </p>
+            </h:panelGrid>
+            
+            <h:panelGrid rendered="#{!calcController.crossoverSafetyCheckForm.safeToCrossoverResultsDisplay}">
+                <h1 style="color:red; font-size:24px;">Crossover Safety Check Results</h1>
+                <p style="width: 750px; font-size:14px; font-weight: 900;">
+                    <h2>Cross Over Determination Results:  This patient has been crossed over into a new arm.
+                        From this point forward, please follow all Protocol-specified treatment and evaluation
+                        procedures for participants in their new arm.</h2>
+                </p>
+            </h:panelGrid>
+            
+            <h:form >
+                <h:panelGrid columns="1" rendered="true">
+                    <h:commandButton value="Return to Registry" action="#{calcController.crossoverAcknowledgeAction()}" />
+                </h:panelGrid>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+    
+</html>

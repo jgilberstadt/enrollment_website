@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="./template/adverseEventWorksheetTemplate.xhtml">
+        <ui:param name="noninvasiveTreatmentAdditions" value=", such as anticoagulation" />
+        <ui:param name="minimalTreatmentAdditions" value=", filter placement" />
+        <ui:param name="dvtPeQuesNums" value="ques3i ques3j ques3k" />
+        <ui:param name="participationQuesNum" value="s2ques7" />
+        
+        <ui:define name="saeProtocolLink">
+            <a href="ecpRegistryProtocolV7_1.xhtml#section6-4" target="_blank">see Protocol Section 6.4</a>
+        </ui:define>
+        
+        <ui:define name="dvtPeQuestions">
+            <div class="answer-radioButton">
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques3i" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.symptomaticPulmonaryEmbolism}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        <f:ajax execute="ques3i" render="form"/>
+                        <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        <!--<f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                        <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />-->
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Was this event a symptomatic pulmonary embolism (PE)?" />
+                </h:panelGrid>
+                <h:message for="ques3i" style="color:red;"/>
+            </div>
+            <div class="answer-radioButton">
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques3j" required="true" requiredMessage="#{msgs.saeYesNoQuestions}" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.deepVeinThrombosis}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        <f:ajax execute="ques3j" render="form"/>
+                        <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                        <!--<f:ajax execute="section1" render="form" listener="#{aEController.updateListener}" />
+                        <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />-->
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Was this event a symptomatic deep vein thrombosis (DVT)?" />
+                </h:panelGrid>
+                <h:message for="ques3j" style="color:red;"/>
+            </div>
+            
+            <div class="question-radioButton">
+                    <h:panelGrid columns="1" >
+                        <h:outputLabel value="If yes location of DVT:" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" >
+                        <h:selectOneRadio id="ques3k" requiredMessage="#{msgs.saeYesNoQuestions}" class="radioReportOutcome" value="#{aEController.adverseEventWorksheetSAEForm.dvtLocation}" layout="lineDirection">
+                            <f:selectItem itemValue="calfDVT" itemLabel="A. Calf DVT"/>
+                            <f:selectItem itemValue="proximalDVT" itemLabel="B. Proximal DVT (Iliac, Femoral, Common Femoral)" /> 
+                            <f:selectItem itemValue="upperExtremityDVT" itemLabel="C. Upper Extremity"/>
+                            <f:selectItem itemValue="centralCavalDVT" itemLabel="D. Central/Caval" /> 
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                    <h:message for="ques3k" style="color:red;"/>
+                </div>
+        </ui:define>
+        
+        <ui:define name="relatedToParticipation">
+            <div class="question-radioButton">
+                <h:panelGrid columns="2" >
+                    <h:outputLabel value="* 7. Was this event related or possibly related to participation in the research (see Protocol section 6.4)?" />
+                    <h:selectOneRadio id="s2ques7" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.relatedToResearch}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        <f:ajax execute="s2ques3 s2ques4 s2ques5 s2ques6a s2ques6b s2ques7" render="form" listener="#{aEController.updateListener}" />
+                        <f:ajax execute="@form" render="form" listener="#{aEController.updateListener}" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+                <h:message for="s2ques5" style="color:red;"/>
+            </div> 
+        </ui:define>
+        
+        <ui:define name="otherTreatmentGiven">
+            <div class="answer-radioButton">
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="qD5" class="yesnoanswers" value="#{aEController.adverseEventWorksheetSAEForm.otherTreatmentGiven}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="5. Other" />
+                </h:panelGrid>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

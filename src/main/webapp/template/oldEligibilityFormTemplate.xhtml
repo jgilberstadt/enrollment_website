@@ -1,0 +1,1187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../formTemplate.xhtml">
+        <ui:define name="form_title">
+
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>CONFIRMATION OF ELIGIBILITY - Case Report Form (CRF)</h2>
+<!--              CRF Version Control ID: <h:outputText value="#{controller.selectedForm.versionControlId}" /> -->
+            </div>
+            <div>
+                <p style="width: 750px; font-size: medium; color: red; font-weight: bold">
+                    <u>Important and Time-Sensitive:</u> Please PRINT this subject's Confirmation of Eligibility (COE) Form, have an authorized physician investigator sign and date the COE form, and scan and upload the signed COE form along with the other Source Documents listed at the top of the COE Form.  Per <a href="ecpRegistryProtocol.xhtml#section3-7" target="_blank">Protocol Section 3.7</a>, submission of this signed COE Form with DCC Verification is required before ECP or any study-related invasive procedure (e.g. central venous catheter placement) may be performed. NOTE: ECP Treatment or study-related invasive procedures are not permitted for Observational Arm participants.
+                </p>
+            </div>
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                    <b>1. A Signed Confirmation of Eligibility Form must be uploaded</b>
+                </div>
+                <div>
+                    <b>2. History and Physical Or Consultation Note</b>
+                </div>
+                <div>
+                    <b>3. Operative Report of Transplant Procedure</b>
+                </div>
+                <div>
+                    <b>4. Pulmonary Function Test Reports (for each FEV-1 submitted)</b>
+                </div>
+            </div>
+
+        </ui:define>
+
+        <ui:define name="form_content">
+            <br/>
+<!--            
+            <div>
+                <h:outputText value="The slope is: #{controller.eligibilityForm.slope}" rendered="true" />
+                <h:outputText value="The significance is: #{controller.eligibilityForm.significance}" rendered="true" /> 
+            </div>
+-->
+            <div>          
+                <div class="confelig-question">
+                    1. INCLUSION CRITERIA - all answers must be "YES" for subject to be eligible for study inclusion:
+                </div>
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques1" class="yesnoanswers" required="true" requiredMessage="#{msgs.age}" value="#{controller.eligibilityForm.age}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Age 18 years or greater" />
+                </h:panelGrid>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('age')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="Age: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType1" value="#{controller.eligibilityForm.ageVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.ageDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1" />
+
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques2" class="yesnoanswers" required="" requiredMessage="#{msgs.medicare}" value="#{controller.eligibilityForm.medicare}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Medicare-eligible" />
+                </h:panelGrid>
+                <p:message for="ques2" />
+
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques3" class="yesnoanswers" required="" requiredMessage="#{msgs.lungTransplant}" value="#{controller.eligibilityForm.lungTransplant}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Lung transplant recipient" />
+                </h:panelGrid>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('lungTransplant')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="Lung Transplant: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType3" value="#{controller.eligibilityForm.lungTransplantVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}"  var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.lungTransplantDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques3" />
+
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques5" class="yesnoanswers" required="" requiredMessage="#{msgs.fiveFEV1sPostTrans}" value="#{controller.eligibilityForm.fiveFEV1sPostTrans}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Has had at least 5 recorded FEV1 values post-transplant all within the last 6 months, separated by at least one week, of which one FEV1 value was recorded on or within one week prior to the day of enrollment" />
+                </h:panelGrid>
+                <p:message for="ques5" />
+                <p></p>
+                <div class="confelig-question">
+                    2. EXCLUSION CRITERIA - all answers must be "NO" for subject to be eligible for study inclusion:
+                </div>
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques6" class="yesnoanswers" required="" requiredMessage="#{msgs.anotherTrial}" value="#{controller.eligibilityForm.anotherTrial}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Participant in another clinical treatment trial with an investigational agent" />
+                </h:panelGrid>
+                <p:message for="ques6" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques7" class="yesnoanswers" required="" requiredMessage="#{msgs.interfereCondition}" value="#{controller.eligibilityForm.interfereCondition}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Any condition that may interfere with subject's ability to perform pulmonary function testing" />
+                </h:panelGrid>
+                <p:message for="ques7" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques8" class="yesnoanswers" required="" requiredMessage="#{msgs.knownAllergy}" value="#{controller.eligibilityForm.knownAllergy}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Known allergy or hypersensitivity to pharmacologic agents used during ECP" />
+                </h:panelGrid>
+                <p:message for="ques8" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques9" class="yesnoanswers" required="" requiredMessage="#{msgs.acuteCondition}" value="#{controller.eligibilityForm.acuteCondition}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Has acute condition that contraindicates ECP, including but not limited to new or evolving myocardial infarction or central nervous system disorder, hemodynamic instability or hypovolemia, acute bleeding, or respiratory distress; or other condition that poses unacceptable risk for study-related complications as judged by the referring clinician" />
+                </h:panelGrid>
+                <p:message for="ques9" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques10" class="yesnoanswers" required="" requiredMessage="#{msgs.otherCondition}" value="#{controller.eligibilityForm.otherCondition}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Any condition that would significantly interfere with ability to adhere to the protocol or affect interpretability of the study results" />
+                </h:panelGrid>
+                <p:message for="ques10" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques11" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{controller.eligibilityForm.aphakia}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Aphakia or absence of ocular lenses" />
+                </h:panelGrid>
+                <p:message for="ques11" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques12" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{controller.eligibilityForm.pregnancy}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Pregnancy (confirmed by a positive pregancy test)" />
+                </h:panelGrid>
+                <p:message for="ques12" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques13" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{controller.eligibilityForm.noInformedConsent}" style="display: inline-table;" disabled="#{controller.eligibilityForm.locked}">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Inability to provide informed consent or to comply with study treatments or assessments (e.g. due to cognitive impairment or geographic distance)" />
+                </h:panelGrid>
+                <p:message for="ques13" />
+                <ui:insert name="leukopenia"/>
+
+                <p></p>
+
+                <div class="confelig-question">
+                    3. PULMONARY EVALUATIONS - Up to 15 pulmonary evaluations were entered to determine study arm eligibility:
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="A. Date "/></b>
+                        <p:calendar id="dateOfFEV11" class="calendar" value="#{controller.eligibilityForm.date1}" required="true" requiredMessage="#{msgs.dateOfFEV1}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+<!--            Date: <input id="datepicker" class="calendar" type="text" value="#{controller.eligibilityForm.date1}" required="true" requiredMessage="#{msgs.dateOfFEV1}" ></input> -->
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev11" value="#{controller.eligibilityForm.fev11}" size="3" required="true" requiredMessage="#{msgs.fev1}" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters" disabled="#{controller.eligibilityForm.locked}">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc1" value="#{controller.eligibilityForm.fvc1}"  size="3" required="false" requiredMessage="#{msgs.fvc}" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters" disabled="#{controller.eligibilityForm.locked}">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date1')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="A. Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeDateOfFEV11" value="#{controller.eligibilityForm.date1VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date1DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev11')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="A. FEV1: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFEV11" value="#{controller.eligibilityForm.fev11VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev11DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc1')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="A. FVC: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFVC1" value="#{controller.eligibilityForm.fvc1VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc1DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV11" />
+                    <p:message for="fev11" />
+                    <p:message for="fvc1" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="B. Date "/></b>
+                        <p:calendar id="dateOfFEV12" class="calendar" value="#{controller.eligibilityForm.date2}" required="true" requiredMessage="#{msgs.dateOfFEV1}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev12" value="#{controller.eligibilityForm.fev12}" size="3" required="true" requiredMessage="#{msgs.fev1}" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc2" value="#{controller.eligibilityForm.fvc2}"  size="3" required="false" requiredMessage="#{msgs.fvc}" validatorMessage="Validation Error: FEV1 ranges between 0.4 and 6.5 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date2')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="B. Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeDateOfFEV12" value="#{controller.eligibilityForm.date2VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date2DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev12')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="B. FEV1: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFEV12" value="#{controller.eligibilityForm.fev12VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev12DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc2')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="B. FVC: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFVC2" value="#{controller.eligibilityForm.fvc2VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc2DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV12" />
+                    <p:message for="fev12" />
+                    <p:message for="fvc2" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="C. Date "/></b>
+                        <p:calendar id="dateOfFEV13" class="calendar" value="#{controller.eligibilityForm.date3}" required="true" requiredMessage="#{msgs.dateOfFEV1}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev13" value="#{controller.eligibilityForm.fev13}" size="3" required="true" requiredMessage="#{msgs.fev1}" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc3" value="#{controller.eligibilityForm.fvc3}"  size="3" required="false" requiredMessage="#{msgs.fvc}" validatorMessage="Validation Error: FEV1 ranges between 0.4 and 6.5 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date3')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="C. Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeDateOfFEV13" value="#{controller.eligibilityForm.date3VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date3DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev13')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="C. FEV1: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFEV13" value="#{controller.eligibilityForm.fev13VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev13DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc3')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="C. FVC: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFVC3" value="#{controller.eligibilityForm.fvc3VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc3DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV13" />
+                    <p:message for="fev13" />
+                    <p:message for="fvc3" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="D. Date "/></b>
+                        <p:calendar id="dateOfFEV14" class="calendar" value="#{controller.eligibilityForm.date4}" required="true" requiredMessage="#{msgs.dateOfFEV1}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev14" value="#{controller.eligibilityForm.fev14}" size="3" required="true" requiredMessage="#{msgs.fev1}" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc4" value="#{controller.eligibilityForm.fvc4}"  size="3" required="false" requiredMessage="#{msgs.fvc}" validatorMessage="Validation Error: FEV1 ranges between 0.4 and 6.5 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date4')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="D. Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeDateOfFEV14" value="#{controller.eligibilityForm.date4VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date4DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev14')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="D. FEV1: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFEV14" value="#{controller.eligibilityForm.fev14VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev14DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc4')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="D. FVC: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFVC4" value="#{controller.eligibilityForm.fvc4VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc4DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV14" />
+                    <p:message for="fev14" />
+                    <p:message for="fvc4" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="E. Date " style="margin-left: 1px;"/></b>
+                        <p:calendar id="dateOfFEV15" class="calendar" value="#{controller.eligibilityForm.date5}" required="true" requiredMessage="#{msgs.dateOfFEV1}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev15" value="#{controller.eligibilityForm.fev15}" size="3" required="true" requiredMessage="#{msgs.fev1}" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc5" value="#{controller.eligibilityForm.fvc5}"  size="3" required="false" requiredMessage="#{msgs.fvc}" validatorMessage="Validation Error: FEV1 ranges between 0.4 and 6.5 liters" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date5')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="E. Date: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeDateOfFEV15" value="#{controller.eligibilityForm.date5VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date5DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev15')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="E. FEV1: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFEV15" value="#{controller.eligibilityForm.fev15VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev15DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc5')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="E. FVC: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeFVC5" value="#{controller.eligibilityForm.fvc5VerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc5DccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV15" />
+                    <p:message for="fev15" />
+                    <p:message for="fvc5" />
+                </div>
+
+                <div class="datefevfvc" style="margin-top:15px">
+                    <b>If additional FEV1 values have been obtained during the last 6 months, please provide:</b>
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="F. Date "/></b>
+                        <p:calendar id="dateOfFEV16" class="calendar" value="#{controller.eligibilityForm.date6}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 2px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev16" value="#{controller.eligibilityForm.fev16}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc6" value="#{controller.eligibilityForm.fvc6}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date6')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="F. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV16" value="#{controller.eligibilityForm.date6VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: "  />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date6DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev16')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="F. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV16" value="#{controller.eligibilityForm.fev16VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev16DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc6')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="F. FVC: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFVC6" value="#{controller.eligibilityForm.fvc6VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc6DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV16" />
+                    <p:message for="fev16" />
+                    <p:message for="fvc6" />
+                </div>
+                
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="G. Date "/></b>
+                        <p:calendar id="dateOfFEV17" class="calendar" value="#{controller.eligibilityForm.date7}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev17" value="#{controller.eligibilityForm.fev17}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc7" value="#{controller.eligibilityForm.fvc7}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date7')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="G. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV17" value="#{controller.eligibilityForm.date7VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " rendered="#{controller.renderVerificationPanel('date7') and controller.eligibilityForm.date7 != null}" />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date7DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev17')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="G. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV17" value="#{controller.eligibilityForm.fev17VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: "  />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev17DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc7')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="G. FVC: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFVC7" value="#{controller.eligibilityForm.fvc7VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: "  />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc7DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV17" />
+                    <p:message for="fev17" />
+                    <p:message for="fvc7" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="H. Date "/></b>
+                        <p:calendar id="dateOfFEV18" class="calendar" value="#{controller.eligibilityForm.date8}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev18" value="#{controller.eligibilityForm.fev18}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc8" value="#{controller.eligibilityForm.fvc8}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date8')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="H. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV18" value="#{controller.eligibilityForm.date8VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date8DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev18')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="H. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV18" value="#{controller.eligibilityForm.fev18VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev18DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc8')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="H. FVC: VERIFICATION STATUS "/>
+                        <h:selectOneMenu id="verifyTypeFVC8" value="#{controller.eligibilityForm.fvc8VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc8DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV18" />
+                    <p:message for="fev18" />
+                    <p:message for="fvc8" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="I. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV19" class="calendar" value="#{controller.eligibilityForm.date9}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev19" value="#{controller.eligibilityForm.fev19}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc9" value="#{controller.eligibilityForm.fvc9}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date9')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="I. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV19" value="#{controller.eligibilityForm.date9VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date9DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev19')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="I. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV19" value="#{controller.eligibilityForm.fev19VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev19DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc9')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="I. FVC: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFVC9" value="#{controller.eligibilityForm.fvc9VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc9DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV19" />
+                    <p:message for="fev19" />
+                    <p:message for="fvc9" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="J. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV110" class="calendar" value="#{controller.eligibilityForm.date10}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev110" value="#{controller.eligibilityForm.fev110}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc10" value="#{controller.eligibilityForm.fvc10}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date10')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="J. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV110" value="#{controller.eligibilityForm.date10VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date10DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev110')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="J. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV110" value="#{controller.eligibilityForm.fev110VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev110DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc10')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="J. FVC: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFVC10" value="#{controller.eligibilityForm.fvc10VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc10DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV110" />
+                    <p:message for="fev110" />
+                    <p:message for="fvc10" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="K. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV111" class="calendar" value="#{controller.eligibilityForm.date11}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev111" value="#{controller.eligibilityForm.fev111}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc11" value="#{controller.eligibilityForm.fvc11}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date11')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="K. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV111" value="#{controller.eligibilityForm.date11VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date11DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev111')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="K. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV111" value="#{controller.eligibilityForm.fev111VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev111DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc11')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="K. FVC: VERIFICATION STATUS "/>
+                        <h:selectOneMenu id="verifyTypeFVC11" value="#{controller.eligibilityForm.fvc11VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc11DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV111" />
+                    <p:message for="fev111" />
+                    <p:message for="fvc11" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="L. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV112" class="calendar" value="#{controller.eligibilityForm.date12}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev112" value="#{controller.eligibilityForm.fev112}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc12" value="#{controller.eligibilityForm.fvc12}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date12')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="L. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV112" value="#{controller.eligibilityForm.date12VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date12DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev112')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="L. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV112" value="#{controller.eligibilityForm.fev112VerificationStatus}">
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: "  />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev112DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc12')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="L. FVC: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFVC12" value="#{controller.eligibilityForm.fvc12VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc12DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV112" />
+                    <p:message for="fev112" />
+                    <p:message for="fvc12" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="M. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV113" class="calendar" value="#{controller.eligibilityForm.date13}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev113" value="#{controller.eligibilityForm.fev113}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc13" value="#{controller.eligibilityForm.fvc13}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date13')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="M. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV113" value="#{controller.eligibilityForm.date13VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date13DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev113')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="M. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV113" value="#{controller.eligibilityForm.fev113VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev113DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc13')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="M. FVC: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFVC13" value="#{controller.eligibilityForm.fvc13VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc13DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV113" />
+                    <p:message for="fev113" />
+                    <p:message for="fvc13" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="N. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV114" class="calendar" value="#{controller.eligibilityForm.date14}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev114" value="#{controller.eligibilityForm.fev114}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc14" value="#{controller.eligibilityForm.fvc14}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date14')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="N. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV114" value="#{controller.eligibilityForm.date14VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date14DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev114')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="N. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV114" value="#{controller.eligibilityForm.fev114VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev114DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc14')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="N. FVC: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFVC14" value="#{controller.eligibilityForm.fvc14VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: "  />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc14DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV114" />
+                    <p:message for="fev114" />
+                    <p:message for="fvc14" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="O. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV115" class="calendar" value="#{controller.eligibilityForm.date15}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev115" value="#{controller.eligibilityForm.fev115}" size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc15" value="#{controller.eligibilityForm.fvc15}"  size="3" disabled="#{controller.eligibilityForm.locked}" />
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('date15')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="O. Date: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeDateOfFEV115" value="#{controller.eligibilityForm.date15VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.date15DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fev115')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="O. FEV1: VERIFICATION STATUS " />
+                        <h:selectOneMenu id="verifyTypeFEV115" value="#{controller.eligibilityForm.fev115VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: "  />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fev115DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('fvc15')}">
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputLabel value="O. FVC: VERIFICATION STATUS "/>
+                        <h:selectOneMenu id="verifyTypeFVC15" value="#{controller.eligibilityForm.fvc15VerificationStatus}" >
+                            <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndentedMore">
+                        <h:outputText value="DCC Query Comment: " />
+                        <h:inputTextarea value="#{controller.eligibilityForm.fvc15DccComment}" rows="1" cols="50" /> 
+                    </div>
+                </h:panelGroup>
+                <div>
+                    <p:message for="dateOfFEV115" />
+                    <p:message for="fev115" />
+                    <p:message for="fvc15" />
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="confelig-question">
+                    4. CONFIRMATION OF ELIGIBILITY
+                </div>
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="A. Date eligibility status confirmed" />
+                    </div>
+                    <div class="cal">
+                        <!-- An input to the calendar for dateEligConfirmed is required so when you open the Eligibility form later and update it, the Actual Date will have a value -->
+                        <!-- If no date is input into dateEligConfirmed, then when the Eligibility form is opened later, the Actual Date will be null and the database will be set to null by the software --> 
+                        <p:calendar id="dateEligConfirmed" class="calendar" value="#{controller.eligibilityForm.enrollmentDate}" required="true" requiredMessage="#{msgs.enrollmentDate}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateEligConfirmed" />
+                </div>
+
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="B. Date the approved Informed Consent Form was signed by the subject " />
+                    </div>
+                    <div class="cal">
+                        <p:calendar id="dateInformedConsentSigned" class="calendar" value="#{controller.eligibilityForm.dateInformedConsentSigned}" required="" requiredMessage="#{msgs.dateInformedConsentSigned}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}"/>
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateInformedConsentSigned" />
+                </div>
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="C. Informed Consent Form Version Date" />
+                    </div>
+                    <div class="cal">
+                        <p:calendar id="dateInformedConsentVersion" class="calendar" value="#{controller.eligibilityForm.dateInformedConsentVersion}" required="" requiredMessage="#{msgs.dateInformedConsentVersion}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" disabled="#{controller.eligibilityForm.locked}" converter="strictDateTimeConverter" />
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateInformedConsentVersion" />
+                </div>
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="D. Has the signed Confirmation of Eligibility CRF been uploaded?" />
+                    </div>
+                    <h:selectOneRadio id="ques4d" class="" required="true" requiredMessage="#{msgs.wasCoeUploaded}" value="#{controller.eligibilityForm.wasCoeUploaded}" style="display: inline-table;" disabled="#{controller.eligibilityForm.commentLocked}" >
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:panelGroup rendered="#{controller.renderVerificationPanel('wasCoeUploaded')}">
+                        <div class="selectVerificationStatusIndentedMore">
+                            <h:outputLabel value="Was COE Uploaded: VERIFICATION STATUS " rendered="true"/>
+                            <h:selectOneMenu id="verifyType4d" value="#{controller.eligibilityForm.wasCoeUploadedVerificationStatus}" rendered="true">
+                                <f:selectItems value="#{controller.eligibilityForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="selectVerificationStatusIndentedMore">
+                            <h:outputText value="DCC Query Comment: " rendered="true" />
+                            <h:inputTextarea value="#{controller.eligibilityForm.wasCoeUploadedDccComment}" rows="1" cols="50" rendered="true" /> 
+                        </div>
+                    </h:panelGroup>
+                    <p:message for="ques4d" />
+                </div> 
+                <div class="clear"></div>
+
+                <p></p>
+                <div class="confelig-question">
+                    5. INVESTIGATOR ATTESTATION
+                </div>
+                <p style="width: 750px; margin-left: 25px;">I have reviewed and confirmed that the information recorded on these CRF Pages is accurate.  I attest that this patient meets all study eligibility criteria and is appropriate to enroll in the ECP Registry</p>
+                <div class="question-inputText-other">
+                    <b>Comments: </b>
+                    <h:inputTextarea value="#{controller.eligibilityForm.comment}" rows="2" cols="80" disabled="#{controller.eligibilityForm.commentLocked}" />
+                </div>
+                <br/>
+                <div class="confirmeligquestions">
+                    <div class="investname">
+                        <h:outputLabel class="investname" value="Investigator Name (please print)" />
+                    </div>
+                    <div class="print">
+                        <h:outputText value="____________________________________________"  />
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <p></p>
+                <div class="confirmeligquestions">
+                    <div class="investsign">
+                        <h:outputLabel class="investsign" value="Investigator Signature" />
+                    </div>
+                    <div class="sign">
+                        <h:outputText value="________________________________  Date: _______________"  />
+                    </div>
+                </div> 
+                <div class="clear"></div>
+
+                <p></p>
+
+            </div>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

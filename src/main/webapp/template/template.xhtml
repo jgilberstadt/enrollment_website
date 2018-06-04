@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <title>ECP Registry</title>
+        <style>
+            .datatable-class {padding-top: 12px;}
+            .header-class {border-top: 1px solid #BBBBBB; padding: 1em; margin-top: 12px;}
+            .odd-row {background-color: #d9f5d6}
+            .even-row {background-color: #c2dfef}
+            .odd-column {background-color: #ece3a5}
+            .even-column {background-color: #dddddd}
+            .center_content  <!-- background-color #dddddd is light gray found in the cssLayout.css file for all CRFs-->
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:graphicImage name="images/ecpwebsiteheader.png" width="1100" height="110"/>
+        <!--<img src="../resources/images/ecpwebsiteheader.png" alt="ECP Header Image with Logo not shown" width="1100" height="110"/>-->
+<!--    
+        Remove the comment tags to allow the TRAINING ECP REGISTRY WEBSITE!!!!! to appear when this code is placed onto the 
+        ecpregtraining.wustl.edu (172.20.175.94) server so study coordinators can easily identify the ECP training website.
+        Change the file ecpregistry.css #crfheader whitesmoke to red for training site or leave whitesmoke for production site.
+-->
+        
+        <!--
+        <div>
+            <h:outputText value="ECP NEW BOS WEBSITE" style="font-size: 40px; color: orange;" />   
+        </div>
+        -->
+        
+        <div>
+            <h:outputText value="#{controller.banner.text}" style="font-size: 40px; color: #{controller.banner.color};" />   
+        </div>
+
+        <div id="top" class="top">
+<!--            <ui:insert name="top">Top</ui:insert>  -->
+            <h:form id="mainMenu">
+                <p:menubar autoDisplay="false">
+                    <p:menuitem value="Home" action="#{controller.homeWordPressPageAction()}" style="color:black; border:1px solid black;" />
+                    <p:menuitem value="Check Enrollment/Arm Eligibility" action="#{calcController.checkEnrollStudyArmEligAction()}" style="color:black; border:1px solid black; margin-left:5px;" rendered="#{controller.renderEnrollmentButton()}" />
+                    <p:menuitem value="New BOS" action="#{controller.registryLoginAction()}" style="color:black; border:1px solid black; margin-left:5px;" />
+                    <p:submenu label="Investigator Resources" styleClass="submenu" style="font:black; margin-left:5px;">
+                        <p:menuitem value="Key Contacts" action="#{controller.keyContacts()}" style="color:black; margin-left:5px;" />
+                        <p:submenu label="Protocol" styleClass="submenu" style="font:black; margin-left:5px;">
+                            <p:menuitem value="ECP Registry Protocol Version 5.0 10-08-15" url="/docs/ECPRegistryProtocolVersion5.0-10-08-15ApprovedHRPO.pdf" style="color:black; margin-left:5px;" rendered="#{controller.renderV5Docs()}" target="_blank"/>
+                            <p:menuitem value="ECP Registry Protocol Version 7.0 7-29-17" url="/docs/ECPRegistryProtocolVersion7.0-7-29-17ApprovedHRPO.pdf" style="color:black; margin-left:5px;" rendered="#{controller.renderV7Docs()}" target="_blank" />
+                            <p:menuitem value="ECP Registry Protocol Version 7.1 2-28-18" url="/docs/ECP_Protocol_V7.1_2-28-18FinalHRPOApproved.pdf" style="color:black; margin-left:5px;" rendered="#{controller.renderV7_1Docs()}" target="_blank" />
+                        </p:submenu>
+                        <p:menuitem value="CCC Manual of Operations" url="/docs/ECPRegistryCCCMOPVersion1-0FINALAPPROVED7-10-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                        <p:menuitem value="DCC Manual of Operations" url="/docs/ECPRegistryDCCMOPVersion1-0FINALAPPROVED7-10-15.pdf" style="color:black; margin-left:5px;" rendered="#{controller.renderV5Docs()}" target="_blank"/>
+                        <p:menuitem value="DCC Manual of Operations" url="/docs/ECPRegistryDCCMOPVersion7-0FINAL11-30-17.pdf" style="color:black; margin-left:5px;" rendered="#{controller.renderV7Docs()}" target="_blank"/>
+                        <p:submenu label="Training Modules" styleClass="submenu" style="font:black; margin-left:5px;">
+                            <p:menuitem value="Summary of ECP Registry" url="/docs/SummaryOfECPRegistryTrainingVer5.pdf" style="color:black; margin-left:5px;" target="_blank" />
+                            <p:menuitem value="User Access" url="/docs/ECPUserAccessTrainingVer2.pdf" style="color:black; margin-left:5px;" rendered="true" target="_blank"/>
+                            <p:menuitem value="Enrollment and COE CRF" url="/docs/ECPEnrollmentandCOECRFTrainingVer3.pdf" style="color:black; margin-left:5px;" rendered="true" target="_blank"/>
+                            <p:menuitem value="Baseline Therapy CRF" url="/docs/ECPBaselineTherapyCRFTrainingVer4.pdf" style="color:black; margin-left:5px;" rendered="true" target="_blank"/>
+                            <p:menuitem value="Demographics and Medical History CRF" url="/docs/ECPDemographicsMedicalHistoryCRFTrainingVer2.pdf" style="color:black; margin-left:5px;" rendered="true" target="_blank"/>
+                            <p:menuitem value="Treatment Arm CRFs" url="/docs/TrainingDataEntry_10-9-2014.doc" style="color:black; margin-left:5px;" rendered="false" target="_blank"/>
+                            <p:menuitem value="Observational Arm CRFs" url="/docs/TrainingDataEntry_10-9-2014.doc" style="color:black; margin-left:5px;" rendered="false" target="_blank"/>
+                            <p:menuitem value="Adding Events for CRFs" url="/docs/TrainingDataEntry_10-9-2014.doc" style="color:black; margin-left:5px;" rendered="false" target="_blank"/>
+                            <p:menuitem value="Serious Adverse Events CRFs" url="/docs/TrainingDataEntry_10-9-2014.doc" style="color:black; margin-left:5px;" rendered="false" target="_blank"/>
+                            <p:menuitem value="ECP Registry Attestation Form" url="/docs/ECPRegistryAttestationForm-6-18-2015.pdf" style="color:black; margin-left:5px;" target="_blank" />
+                        </p:submenu>
+                        <p:submenu label="CRFs - IRB Ver 4.0" styleClass="submenu" style="font:black; margin-left:5px;" rendered="#{controller.renderIRBVersion4CRFsFromMenuItems()}" >
+<!--                        <p:submenu label="Case Report Forms" styleClass="submenu" style="font:black; margin-left:5px;" > -->
+                            <p:menuitem value="Confirmation Of Eligibility CRF" url="/docs/COECRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Demographics CRF" url="/docs/DemographicsCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Baseline Therapy CRF" url="/docs/BaselineCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="ECP Treatment Visit CRF" url="/docs/ECPTreatmentVisitCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Pulmonary Function Testing CRF" url="/docs/PFTCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Change In Therapy CRF" url="/docs/ChangeinTherapyCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Observational Arm Pulmonary Evaluation Log" url="/docs/ObvArmPulmonaryEvalLogCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Crossover Safety Check CRF" url="/docs/CrossoverSafetyCheckCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Adverse Event Worksheet SAE CRF" url="/docs/AE-SAEWorksheetVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="End Of Study CRF" url="/docs/EndofStudyCRFVer1.1-9-23-14.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                        </p:submenu>
+                        <p:submenu label="CRFs - IRB Ver 5.0" styleClass="submenu" style="font:black; margin-left:5px;" rendered="#{controller.renderIRBVersion5CRFsFromMenuItems()}" >
+<!--                        <p:submenu label="Case Report Forms" styleClass="submenu" style="font:black; margin-left:5px;" > -->
+                            <p:menuitem value="Confirmation Of Eligibility CRF" url="/docs/COECRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Demographics CRF" url="/docs/DemographicsCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Baseline Therapy CRF" url="/docs/BaselineCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="ECP Treatment Visit CRF" url="/docs/ECPTreatmentVisitCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Pulmonary Function Testing CRF" url="/docs/PFTCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Change In Therapy CRF" url="/docs/ChangeinTherapyCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Observational Arm Pulmonary Evaluation Log" url="/docs/ObvArmPulmonaryEvalLogCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Crossover Safety Check CRF" url="/docs/CrossoverSafetyCheckCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Adverse Event Worksheet SAE CRF" url="/docs/AE-SAEWorksheetVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="End Of Study CRF" url="/docs/EndofStudyCRFVer5.0-10-08-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                        </p:submenu>
+                        <p:submenu label="CRFs - IRB Ver 7.0" styleClass="submenu" style="font:black; margin-left:5px;" rendered="#{controller.renderIRBVersion7CRFsFromMenuItems()}" >
+<!--                        <p:submenu label="Case Report Forms" styleClass="submenu" style="font:black; margin-left:5px;" > -->
+                            <p:menuitem value="Confirmation Of Eligibility CRF" url="/docs/NewBOS-COE-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Demographics CRF" url="/docs/NewBOS-Demographics-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Baseline Therapy CRF" url="/docs/NewBOS-BaselineTherapy-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="ECP Treatment Visit CRF" url="/docs/NewBOS-ECPTreatmentVisit-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Pulmonary Function Testing CRF" url="/docs/NewBOS-PFT-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Change In Therapy CRF" url="/docs/NewBOS-ChangeInTherapy-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Quality of Life CRF" url="/docs/NewBOS-QualityOfLife-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Adverse Event Worksheet SAE CRF" url="/docs/NewBOS-AEWorksheet-SAE-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Hospitalization CRF" url="/docs/NewBOS-Hospitalization-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="End Of Study CRF" url="/docs/NewBOS-EndOfStudy-CRF-Ver7.0-07-29-2017.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                        </p:submenu>
+<!--                        <p:menuitem value="Newsletters" action="#{controller.newsletters()}" style="color:black; margin-left:5px;" /> -->
+<!--                        <p:menuitem value="Screening and Enrollment" url="/docs/ScreeningandEnrollment_10-9-2014.doc" style="color:black; margin-left:5px;" /> -->
+                        <p:submenu label="Site Start Up" styleClass="submenu" style="font:black; margin-left:5px;">
+                            <p:menuitem value="ECP Registry Investigator Signature Page" url="/docs/InvestigatorSignaturePageECPProtocol_V7.1_2-28-18.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="ECP Site Delegation of Authority Log" url="/docs/ECPSiteDelegationofAuthorityLog_V7.1_2-28-18.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+<!--                            <p:menuitem value="ECP Registry Investigator Signature Page" url="/docs/InvestigatorSignaturePage-ECPRegistryV4revised-12-10-14.pdf" style="color:black; margin-left:5px;" target="_blank"/> -->
+<!--                            <p:menuitem value="ECP Site Delegation of Authority Log" url="/docs/ECPSiteDelegationofAuthorityLog-12-10-14.pdf" style="color:black; margin-left:5px;" target="_blank"/> -->
+                            <p:menuitem value="ECP Registry Site Regulatory Binder Table of Contents Guide" url="/docs/SiteRegulatoryBinderTableofContentsGuideforECPRegistry-1-23-15.pdf" style="color:black; margin-left:5px;" target="_blank"/>
+                            <p:menuitem value="Note To File ECP Refractory BOS" url="/docs/NoteToFileECPRefractoryBOS.doc" style="color:black; margin-left:5px;" target="_blank"/>
+                        </p:submenu>
+                        <p:menuitem value="ECP Source Document Labels - Requires AVERY 5161 Labels" url="/docs/SourcedocumentlabelsECPRefractoryBOS_V7.1_2-28-18.doc" style="color:black; margin-left:5px;" target="_blank"/>
+<!--                        <p:menuitem value="ECP Source Document Labels - Requires AVERY 5161 Labels" url="/docs/SourcedocumentlabelsECPRegistry5-28-15.doc" style="color:black; margin-left:5px;" target="_blank"/> -->
+<!--                        <p:menuitem value="Frequently Asked Questions" url="/docs/FrequentlyAskedQuestions_10-9-2014.doc" style="color:black; margin-left:5px;" /> -->
+<!--                        <p:menuitem value="Reminders" url="/docs/Reminders_10-9-2014.doc" style="color:black; margin-left:5px;" /> -->
+<!--                        <p:menuitem value="Methoxsalen Insert" url="/docs/MethoxsalenInsert_10-9-2014.doc" style="color:black; margin-left:5px;" /> -->
+                    </p:submenu>
+                    <p:submenu label="ECP Reports" styleClass="submenu" style="color:black; margin-left:5px;" rendered="#{controller.renderECPReportMenuItems()}">
+                        <!-- The html for a report listed below is created when the method (ie. TotalAccuralReportAction()) within the reportsController is executed. --> 
+                        <p:menuitem value="Total Accrual Report" action="#{reportsController.TotalAccrualReportAction()}" style="color:black; margin-left:5px;" target="_blank" rendered="#{controller.renderECPReportMenuItems()}"/>
+                        <p:menuitem value="Monthly Accrual Report" action="#{reportsController.MonthlyAccrualReportAction()}" style="color:black; margin-left:5px;" target="_blank" rendered="#{controller.renderECPReportMenuItems()}"/>
+<!--
+                        <p:menuitem value="Quarterly Milestone Payment Report" url="" style="color:black; margin-left:5px;" target="_blank" rendered="#{controller.renderECPReportMenuItems()}"/>
+                        <p:menuitem value="Monthly Data Deficiency Report" url="" style="color:black; margin-left:5px;" target="_blank" rendered="#{controller.renderECPReportMenuItems()}"/>
+                        <p:menuitem value="Weekly SAE Update Report" url="" style="color:black; margin-left:5px;" target="_blank" rendered="#{controller.renderECPReportMenuItems()}"/>
+-->
+                    </p:submenu>
+                    <p:submenu label="Help" styleClass="submenu" style="color:black; margin-left:5px;">
+<!--                        <p:menuitem value="Help Desk" url="/docs/Helpdesk-04-02-2015.pdf" style="color:black; margin-left:5px;" target="_blank"/> -->
+                        <p:menuitem value="Support Staff" action="#{controller.supportStaff()}" style="color:black; margin-left:5px;" target="_blank"/>
+<!--                        <p:menuitem value="Hours of Operation" url="/docs/HoursOfOperation-04-02-2015.pdf" style="color:black; margin-left:5px;" target="_blank"/> -->
+<!--                        <p:menuitem value="Holiday Schedule" url="/docs/HolidaySchedule-04-02-2015.pdf" style="color:black; margin-left:5px;" target="_blank"/> -->
+                        <p:menuitem value="About" action="#{controller.about()}" style="color:black; margin-left:5px;" target="_blank"/>
+                    </p:submenu>
+                </p:menubar>
+            </h:form>
+        </div>
+
+        <div id="content" class="center_content">
+            <div id="login" style="clear:both; float:right">
+                <h:form id="loginForm">
+                    <h:outputLabel value="User name: " for="username" />
+                    <h:outputText id="username" value="#{securityManager.userName} "/>
+                    <h:commandButton value="logout" action="#{securityManager.logoutAction()}"/>
+                </h:form>
+            </div>
+            
+            <ui:insert name="body">Content</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

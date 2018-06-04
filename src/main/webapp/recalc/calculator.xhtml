@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="./calculatorTemplate.xhtml">
+        <ui:define name="content">
+            
+            <h:form>
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>Participant Eligibility Calculator</h2>
+            </div>
+            <br/>
+            
+            <h:outputLabel for="selectSite" value="Site: " />
+            <h:selectOneListbox id="selectSite" value="#{reCalcController.site}" size="1" converter="#{reCalcController.siteConverter}">
+                <f:selectItems value="#{reCalcController.sites}" var="site" itemLabel="#{site.name}" itemValue="#{site}"/>
+                <f:ajax listener="#{reCalcController.selectSiteListener}" render="selectParticipant evaluations"/>
+            </h:selectOneListbox>
+            
+            <h:outputLabel for="selectParticipant" value="Participant " />
+            <h:selectOneListbox id="selectParticipant" value="#{reCalcController.participant}" size="1" converter="#{reCalcController.participantConverter}">
+                <f:selectItems value="#{reCalcController.participants}" var="participant" itemLabel="#{participant.participantID}" itemValue="#{participant}"/>
+                <f:ajax listener="#{reCalcController.selectParticipantListener}" render="evaluations"/>
+            </h:selectOneListbox>
+            
+            <h:panelGrid id="evaluations">
+                <ui:repeat var="eval" value="#{reCalcController.inputEvaluations}" varStatus="status">
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="Date "/></b>
+                        <p:calendar id="dateOfFEV11" value="#{eval.date}" required="" requiredMessage="#{msgs.dateOfFEV1}" mode="popup" showOn="button" showButtonPanel="true" pattern="yyyy/MM/dd" navigator="true" size="10" converter="strictDateTimeConverter"/>
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev11" value="#{eval.fev1}" size="3" required="false" requiredMessage="#{msgs.fev1}" validatorMessage="FEV1 ranges between 0 and 6.0">
+                            <f:validateLongRange minimum="0" maximum="6"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+                <div class="clear"></div> 
+                <div>
+                    <p:message for="dateOfFEV11" />
+                    <p:message for="fev11" />
+                </div>
+                </ui:repeat>
+                <p:messages showDetail="true"/>
+            </h:panelGrid>
+            
+                <h:commandButton value="Calculate" action="#{reCalcController.eligibilityCalcAction}" />
+
+            </h:form>
+            
+            <p>
+                <h:outputText value="Slope: #{reCalcController.calculator.slope} (ml per 30 days)"/> <br/>
+                <h:outputText value="P-Value #{reCalcController.calculator.PValue}"/>
+            </p>
+            
+            <p:chart type="line" model="#{chartView.lineModel}" style="height:500px; width: 800px;" rendered="#{reCalcController.renderChart}"/>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>

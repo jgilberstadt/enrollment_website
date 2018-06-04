@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<!--      xmlns:shiro="http://shiro.apache.org/tags/facelets"-->
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+<!--            <h:panelGrid columns="1">
+                <h:outputText value="All-Site Summary" />
+            </h:panelGrid>
+-->
+            <h3>ECP Registry Monthly Accrual Report</h3>
+<!--            <shiro
+            <shiro:principal />
+            <shiro:hasPermission-->
+            
+            <h:form>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="header-class">Site Name</th>
+                            <th class="header-class">Site ID</th>
+                            <th class="header-class">Enrolling Status</th>
+                            <th class="header-class">Participant Count</th>
+                            <!-- The following three lines of code print out the heading for each status column such as Pending, Started, Submitted, etc. -->
+                            <ui:repeat value="#{controller.eventStatus}" var="estatus" >
+                                <th class="header-class">#{estatus.name}</th>
+                            </ui:repeat>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{controller.sites}" var="site" varStatus="rowStatus">
+                            <h:panelGroup rendered="#{rowStatus.odd}" >
+                                <tr class="odd-row">
+                                    <td><h:outputText value="#{site.name}" /></td>
+                                    <td><h:outputText value="#{site.siteID}" /></td>
+                                    <td><h:outputText value="#{site.status}" /></td>
+                                    <td style="text-align: center"><h:outputText value="#{site.enrolledParticipantsCount}" /></td>
+                                    <ui:repeat value="#{controller.eventStatus}" var="estatus" >
+                                        <td style="text-align: center"><h:outputText value="#{controller.getSiteEventCount(site, estatus)}" /></td>
+                                    </ui:repeat>
+                                    <td>
+                                        <h:commandButton value="View" action="#{controller.viewSiteAction(site)}"/>
+                                    </td>
+                                </tr>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{rowStatus.even}" >
+                                <tr class="even-row">
+                                    <td><h:outputText value="#{site.name}" /></td>
+                                    <td><h:outputText value="#{site.siteID}" /></td>
+                                    <td><h:outputText value="#{site.status}" /></td>
+                                    <td style="text-align: center"><h:outputText value="#{site.enrolledParticipantsCount}" /></td>
+                                    <ui:repeat value="#{controller.eventStatus}" var="estatus" >
+                                        <td style="text-align: center"><h:outputText value="#{controller.getSiteEventCount(site, estatus)}" /></td>
+                                    </ui:repeat>
+                                    <td>
+                                        <h:commandButton value="View" action="#{controller.viewSiteAction(site)}"/>
+                                    </td>
+                                </tr>
+                            </h:panelGroup>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+
+                <h:commandButton value="Add Site" action="${controller.editSiteAction()}" >
+                    <f:param name="siteId" value="-1" />
+                </h:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>

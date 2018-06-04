@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="./formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>END OF STUDY  - Case Report Form (CRF)</h2>
+            </div>
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                <b>1. Clinical or Progress Note</b>
+                </div>
+                <div>
+                <b>2. Autopsy Report If Available</b>
+                </div>
+            </div>
+
+        </ui:define>
+       
+        <ui:define name="form_content">
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                <b>Date of Termination from Study: </b>
+                <p:calendar id="terminationDate" class="calendar" value="#{controller.endOfStudyForm.terminationDate}" requiredMessage="#{msgs.terminationDate}" disabled="#{controller.endOfStudyForm.locked}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                    <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                </p:calendar>                
+                </div>
+            </div>
+            <p:message for="terminationDate" />
+            <br/>
+            <div>          
+
+                <div class="question-radioButton">
+                    <b>1. Reason for Termination from Study (check one): </b>
+                    <div class="question-multipleRadioButton" >
+                        <h:selectOneRadio id="terminationReason" class="question-multipleRadioButton" requiredMessage="#{msgs.terminationReason}" value="#{controller.endOfStudyForm.terminationReason}" disabled="#{controller.endOfStudyForm.locked}" layout="pageDirection">
+                            <f:selectItem itemValue="normal termination" itemLabel="Normal termination, study protocol completed" /> 
+                            <f:selectItem itemValue="death" itemLabel="Early termination due to participant death" /> 
+                            <f:selectItem itemValue="withdrawal" itemLabel="Early termination due to participant withdrawal of consent" /> 
+                            <f:selectItem itemValue="other" itemLabel="Early termination for other reason" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                    </div>
+                    <div class="treatment-parameters-string">
+                        <b>If other, specify: </b>
+                        <h:inputTextarea value="#{controller.endOfStudyForm.otherSpecify}" rows="2" cols="80" />
+                    </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('terminationReason')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyType" value="#{controller.endOfStudyForm.terminationReasonVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.endOfStudyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.endOfStudyForm.terminationReasonDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                    <p:message for="terminationReason" />
+                </div>
+
+            </div>
+            <div class="question-radioButton">
+                <b>2. Comments: </b>
+                <h:inputTextarea value="#{controller.endOfStudyForm.comment}" rows="2" cols="80" disabled="#{controller.endOfStudyForm.commentLocked}" style="margin-left: 17px;"/>
+            </div>
+        </ui:define>
+    </ui:composition>
+
+</html>

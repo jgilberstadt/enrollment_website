@@ -1,0 +1,343 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="./formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>HOSPITALIZATION - Case Report Form (CRF)</h2>
+                <div>
+                    <h2><center><h:outputText value="#{controller.selectedForm.title}" /></center></h2>
+                </div>
+            </div>
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                <b>1. Admission progress Note / Emergency Department Note / Acute Ambulatory Care Note / Acute Clinic Note</b><br/>
+                <b>2. Discharge Summary</b>
+                </div>
+            </div>
+
+        </ui:define>
+       
+        <ui:define name="form_content">
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                <b>Admission Date or Emergency Department (ED) Date: </b>
+                <p:calendar id="admissionEDDate" class="calendar" value="#{controller.hospitalizationForm.admissionEDDate}" requiredMessage="#{msgs.admissionEDDate}" disabled="#{controller.hospitalizationForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                    <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                </p:calendar>
+                </div>
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('admissionEDDate')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="DATE: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyTypeDate" value="#{controller.hospitalizationForm.admissionEDDateVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.hospitalizationForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.admissionEDDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="admissionEDDate" />
+
+            <br/>
+                <div class="pre-treat-assess">
+                    <b>1. Admission or ED Diagnosis: </b>
+                    <h:inputTextarea id="ques1" required="#{param['VALIDATE']}" value="#{controller.hospitalizationForm.admissionEDDiagnosis}" rows="2" cols="80" disabled="#{controller.hospitalizationForm.locked}" style="margin-left: 17px;" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputTextarea>
+                </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('admissionEDDiagnosis')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q1: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType1" value="#{controller.hospitalizationForm.admissionEDDiagnosisVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.hospitalizationForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.admissionEDDiagnosisDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <p:message for="ques1" />
+                
+                <div class="pre-treat-assess">
+                    <b>2. Discharge Date: </b>
+                    <p:calendar id="hospitalizationDate" class="calendar" value="#{controller.hospitalizationForm.dischargeDate}" requiredMessage="#{msgs.dischargeDate}" disabled="#{controller.hospitalizationForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </p:calendar>
+                </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('dischargeDate')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q2: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType2" value="#{controller.hospitalizationForm.dischargeDateVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.hospitalizationForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.dischargeDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <p:message for="hospitalizationDate" />
+            
+                <div class="pre-treat-assess">
+                    <b>3. Discharge Diagnosis: </b>
+                    <h:inputTextarea id="ques3" required="#{param['VALIDATE']}" value="#{controller.hospitalizationForm.dischargeDiagnosis}" rows="2" cols="80" disabled="#{controller.hospitalizationForm.locked}" style="margin-left: 17px;" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputTextarea>
+                </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('dischargeDiagnosis')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q3: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType3" value="#{controller.hospitalizationForm.dischargeDiagnosisVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.hospitalizationForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.dischargeDiagnosisDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <p:message for="ques3" />
+            <br/>
+
+            <!--
+            <div>
+                <b>FOR CCC USE ONLY: Select Disease specific category: </b>
+            </div>
+            <div class="question-radioButton">
+                <b>1. Central Nervous System (CNS): </b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="cnsCheckBox1" value="#{controller.hospitalizationForm.centralNervousSysTIA}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. TIA" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="cnsCheckBox2" value="#{controller.hospitalizationForm.centralNervousSysCVA}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. CVA" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="cnsCheckBox3" value="#{controller.hospitalizationForm.centralNervousSysIntracranialHemorrhage}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="C. Intracranial Hemorrhage" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="cnsCheckBox4" value="#{controller.hospitalizationForm.centralNervousSysAcuteNeurDeficit}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="D. Acute Neurologic Deficit" />
+                </div>
+                <br/>
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="E. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.centralNervousSysOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>2. Myocardial: </b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="myocardialCheckBox1" value="#{controller.hospitalizationForm.myocardialIschemia}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. Acute Myocardial Ischemia" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="myocardialCheckBox2" value="#{controller.hospitalizationForm.myocardialInfarction}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. Acute Myocardial Infarction" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="myocardialCheckBox3" value="#{controller.hospitalizationForm.myocardialArrythmia}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="C. Acute Tachy or bradyarrythmia" />
+                </div>
+                <br/>
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="D. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.myocardialOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>3. Renal: </b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="renalCheckBox1" value="#{controller.hospitalizationForm.renalAcuteFailure}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. Acute Renal Failure" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="renalCheckBox2" value="#{controller.hospitalizationForm.renalChronicFailure}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. Chronic Renal Failure" />
+                </div>
+                <br/>
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="C. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.renalOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>4. Pulmonary: </b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="pulmCheckBox1" value="#{controller.hospitalizationForm.pulmonaryAcuteRespiratoryFailure}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. Acute Respiratory Failure" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="pulmCheckBox2" value="#{controller.hospitalizationForm.pulmonaryBOS}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. BOS" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="pulmCheckBox3" value="#{controller.hospitalizationForm.pulmonaryAcuteHypoxemia}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="C. Acute Hypoxemia" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="pulmCheckBox4" value="#{controller.hospitalizationForm.pulmonaryInfection}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="D. Pulmonary Infection" />
+                </div>
+                <br/>
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="E. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.pulmonaryOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>5. Hepatic </b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="hepaticCheckBox1" value="#{controller.hospitalizationForm.hepaticAcuteFailure}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. Acute Hepatic Failure" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="hepaticCheckBox2" value="#{controller.hospitalizationForm.hepaticAcuteRiseInEnzymes}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. Acute Rise in Liver Enzymes" />
+                </div>
+                <br/>
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="C. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.hepaticOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>6. Diabetes Mellitus (DM)</b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="diabetesCheckBox1" value="#{controller.hospitalizationForm.diabetesNewDiagnosis}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. New Diagnosis of DM" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="diabetesCheckBox2" value="#{controller.hospitalizationForm.diabetesAcuteExacerbation}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. Acute DM Exacerbation" />
+                </div>
+                <br/>
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="C. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.diabetesOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>7. Hematologic (Dyscrasia that involves symptoms or requires treatment) </b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="hematologicCheckBox1" value="#{controller.hospitalizationForm.hematologicAnemia}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. Anemia" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="hematologicCheckBox2" value="#{controller.hospitalizationForm.hematologicThrombocytopenia}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. Thrombocytopenia" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="hematologicCheckBox3" value="#{controller.hospitalizationForm.hematologicLeukopenia}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="C. Leukopenia" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="hematologicCheckBox4" value="#{controller.hospitalizationForm.hematologicLeukocystosis}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="D. Leukocystosis" />
+                </div>
+                <br/>
+                
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="E. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.hematologicOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>8. Infection</b>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="infectionCheckBox1" value="#{controller.hospitalizationForm.infectionRequiringTreatment}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="A. Infection Requiring Treatment" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="infectionCheckBox2" value="#{controller.hospitalizationForm.infectionRequiringHospitalization}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="B. Infection Requiring Hospitalization" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="infectionCheckBox3" value="#{controller.hospitalizationForm.infectionRequiringICUAdmission}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="C. Infection Requiring ICU Admission" />
+                </div>
+                <br/>
+                <div style="position: absolute; left: 45px;">
+                    <h:selectBooleanCheckbox id="infectionCheckBox4" value="#{controller.hospitalizationForm.infectionSepsis}" disabled="#{controller.hospitalizationForm.locked}" />
+                    <h:outputText value="D. Sepsis " />
+                </div>
+                <br/>
+                <div style="position:relative; left:37px; top:5px;">
+                    <h:outputText value="E. Other:" />
+                    <h:inputTextarea value="#{controller.hospitalizationForm.infectionOther}" rows="1" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                </div>
+                <br/>
+            </div>
+
+            <div class="question-radioButton">
+                <b>9. Other:</b>
+                <br/>
+                    <h:inputTextarea value="#{controller.hospitalizationForm.other}" rows="2" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+                <br/>
+            </div>
+                
+            <div class="question-radioButton">
+                <b>10. Comments: </b>
+                <h:inputTextarea value="#{controller.hospitalizationForm.comment}" rows="2" cols="80" disabled="#{controller.hospitalizationForm.commentLocked}" style="margin-left: 17px;" />
+            </div>
+            -->
+
+        </ui:define>
+    </ui:composition>
+    
+</html>
+

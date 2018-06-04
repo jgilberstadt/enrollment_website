@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <div class="center_content">
+                <h:panelGrid columns="2" >
+<!--                <a href="http://ecpregistry.wustl.edu" > <button>Home</button></a>  -->
+<!--                <h:commandButton value="Investigator Resources" action="# {calcController.homeAction()}" />  -->
+                </h:panelGrid>
+            </div>
+
+            <h:panelGrid rendered="#{calcController.eligibilityScreeningPassed}">
+                <h1 style="color:red; font-size:24px;">Enrollment Determination Results</h1>
+                <h2>This patient is now ENROLLED into the Study.</h2>
+                <p>
+<!--                    <h:outputText value="index = # {calcController.enrollmentEligible} "/>  -->
+                </p>
+                <h:form >
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Enroll Patient..." action="#{calcController.enrollParticipantIntoECPStudyAction}" />
+                        <h:commandButton value="Cancel" action="#{calcController.cancelCalculationAction()}" />
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGrid>
+
+            <h:panelGrid  rendered="#{calcController.eligibilityScreeningFailed}">
+                <h1 style="color:red; font-size:24px;">Enrollment Determination Results</h1>
+                <h2>This patient CANNOT be enrolled at this time. To be eligible for study enrollment,</h2>
+                <h2>the patient must meet all study Inclusion Criteria and no study Exclusion Criteria.</h2>
+                <h2>All of the Inclusion Criteria questions must be marked YES and all of the </h2>
+                <h2>Exclusion Criteria questions must be marked NO to be eligible for study enrollment.</h2>
+                <p>
+<!--                    Eligibility failed on the following criterion:  -->
+<!--                    <h:outputText value="# {calcController.rule}"/>  -->
+                </p>
+                <p>
+<!--                    <h:outputText value="index = # {calcController.notEnrollmentEligible} "/>  -->
+                </p>
+                <h:form >
+                    <h:panelGrid columns="3">
+                        <h:commandButton value="Review Data Entry" action="#{calcController.reviewEnrollmentDataAction()}" />
+                        <h:commandButton value="Cancel" action="#{calcController.cancelCalculationAction()}" />
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGrid>
+            
+        </ui:define>
+    </ui:composition>
+    
+</html>

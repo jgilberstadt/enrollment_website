@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="./template/newChangeInTherapyTemplate.xhtml">
+        
+        <ui:define name="form_title_insert">
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>CHANGE IN THERAPY - Case Report Form (CRF)</h2>
+                <div>
+                    <h2><center><h:outputText value="#{controller.selectedForm.title}" /></center></h2>
+                </div>
+            </div>
+            <div>
+                <p style="width: 750px; font-size: medium; color: red; font-weight: bold">
+                    The medications listed in this Change in Therapy CRF are pre-populated from either the Baseline Therapy CRF or the most previous Change in Therapy CRF.  Please review all items and update the medications that have changed.
+                </p>
+            </div>
+	    <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                <b>1. Clinic or Progress Note and/or Medication Record</b>
+                </div>
+            </div>
+        </ui:define>
+       
+    </ui:composition>
+
+</html>

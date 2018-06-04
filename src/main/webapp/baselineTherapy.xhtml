@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="./template/baselineTherapyFormTemplate.xhtml">
+        <ui:param name="anticoagQuesNumber" value="2" />
+        <ui:param name="plateletQuesNumber" value="3" />
+        <ui:param name="commentsQuesNumber" value="4" />
+        
+        <ui:define name="formSourceDocumentInsert">
+            <div>
+                <b>1. Clinical Note or Medication Record Form</b>
+            </div>
+        </ui:define>
+
+        
+        <ui:define name="prednisoneInTable">
+            <div class="answer-radioButton">
+                <h:panelGrid columns="5" >
+                    <h:selectOneRadio id="ques1bprednisone" class="yesnoanswers" requiredMessage="#{msgs.prednisoneCurrent}" value="#{controller.baselineTherapyForm.prednisoneCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                        <f:ajax execute="baselineTherapyForm" render="@form" listener="#{controller.clearBaselineTherapyDrugsIfNoListener}" />
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions-prednizone" value="Prednisone" />
+                    <b>If yes, enter daily dose: </b>
+                    <h:inputText id="ques1bDose" value="#{controller.baselineTherapyForm.prednisoneCurrentDosage}" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.prednisoneCurrent == false}" size="4" validatorMessage="Validation Error: Prednisone dose ranges between 0 and 150 mg.">
+                        <f:validateLongRange minimum="0" maximum ="150"/>
+                    </h:inputText>
+                    <b> mg (input range: 0-150)</b>
+                </h:panelGrid>
+            </div>
+            <p:message for="ques1bDose" />
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('prednisoneCurrent')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q1 Prednisone: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyPrednisoneCurrent" value="#{controller.baselineTherapyForm.prednisoneCurrentVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.baselineTherapyForm.prednisoneCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="ques1bprednisone" />
+        </ui:define>
+    </ui:composition>
+
+</html>

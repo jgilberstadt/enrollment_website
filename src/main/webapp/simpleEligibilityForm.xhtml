@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="./formTemplate.xhtml">
+        <ui:define name="form_content">
+
+                <h:outputText value="Age 18 years or greater: " />
+                <h:selectBooleanCheckbox value="#{controller.simpleEligibilityForm.age18OrOlder}" disabled="#{controller.readOnlyForm}"/> 
+                <h:outputText value="Medicare-eligible: " />
+                <h:selectBooleanCheckbox value="#{controller.simpleEligibilityForm.medicareEligible}" disabled="#{controller.readOnlyForm}"/> <br/>
+                <h:outputText value="FEV 1: " />
+                <h:inputText value="#{controller.simpleEligibilityForm.FEV1}" /> <br/>
+                <h:outputText value="FVC 1: " />
+                <h:inputText value="#{controller.simpleEligibilityForm.FVC1}" /> <br/>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>
+

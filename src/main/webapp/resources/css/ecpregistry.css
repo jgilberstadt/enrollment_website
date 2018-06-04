@@ -1,0 +1,837 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 9, 2014, 3:13:15 PM
+    Author     : pkc
+*/
+
+body{
+    font-family: "Verdana", Helvetica, Arial, sans-serif;
+    background-color: #e2f3ff; /* original light blue body backgound color behind the CRFs is: e2f3ff */
+}
+
+h2{ 
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    color: black;
+    width: 750px;
+    text-align: center;
+}
+
+h3{ 
+    color: black;
+    width: 750px;
+    text-align: center;
+}
+
+
+.ui-widget .ui-calendar {
+    
+}
+
+.ui-icon-calendar{
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.ui-button{
+
+}
+
+/* id definitions can be used only one time in the xhtml file */
+
+#crfheader {
+    width: 757px;
+    background-color: whitesmoke;  /* original light gray CRF header backgound color is: whitesmoke   NOTE: The training color should be: red */
+    padding: 1px;
+    border: 2px solid black;
+}
+
+#crfheadertraining {
+    width: 757px;
+    background-color: red;  /* original light gray CRF header backgound color is: whitesmoke   NOTE: The training color should be: red */
+    padding: 1px;
+    border: 2px solid black;
+}
+
+#crfcenterparticipantids {
+    width: 738px;
+    background-color: #d2f7df;  /* background-color: #d2f3df; Light green color */
+    padding: 9px;
+    font-size: large;
+    color: black;
+    font-weight: bold;
+}
+
+#crfcenterparticipantidsdate {
+    width: 744px;
+    background-color: #d2f7df;  /* background-color: #d2f3df; Light green color */
+    padding: 9px;
+    font-size: large;
+    color: black;
+    font-weight: bold;
+}
+
+/* class definitions can be used many times in multiple elements in the xhtml file */
+
+.crfpage{
+    width: 755px;
+    background-color: #e2f3ff;  /* light blue background color */
+    padding: 5px;
+    border: 0px solid black;
+}
+
+.yesnoanswers {
+    width: 150px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.yesnoanswers2 {
+    width: 135px;
+    margin-left: 10px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.yesnoanswers3 {
+    width: 235px;
+    margin-left: 0px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.uvarcellex {
+    width: 215px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.textGender {
+    width: 75px;
+    margin-left: 25px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    float: left;
+    border: 0px solid black;
+}
+
+.radioGender {
+    width: 200px;
+    margin-left: 15px;
+    padding-top: 10px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.typeAnticoagulant {
+    width: 315px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.typeVenousAccess {
+    width: 500px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.typeVenousAccessLumen {
+    width: 300px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.confelig-question {
+    width: 750px;
+    padding: 10px;
+    font-size: medium;
+    color: black;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.yesno-questions {
+    display: block; /* display block is required for h:outputlabel so width and height works */
+    width: 590px;
+    padding-left: 5px;
+    padding-top: 0px;
+    margin-left: 5px;
+    border: 0px solid black;
+}
+
+.yesno-questions2 {
+    display: block; /* display block is required for h:outputlabel so width and height works */
+    width: 200px;
+    padding-left: 5px;
+    padding-top: 0px;
+    margin-left: 5px;
+    border: 0px solid black;
+}
+
+.yesnoanswers-expectedness {
+    width: 250px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.yesno-questions-prednizone {
+    display: block; /* display block is required for h:outputlabel so width and height works */
+    width: 110px;
+    padding-left: 5px;
+    padding-top: 0px;
+    margin-left: 5px;
+    border: 0px solid black;
+}
+.bosStage {
+    width: 300px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.tableBos{
+    margin-left: 25px;
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+
+.radioReportType {
+    width: 300px;
+    margin-left: 5px;
+    padding-top: 0px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.radioReportOutcome {
+    width: 720px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.radioReportMethoxsalen {
+    width: 620px;
+    margin-left: 15px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.adminMethoxsalen{
+    display: block;
+    width: 410px;
+    border: 0px solid black;
+}
+
+.adminMethoxsalenCheckbox{
+    display: block;
+    width: 100px;
+    margin-left: 50px;
+}
+
+.indent{
+    display: block;
+    width: 50px;
+}
+
+.keyContact-title{
+    font-size: large; 
+    text-align: left;
+    font-weight: bold;
+}
+
+.keyContact-name{
+    color: red; 
+    font-size: medium; 
+    text-align: left;
+    font-weight: bold;
+}
+
+.keyContact-font-align{ 
+    font-size: 110%; 
+    text-align: left;
+    font-weight: bold;
+}
+
+td.rightTable1{ 
+    text-align: right;
+    padding-right: 80px;
+}
+
+td.rightTable3{ 
+    text-align: center;
+}
+
+.datatable-class-reports{
+    font-size: 150%;  
+}
+
+.header-class-reports{
+    background-color: lightgreen;
+    padding: 10px;
+}
+
+.saeTitle {
+    font-size: 30px;
+    font-weight: bold;
+    width: 732px;
+    color: black;
+}
+
+/***************************/
+/* PRIMEFACES CSS CHANGES  */
+/***************************/
+
+.calendar{
+    font-size: 14px;
+    background-color: white !important;
+}
+                               
+.calendar .ui-state-disabled {
+    font-weight: bold !important; 
+    color: black !important;
+    background-color: whitesmoke !important;
+}
+                               
+
+
+/* How to use the div tag to display columns instead of tables */
+/* http://www.ben-morris.com/using-the-div-tag-to-display-columns-rather-than-tables */
+
+div.datefevfvc {
+    width: 593px;
+    margin-left: 100px;
+}
+
+div.datefevfvc div {
+    margin-top: 5px;
+    float: left;
+    border: 0px solid black;
+}
+
+div.date {
+    font-size: 14px;
+    width: 45%;
+}
+
+div.fev {
+    font-size: 14px;
+    width: 25%;
+    padding-top: 7px;
+}
+
+div.fvc {
+    font-size: 14px;
+    width: 25%;
+    padding-top: 7px;
+}
+
+div.clear {
+    clear: both; /* clears both left and right float */
+}
+
+div.confirmeligquestions {
+    width: 750px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.confirmeligquestions div {
+    float: left;
+    border: 0px solid black;
+}
+
+div.ques {
+    width: 510px;
+    padding-top: 7px;
+}
+
+div.cal {
+    width: 180px;
+}
+
+div.investname {
+    width: 250px;
+}
+
+div.print {
+    width: 280px;
+}
+
+div.investsign {
+    width: 160px;
+}
+
+div.sign {
+    width: 480px;
+}
+
+div.submitbutton {
+
+}
+
+div.sectionFirstHeading, div.sectionSecondHeading{
+    width: 730px;
+    margin-left: 5px;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    font-size: large;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.sectionSecondHeading{
+    width: 730px;
+    padding-top: 27px;
+}
+
+div.pre-treat-assess, div.pre-treat-assess-steroid{
+    width: 550px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.pre-treat-assess-steroid{
+    margin-left: 25px;
+}
+
+div.pre-treat-assess-2{
+    width: 600px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-inputText{
+    width: 550px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.inputText-baselineFEV1{
+    width: 55px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.ishlt-directions{
+    width: 750px;
+    padding-top: 10px;
+    margin-left: 45px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.outputText-indented{
+    padding-top: 10px;
+    margin-left: 45px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.outputText-indentedTwice{
+    padding-top: 10px;
+    margin-left: 65px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-inputText-other{
+    width: 550px;
+    padding-top: 10px;
+    margin-left: 40px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-inputText-immunodrug{
+    width: 700px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-inputText-ChangeImmunoDrug{
+    width: 700px;
+    padding-top: 10px;
+    margin-left: 40px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-radioButton{
+    width: 700px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-radioButton2{
+    width: 730px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-radioButtonDemo{
+    width: 700px;
+    padding-bottom: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-multipleRadioButton {
+    width: 700px;
+    margin-left: 10px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.answer-radioButton{
+    width: 700px;
+    padding-top: 0px;
+    margin-left: 22px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.answer-radioButton-otherDrugs{
+    width: 700px;
+    padding-top: 0px;
+    margin-left: 250px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.answer-radioButtonMedicalHistory{
+    width: 700px;
+    padding-top: 3px;
+    padding-bottom: 5px;
+    margin-left: 22px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.yesnoanswersgerd{
+    width: 150px;
+    margin-left: 3px;
+    font-weight: bold;
+    float: left;
+    border: 0px solid black;
+}
+
+div.gerd {
+    width: 190px;
+    padding-top: 5px;
+    margin-left: 30px;
+    font-weight: bold;
+    float: left;
+    border: 0px solid black;
+}
+
+div.gerdTreatment {
+    width: 300px;
+    margin-left: 370px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.coronaryArteryDisease {
+    width: 235px;
+    padding-top: 5px;
+    margin-left: 30px;
+    font-weight: bold;
+    float: left;
+    border: 0px solid black;
+}
+
+div.coronaryArteryDiseaseType {
+    width: 300px;
+    margin-left: 420px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.pre-treat-assess-steroid-drug div{
+    width: 270px;
+    padding-top: 15px;
+    margin-left: 45px;
+    float: left;
+    border: 0px solid black;
+}
+
+div.steroid-drug{
+    border: 0px solid black;
+}
+
+div.pre-treat-assess-bloodpressure {
+    width: 750px;
+    margin-left: 23px;
+}
+
+div.pre-treat-assess-bloodpressure div{
+    padding-top: 15px;
+    float: left;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.bloodpressureQuestion{
+    padding-left: 2px;
+    width: 19%;
+    border: 0px solid black;    
+}
+
+div.bloodpressureValues {
+    width: 25%;
+    border: 0px solid black;
+}
+
+div.pre-treat-assess-cbc{
+    width: 550px;
+    padding-top: 15px;
+    padding-left: 0px;
+    margin-left: 45px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.treatment-parameters{
+    width: 750px;
+    padding-top: 10px;
+    margin-left: 23px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.treatment-parameters-questions{
+    width: 150px;
+    border: 0px solid black;
+}
+
+div.treatment-parameters-questions11_12{
+    width: 710px;
+    padding-top: 10px;
+    margin-left: 23px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.treatment-parameters-string{
+    width: 750px;
+    padding-top: 15px;
+    padding-left: 2px;
+    padding-bottom: 8px;
+    margin-left: 23px;
+    border: 0px solid black;
+}
+
+div.treatment-parameters-indent{
+    margin-left: 23px;
+    border: 0px solid black;
+}
+
+div.treatment-parameters-rec-supple-oxy{
+    width: 750px;
+    padding-top: 15px;
+    padding-left: 28px;
+    padding-bottom: 8px;
+    margin-left: 15px;
+    border: 0px solid black;
+}
+
+div.treatment-parameters-string-indent{
+    width: 750px;
+    padding-top: 15px;
+    padding-left: 28px;
+    padding-bottom: 8px;
+    margin-left: 25px;
+    border: 0px solid black;
+}
+
+div.change-therapy-ques4-indent{
+    width: 750px;
+    padding-top: 15px;
+    padding-left: 17px;
+    padding-bottom: 8px;
+    margin-left: 25px;
+    border: 0px solid black;
+}
+
+div.longStringQuestion{
+    width: 720px;
+    padding-top: 15px;
+    padding-left: 2px;
+    padding-bottom: 8px;
+    margin-left: 23px;
+    border: 0px solid black;
+}
+
+div.resolution{
+    vertical-align: middle;
+    border: 0px solid black;
+}
+
+div.paragraph{
+    width: 700px;
+    margin-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 0px solid black;    
+}
+
+div.paragraph-indent{
+    width: 700px;
+    margin-left: 45px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border: 0px solid black;    
+}
+
+.saeReportType{
+    padding-left: 20px;
+    border: 2px solid black;    
+}
+
+div.question-radioButtonSAE{
+    width: 750px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-radioButtonSAEindent{
+    width: 750px;
+    padding-top: 10px;
+    margin-left: 45px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-radioButtonSAEindentMore{
+    width: 750px;
+    padding-top: 10px;
+    margin-left: 47px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-radioButton9{
+    width: 750px;
+    padding-top: 10px;
+    margin-left: 27px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-inputTextAE{
+    width: 550px;
+    padding-top: 10px;
+    margin-left: 27px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.question-inputText-vital-signs{
+    width: 650px;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+div.selectVerificationStatus{
+    color: red;
+    font-weight: bold;
+}
+
+div.selectVerificationStatusIndented{
+    margin-left: 25px;
+    color: red;
+    font-weight: bold;
+}
+
+div.selectVerificationStatusIndentedMore{
+    margin-left: 200px;
+    color: red;
+    font-weight: bold;
+}
+
+div.keyContact{
+    font-size: large; 
+    text-align: center;
+    font-weight: bold;
+}
+
+div.crossoverSafetyCheckQues1 {
+    width: 800px;
+    font-weight: bold;
+}
+
+div.crossoverSafetyCheckQues1-inputText{
+    width: 550px;
+    float: left;
+    padding-top: 10px;
+    margin-left: 25px;
+    font-weight: bold;
+}
+
+div.crossoverSafetyCheckQues1-radioButton{
+    width: 200px;
+    float: left;
+    padding-top: 10px;
+    margin-left: 0px;
+    font-weight: bold;
+}
+
+div.crossoverSafetyCheckQues2 {
+    width: 800px;
+    font-weight: bold;
+}
+
+div.crossoverSafetyCheckQues2-inputText{
+    width: 450px;
+    float: left;
+    padding-top: 5px;
+    margin-left: 25px;
+    font-weight: bold;
+}
+
+div.crossoverSafetyCheckQues2-radioButton{
+    width: 200px;
+    float: left;
+    margin-left: 12px;
+    font-weight: bold;
+}
+
+div.crossoverSafetyCheckQues3-inputText{
+    width: 550px;
+    float: left;
+    padding-top: 5px;
+    margin-left: 25px;
+    font-weight: bold;
+}

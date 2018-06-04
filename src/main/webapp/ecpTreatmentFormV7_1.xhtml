@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:composition template="./template/newEcpTreatmentFormTemplate.xhtml">
+        <ui:param name="seriousAE" value="the Serious" />
+               
+        <ui:param name="eCPTypeMachineQuesNumber" value="8" />
+        <ui:param name="anticoagUsedQuesNumber" value="9" />
+        <ui:param name="uvarMachineUsedQuesNumber" value="10" />
+        <ui:param name="cellexMachineUsedQuesNumber" value="11" />
+        <ui:param name="answerNoReasonWhyQuesNumber" value="12" />
+        <ui:param name="typeVenousAccessQuesNumber" value="13" />
+        <ui:param name="ecpTxCompletedQuesNumber" value="14" />
+        <ui:param name="complicationsQuesNumber" value="15" />
+        <ui:param name="commentsQuesNumber" value="16" />
+        
+        <ui:define name="cbc_questions_insert">
+            <f:selectItem itemValue="cbcWithDiffCollected" itemLabel="CBC with Differential collected on the Day of ECP prior to initiating ECP"/>
+            <f:selectItem itemValue="cbcCollectedYesterday" itemLabel="CBC Collected prior to the ECP Treatment Yesterday" />
+            <f:selectItem itemValue="cbcMissed" itemLabel="CBC Missed (Please provide note to file.)" />
+            <f:selectItem itemValue="diffMissed" itemLabel="Differential Missed (Please provide note to file.)" />
+        </ui:define>
+
+
+        <ui:define name="portDescription">
+            
+            <div class="treatment-parameters-string-indent">
+
+                <b>A. If yes to port: </b>
+                <h:selectOneRadio id="ques13a" class="typeVenousAccessLumen" requiredMessage="#{msgs.portLumen}" value="#{controller.ecpTreatmentForm.portLumen}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                    <f:selectItem itemValue="portSingleLumen" itemLabel="Single Lumen"/>
+                    <f:selectItem itemValue="portDoubleLumen" itemLabel="Double Lumen" /> 
+                </h:selectOneRadio>
+
+            </div>
+            <div class="treatment-parameters-string-indent">
+                <b>B. Name of port </b>
+                <h:selectOneRadio id="ques13b" class="typeVenousAccess" requiredMessage="#{msgs.portName}" value="#{controller.ecpTreatmentForm.portName}" disabled="#{controller.ecpTreatmentForm.locked}" style="display: inline-table;">
+                    <f:selectItem itemValue="portNameVortex" itemLabel="Vortex"/>
+                    <f:selectItem itemValue="portNamePowerPort" itemLabel="Power Port"/>
+                    <f:selectItem itemValue="portNamePowerFlow" itemLabel="Power Flow"/>
+                    <f:selectItem itemValue="portNameOther" itemLabel="Other"/>
+                </h:selectOneRadio>
+            </div>
+            <div class="treatment-parameters-string-indent">
+                <b>If other, please provide the name of the port: </b>
+                <h:inputTextarea value="#{controller.ecpTreatmentForm.portNameComment}" rows="2" cols="80" disabled="#{controller.ecpTreatmentForm.locked}" />
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

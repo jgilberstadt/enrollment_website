@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="../formTemplate.xhtml">
+        <ui:define name="form_title">
+        
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>BASELINE THERAPY - Case Report Form (CRF)</h2>
+            </div>
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <ui:insert name="formSourceDocumentInsert"/>
+            </div>
+
+        </ui:define>
+       
+        <ui:define name="form_content">
+            <h:panelGroup id="baselineTherapyForm" >
+                <div id="crfcenterparticipantidsdate">
+                    <div>
+                    <b>Baseline Therapy Date: </b>
+                    <p:calendar id="baselineTherapyDate" class="calendar" value="#{controller.baselineTherapyForm.baselineTherapyDate}" requiredMessage="#{msgs.baselineTherapyDate}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </p:calendar>
+                    </div>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('baselineTherapyDate')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="DATE: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeDate" value="#{controller.baselineTherapyForm.baselineTherapyDateVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.baselineTherapyDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="baselineTherapyDate" />
+                <br/>
+
+
+
+                <div class="question-inputText-immunodrug">
+                    <b>1. Check all immunosuppressive drugs that are <u>currently being used</u> by the participant: </b>
+                </div>
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1a" class="yesnoanswers" requiredMessage="#{msgs.tacrolimusCurrent}" value="#{controller.baselineTherapyForm.tacrolimusCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Tacrolimus" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('tacrolimusCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Tacrolimus: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTacrolimusCurrent" value="#{controller.baselineTherapyForm.tacrolimusCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.tacrolimusCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1a" />
+                
+                <ui:insert name="prednisoneInTable" />
+                
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1c" class="yesnoanswers" requiredMessage="#{msgs.alemtuzumabCurrent}" value="#{controller.baselineTherapyForm.alemtuzumabCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Alemtuzumab" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('alemtuzumabCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Alemtuzumab: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyalemtuzumabCurrent" value="#{controller.baselineTherapyForm.alemtuzumabCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.alemtuzumabCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1c" />
+
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1d" class="yesnoanswers" requiredMessage="#{msgs.sirolimusCurrent}" value="#{controller.baselineTherapyForm.sirolimusCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Sirolimus (Rapamycin)" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('sirolimusCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Sirolimus: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifysirolimusCurrent" value="#{controller.baselineTherapyForm.sirolimusCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.sirolimusCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1d" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1e" class="yesnoanswers" requiredMessage="#{msgs.everolimusCurrent}" value="#{controller.baselineTherapyForm.everolimusCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Everolimus" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('everolimusCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Everolimus: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyEverolimusCurrent" value="#{controller.baselineTherapyForm.everolimusCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.everolimusCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1e" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1f" class="yesnoanswers" requiredMessage="#{msgs.azathioprineCurrent}" value="#{controller.baselineTherapyForm.azathioprineCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Azathioprine" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('azathioprineCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Azathioprine: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyAzathioprineCurrent" value="#{controller.baselineTherapyForm.azathioprineCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.azathioprineCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1f" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1g" class="yesnoanswers" requiredMessage="#{msgs.cyclosporineACurrent}" value="#{controller.baselineTherapyForm.cyclosporineACurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Cyclosporine A" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('cyclosporineACurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Cyclosporine A: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyCyclosporineACurrent" value="#{controller.baselineTherapyForm.cyclosporineACurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.cyclosporineACurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1g" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1h" class="yesnoanswers" requiredMessage="#{msgs.methotrexateCurrent}" value="#{controller.baselineTherapyForm.methotrexateCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Methotrexate" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('methotrexateCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Methotrexate: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyMethotrexateCurrent" value="#{controller.baselineTherapyForm.methotrexateCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.methotrexateCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1h" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1i" class="yesnoanswers" requiredMessage="#{msgs.macrolideAntibioticCurrent}" value="#{controller.baselineTherapyForm.macrolideAntibioticCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Macrolide Antibiotic, Azithromycin" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('macrolideAntibioticCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Macrolide Antibiotic: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyMacrolideAntibioticCurrent" value="#{controller.baselineTherapyForm.macrolideAntibioticCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.macrolideAntibioticCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1i" />
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1j" class="yesnoanswers" requiredMessage="#{msgs.mycophenolateMofetilCurrent}" value="#{controller.baselineTherapyForm.mycophenolateMofetilCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+    <!--                        <f:validateRequired disabled="# {controller.baselineTherapyForm.dataMissing}" /> -->
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Mycophenolate Mofetil (Cellcept or Myfortic)" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('mycophenolateMofetilCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Mycophenolate Mofetil: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyMycophenolateMofetilCurrent" value="#{controller.baselineTherapyForm.mycophenolateMofetilCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.mycophenolateMofetilCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1j" />
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1k" class="yesnoanswers" requiredMessage="#{msgs.antiThymocyteGlobulinCurrent}" value="#{controller.baselineTherapyForm.antiThymocyteGlobulinCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Anti-Thymocyte Globulin - ATG (Thymoglobulin or Atgam)" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('antiThymocyteGlobulinCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Total Lymphoid Irradiation: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyAntiThymocyteGlobulinCurrent" value="#{controller.baselineTherapyForm.antiThymocyteGlobulinCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.antiThymocyteGlobulinCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1k" />
+
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="2" >
+                        <h:selectOneRadio id="ques1m" class="yesnoanswers" requiredMessage="#{msgs.totalLymphoidIrradiationCurrent}" value="#{controller.baselineTherapyForm.totalLymphoidIrradiationCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+    <!--                        <f:validateRequired disabled="# {controller.baselineTherapyForm.dataMissing}" /> -->
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions" value="Total Lymphoid Irradiation" />
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('totalLymphoidIrradiationCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Total Lymphoid Irradiation: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTotalLymphoidIrradiationCurrent" value="#{controller.baselineTherapyForm.totalLymphoidIrradiationCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.totalLymphoidIrradiationCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques1m" />
+
+                <div class="answer-radioButton">
+                    <h:panelGrid columns="4" >
+                        <h:selectOneRadio id="quest1nOtherDrugs" class="yesnoanswers" value="#{controller.baselineTherapyForm.otherDrugsCurrent}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            <f:ajax execute="baselineTherapyForm" render="@form" listener="#{controller.clearBaselineTherapyDrugsIfNoListener}" />
+                        </h:selectOneRadio>
+                        <h:outputLabel class="yesno-questions2" value="Other Drug(s)" />
+                    </h:panelGrid>
+                </div>
+                <div>
+                    <h:panelGrid style="margin-left:203px; width: 450px;">
+                        <h:outputLabel style=" font-weight: bold; border: 0px solid black;" value="If YES for Other Drug(s), please provide the drug name(s): " />
+                    </h:panelGrid>
+                    <h:panelGrid >
+                        <h:inputTextarea style="margin-left:203px;" value="#{controller.baselineTherapyForm.otherDrugNamesCurrent}" cols="60" rows="2" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.otherDrugsCurrent == false}"/>
+                    </h:panelGrid>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('otherDrugsCurrent')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q1 Other Drug(s): VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyOtherDrugsCurrent" value="#{controller.baselineTherapyForm.otherDrugsCurrentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.otherDrugsCurrentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                
+                <ui:insert name="prednisoneOutsideTable" />
+                
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel class="treatment-parameters-questions" value="#{anticoagQuesNumber}. Is the participant taking an anticoagulant drug?" />
+                        <h:selectOneRadio id="ques2anticoagulants" class="yesnoanswers" requiredMessage="#{msgs.onAntiCoagulant}" value="#{controller.baselineTherapyForm.onAntiCoagulant}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="baselineTherapyForm" render="@form" listener="#{controller.clearBaselineTherapyDrugsIfNoListener}" />
+    <!--                        <f:validateRequired disabled="# {controller.baselineTherapyForm.dataMissing}" /> -->
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="question-inputText-other">
+                    <b>If yes, list drugs: </b><br/>
+                    Name anticoagulant 1: <h:inputText value="#{controller.baselineTherapyForm.antiCoagulantName1}" size="30" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.onAntiCoagulant == false}" /><br/><br/>
+                    Name anticoagulant 2: <h:inputText value="#{controller.baselineTherapyForm.antiCoagulantName2}" size="30" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.onAntiCoagulant == false}" /><br/><br/>
+                    Name anticoagulant 3: <h:inputText value="#{controller.baselineTherapyForm.antiCoagulantName3}" size="30" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.onAntiCoagulant == false}" /><br/>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('onAntiCoagulant')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q#{anticoagQuesNumber} Anticoagulant drugs: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyAnticoagulant" value="#{controller.baselineTherapyForm.onAntiCoagulantVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.onAntiCoagulantDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques2anticoagulants" />
+
+                <div class="treatment-parameters">
+                    <h:panelGrid columns="3" >
+                        <h:outputLabel class="treatment-parameters-questions" value="#{plateletQuesNumber}. Is the participant taking an anti-platelet drug?" />
+                        <h:selectOneRadio id="ques3antiplatelets" class="yesnoanswers" requiredMessage="#{msgs.onAntiPlatelet}" value="#{controller.baselineTherapyForm.onAntiPlatelet}" disabled="#{controller.baselineTherapyForm.locked}" style="display: inline-table;" >
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:ajax execute="baselineTherapyForm" render="@form" listener="#{controller.clearBaselineTherapyDrugsIfNoListener}" />
+    <!--                        <f:validateRequired disabled="# {controller.baselineTherapyForm.dataMissing}" />  -->
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+                </div>
+                <div class="question-inputText-other">
+                    <b>If yes, list drugs: </b><br/>
+                    Name anti-platelet 1: <h:inputText value="#{controller.baselineTherapyForm.antiPlateletName1}" size="30" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.onAntiPlatelet == false}" /><br/><br/>
+                    Name anti-platelet 2: <h:inputText value="#{controller.baselineTherapyForm.antiPlateletName2}" size="30" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.onAntiPlatelet == false}" /><br/><br/>
+                    Name anti-platelet 3: <h:inputText value="#{controller.baselineTherapyForm.antiPlateletName3}" size="30" disabled="#{controller.baselineTherapyForm.locked || controller.baselineTherapyForm.onAntiPlatelet == false}" /><br/>
+                </div>
+                <h:panelGroup rendered="#{controller.renderVerificationPanel('onAntiPlatelet')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q#{plateletQuesNumber} Antiplatelet Drugs: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyAntiPlatelet" value="#{controller.baselineTherapyForm.onAntiPlateletVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.baselineTherapyForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.baselineTherapyForm.onAntiPlateletDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+                <p:message for="ques3antiplatelets" />
+
+                <div class="question-radioButton">
+                    <b>#{commentsQuesNumber}. Comments: </b>
+                    <h:inputTextarea value="#{controller.baselineTherapyForm.comment}" rows="2" cols="80" disabled="#{controller.baselineTherapyForm.commentLocked}" style="margin-left: 17px;"/>
+                </div>
+
+    <!--        // The following section of code was moved to the formTemplate.xhtml file, so the Data Missing checkbox could be placed to the right of the Submit button.
+                <div class="question-radioButton">
+                    <h:selectBooleanCheckbox id="dataMissingCheckBox" value="# {controller.baselineTherapyForm.dataMissing}" >
+                        <f:ajax listener="# {controller.baselineTherapyForm.dataMissingListener}" render=""/>
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel for="dataMissingCheckBox" value="Data Missing" />
+                </div>
+    -->
+            </h:panelGroup>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="./demoMedHistFormTemplate.xhtml">
+        <ui:param name="clinStatusWeeksHeader" value="Two Weeks" />
+        <ui:param name="clinStatusWeeks" value="two weeks" />
+        
+        <ui:define name="sourceDocuments">
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                <b>1. History and Physical Or Consultation Note</b>
+                </div>
+                <div>
+                <b>2. Operative Report of Transplant Procedure</b>
+                </div>
+                <div>
+                <b>3. Pulmonary Function Test Reports (for each FEV-1 submitted)</b>
+                </div>
+                <div>
+                <b>4. Medication List</b>
+                </div>
+            </div>
+        </ui:define>
+        
+        <ui:define name="lungTransplantationCause">
+            <div class="question-radioButton">
+                <b>5. Please provide a description of the underlying disease necessitating lung transplantation: </b>
+                <br/>
+                <h:selectBooleanCheckbox id="causeCheckBox1" value="#{controller.demoMedHistForm.transplantCauseCopdIncludingEmphysema}" disabled="#{controller.demoMedHistForm.locked}" />
+                <h:outputText value=" Chronic Obstructive Pulmonary Disease (COPD) including Emphysema" />
+                <br/>
+                <h:selectBooleanCheckbox id="causeCheckBox2" value="#{controller.demoMedHistForm.transplantCauseInterstitialLungDisease}" disabled="#{controller.demoMedHistForm.locked}" />
+                <h:outputText value=" Interstitial Lung Disease" />
+                <br/>
+                <h:selectBooleanCheckbox id="causeCheckBox3" value="#{controller.demoMedHistForm.transplantCauseCysticFibrosis}" disabled="#{controller.demoMedHistForm.locked}" />
+                <h:outputText value=" Cystic Fibrosis" />
+                <br/>
+                <h:selectBooleanCheckbox id="causeCheckBox4" value="#{controller.demoMedHistForm.transplantCausePulmonaryHypertension}" disabled="#{controller.demoMedHistForm.locked}" />
+                <h:outputText value=" Pulmonary Hypertension" />
+                <br/>
+                <h:selectBooleanCheckbox id="causeCheckBox5" value="#{controller.demoMedHistForm.transplantCauseA1ADEmphysema}" disabled="#{controller.demoMedHistForm.locked}" />
+                <h:outputText value=" Alpha 1-Antitrypsin Deficiency Emphysema" />
+                <br/>
+                <h:selectBooleanCheckbox id="causeCheckBox6" value="#{controller.demoMedHistForm.transplantCauseReplacingPrevTransplant}" disabled="#{controller.demoMedHistForm.locked}" />
+                <h:outputText value=" Replacing previously transplanted lung that failed" />
+                <br/>
+                <h:selectBooleanCheckbox id="causeCheckBox7" value="#{controller.demoMedHistForm.transplantCauseOther}" disabled="#{controller.demoMedHistForm.locked}" />
+                <h:outputText value=" Other" />
+                <br/>
+            </div>
+        </ui:define>
+        
+        <ui:define name="heightWeightAtTransplant">
+                <h:panelGroup id='weightAtTransplant'>    
+                <div class="question-inputText">
+                <b>8. Weight at time of transplant: </b>
+                <h:inputText id="ques8" value="#{controller.demoMedHistForm.weightAtTransplant}" requiredMessage="#{msgs.weightAtTransplant}" disabled="#{controller.demoMedHistForm.locked || controller.demoMedHistForm.weightAtTransplantNA == true}" size="3" validatorMessage="Validation Error: Weight ranges between 30 and 200 kg." >
+                        <f:validateLongRange minimum="30" maximum ="200"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    kilograms
+                    
+                    <h:selectBooleanCheckbox id="weightNaCheckBox" value="#{controller.demoMedHistForm.weightAtTransplantNA}" disabled="#{controller.demoMedHistForm.locked}" >
+                       <f:ajax execute="weightAtTransplant" render="weightAtTransplant" />
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel for="weightNaCheckBox" value="Not Available" />
+                </div>
+                <p:message for="ques8" />
+                </h:panelGroup>
+                <h:panelGroup id='height'>
+                <div class="question-inputText">
+                    <b>9. Height: </b>
+                    <h:inputText id="ques9" value="#{controller.demoMedHistForm.height}" requiredMessage="#{msgs.height}" disabled="#{controller.demoMedHistForm.locked || controller.demoMedHistForm.heightNotAvailable == true}" size="3" validatorMessage="Validation Error: height ranges between 120 and 240 cm." >
+                        <f:validateLongRange minimum="120" maximum ="240"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    centimeters
+                    
+                    <h:selectBooleanCheckbox id="heightNaCheckBox" value="#{controller.demoMedHistForm.heightNotAvailable}" disabled="#{controller.demoMedHistForm.locked}" >
+                        <f:ajax execute="height" render="height" />
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel for="heightNaCheckBox" value="Not Available" />
+                </div>
+                <p:message for="ques9" />
+                </h:panelGroup>
+        </ui:define>
+        
+        <ui:define name="validateComorbidConditions">
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('comorbidConditions')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q10: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeCMC" value="#{controller.demoMedHistForm.comorbidConditionsVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.comorbidConditionsDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+        </ui:define>
+        
+        <ui:define name="validateMaintenancePrevention">
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('maintenancePrevention')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q12: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeMP" value="#{controller.demoMedHistForm.maintenancePreventionVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.maintenancePreventionDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+        </ui:define>
+        
+         <ui:define name="validateActiveTreatment">
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('activeTreatment')}">
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputLabel value="Q13: VERIFICATION STATUS " rendered="true"/>
+                        <h:selectOneMenu id="verifyTypeAT" value="#{controller.demoMedHistForm.activeTreatmentVerificationStatus}" rendered="true">
+                            <f:selectItems value="#{controller.demoMedHistForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="selectVerificationStatusIndented">
+                        <h:outputText value="DCC Query Comment: " rendered="true" />
+                        <h:inputTextarea value="#{controller.demoMedHistForm.activeTreatmentDccComment}" rows="1" cols="50" rendered="true" /> 
+                    </div>
+                </h:panelGroup>
+        </ui:define>
+
+    </ui:composition>
+</html>

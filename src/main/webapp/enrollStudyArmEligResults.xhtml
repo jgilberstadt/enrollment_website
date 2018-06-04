@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <div class="center_content">
+                <h:panelGrid columns="2" >
+<!--                <a href="http://ecpregistry.wustl.edu" > <button>Home</button></a>  -->
+<!--                <h:commandButton value="Investigator Resources" action="# {calcController.homeAction()}" />  -->
+                </h:panelGrid>
+            </div>
+
+            <h:panelGrid rendered="#{calcController.enrollmentEligible}">
+                <h1 style="color:red; font-size:24px;">Enrollment Determination Results</h1>
+                <h2>This patient is now ENROLLED into the Study.</h2>
+
+                <h:panelGrid rendered="#{calcController.ecpTreatmentArmEligible}">
+                    <h1 style="color:red; font-size:24px;">Study Arm Eligibility Results</h1>
+                    <h2>This patient is assigned to the "ECP New BOS Treatment Arm".  Please follow the</h2>
+                    <h2>Protocol's treatment and evaluation procedures for Early Photopheresis Intervention Arm participants.</h2>
+                    <p>
+                        <h:outputText value="Rate of lung function decline (Slope) = #{calcController.slope} ml / month"/>
+                        <h:outputText value="Statistically significant rate of decline (P-Value less than 0.05) = #{calcController.PValue}"/>
+                        <h:outputText value="Last FEV1 value = #{calcController.lastFev} ml"/>
+                    </p>
+                    <h:form >
+                        <h:panelGrid columns="2">
+                            <h:commandButton value="Enroll into the Early Photopheresis Intervention Arm..." action="#{calcController.enrollParticipantIntoECPTreatmentArmAction}" />
+    <!--                        <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" /> -->
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGrid>
+
+                <h:panelGrid  rendered="#{calcController.observationalArmEligible}">
+                    <h1 style="color:red; font-size:24px;">Study Arm Assignment Results</h1>
+                    <h2>This patient is assigned to the Control Arm.  This patient is not currently</h2>
+                    <h2>eligible to receive ECP because the rate (slope) of FEV1 decline does not meet</h2>
+                    <h2>the study Protocol's threshold to qualify to receive ECP (see <a href="ecpRegistryProtocol.xhtml#section3-6" target="_blank">Protocol Section 3.6</a>).</h2>
+                    <p>
+                        Eligibility failed on the following criterion:
+                        <h:outputText value="#{calcController.rule}"/>
+                    </p>
+                    <p>
+                        <h:outputText value="Rate of lung function decline (Slope) = #{calcController.slope} ml / month"/>
+                        <h:outputText value="Statistically significant rate of decline (P-Value less than 0.05) = #{calcController.PValue}"/>
+                        <h:outputText value="Last FEV1 value = #{calcController.lastFev} ml"/>
+                    </p>
+                    <h:form >
+                        <h:panelGrid columns="2">
+                            <h:commandButton value="Enroll Into Control Arm..." action="#{calcController.enrollIntoObservationalArmAction}" />
+    <!--                        <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" /> -->
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGrid>
+<!--
+                <h:form >
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Enroll Patient..." action="# {calcController.enrollParticipantIntoECPStudyAction}" />
+                        <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" />
+                    </h:panelGrid>
+                </h:form>
+ -->
+            </h:panelGrid>
+            
+            
+            
+
+
+            <h:panelGrid  rendered="#{calcController.notEnrollmentEligible}">
+                <h1 style="color:red; font-size:24px;">Enrollment Determination Results</h1>
+                <h2>This patient MAY NOT be enrolled at this time. To be eligible for study enrollment,</h2>
+                <h2>the patient must meet all study Inclusion Criteria and no study Exclusion Criteria.</h2>
+                <p>
+<!--                    Eligibility failed on the following criterion:  -->
+<!--                    <h:outputText value="# {calcController.rule}"/>  -->
+                </p>
+                <p>
+<!--                    <h:outputText value="index = # {calcController.notEnrollmentEligible} "/>  -->
+                </p>
+                <h:form >
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Cancel" action="#{calcController.cancelCalculationAction()}" />
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGrid>
+            
+        </ui:define>
+    </ui:composition>
+    
+</html>

@@ -1,0 +1,913 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="./formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>OBSERVATION PULMONARY EVALUATION LOG</h2>
+                <div>
+                    <h2><center><h:outputText value="#{controller.selectedForm.title}" /></center></h2>
+                </div>
+            </div>
+
+        </ui:define>
+       
+        <ui:define name="form_content">
+
+            <br/>
+            <table rowClasses="odd-row,even-row" headerClass="header-class" styleClass="datatable-class" border="1px solid black">
+                <tbody>
+                    <tr>
+                        <th style="padding:12px">Pulmonary Function Test Date</th>
+                        <th style="padding:12px">FEV1 liters (pre-bronchodilator)</th>
+                        <th style="padding:12px">FVC liters (pre-bronchodilator)</th>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate1" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate1}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10"  validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate1" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV11" value="#{controller.observePulmEvalLogForm.fev11}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV11" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC1" value="#{controller.observePulmEvalLogForm.fvc1}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate2" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate2}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate2" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV12" value="#{controller.observePulmEvalLogForm.fev12}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV12" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC2" value="#{controller.observePulmEvalLogForm.fvc2}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC2" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate3" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate3}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate3" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV13" value="#{controller.observePulmEvalLogForm.fev13}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV13" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC3" value="#{controller.observePulmEvalLogForm.fvc3}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC3" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate4" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate4}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate4" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV14" value="#{controller.observePulmEvalLogForm.fev14}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV14" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC4" value="#{controller.observePulmEvalLogForm.fvc4}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC4" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate5" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate5}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate5" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV15" value="#{controller.observePulmEvalLogForm.fev15}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV15" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC5" value="#{controller.observePulmEvalLogForm.fvc5}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC5" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate6" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate6}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate6" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV16" value="#{controller.observePulmEvalLogForm.fev16}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV16" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC6" value="#{controller.observePulmEvalLogForm.fvc6}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC6" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate7" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate7}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate7" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV17" value="#{controller.observePulmEvalLogForm.fev17}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV17" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC7" value="#{controller.observePulmEvalLogForm.fvc7}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC7" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate8" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate8}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate8" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV18" value="#{controller.observePulmEvalLogForm.fev18}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV18" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC8" value="#{controller.observePulmEvalLogForm.fvc8}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC8" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate9" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate9}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate9" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV19" value="#{controller.observePulmEvalLogForm.fev19}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV19" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC9" value="#{controller.observePulmEvalLogForm.fvc9}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC9" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate10" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate10}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate10" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV110" value="#{controller.observePulmEvalLogForm.fev110}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV110" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC10" value="#{controller.observePulmEvalLogForm.fvc10}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC10" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate11" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate11}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate11" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV111" value="#{controller.observePulmEvalLogForm.fev111}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV111" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC11" value="#{controller.observePulmEvalLogForm.fvc11}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC11" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate12" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate12}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate12" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV112" value="#{controller.observePulmEvalLogForm.fev112}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV112" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC12" value="#{controller.observePulmEvalLogForm.fvc12}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC12" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate13" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate13}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate13" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV113" value="#{controller.observePulmEvalLogForm.fev113}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV113" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC13" value="#{controller.observePulmEvalLogForm.fvc13}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC13" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate14" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate14}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate14" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV114" value="#{controller.observePulmEvalLogForm.fev114}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV114" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC14" value="#{controller.observePulmEvalLogForm.fvc14}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC14" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate15" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate15}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate15" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV115" value="#{controller.observePulmEvalLogForm.fev115}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV115" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC15" value="#{controller.observePulmEvalLogForm.fvc15}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC15" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate16" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate16}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate16" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV116" value="#{controller.observePulmEvalLogForm.fev116}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV116" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC16" value="#{controller.observePulmEvalLogForm.fvc16}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC16" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate17" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate17}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate17" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV117" value="#{controller.observePulmEvalLogForm.fev117}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV117" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC17" value="#{controller.observePulmEvalLogForm.fvc17}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC17" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate18" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate18}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate18" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV118" value="#{controller.observePulmEvalLogForm.fev118}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV118" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC18" value="#{controller.observePulmEvalLogForm.fvc18}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC18" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate19" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate19}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate19" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV119" value="#{controller.observePulmEvalLogForm.fev119}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV119" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC19" value="#{controller.observePulmEvalLogForm.fvc19}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC19" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate20" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate20}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate20" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV120" value="#{controller.observePulmEvalLogForm.fev120}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV120" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC20" value="#{controller.observePulmEvalLogForm.fvc20}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC20" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate21" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate21}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate21" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV121" value="#{controller.observePulmEvalLogForm.fev121}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV121" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC21" value="#{controller.observePulmEvalLogForm.fvc21}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC21" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate22" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate22}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate22" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV122" value="#{controller.observePulmEvalLogForm.fev122}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV122" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC22" value="#{controller.observePulmEvalLogForm.fvc22}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC22" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate23" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate23}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate23" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV123" value="#{controller.observePulmEvalLogForm.fev123}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV123" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC23" value="#{controller.observePulmEvalLogForm.fvc23}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC23" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate24" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate24}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate24" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV124" value="#{controller.observePulmEvalLogForm.fev124}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV124" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC24" value="#{controller.observePulmEvalLogForm.fvc24}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC24" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate25" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate25}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate25" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV125" value="#{controller.observePulmEvalLogForm.fev125}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV125" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC25" value="#{controller.observePulmEvalLogForm.fvc25}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC25" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate26" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate26}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate26" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV126" value="#{controller.observePulmEvalLogForm.fev126}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV126" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC26" value="#{controller.observePulmEvalLogForm.fvc26}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC26" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate27" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate27}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate27" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV127" value="#{controller.observePulmEvalLogForm.fev127}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV127" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC27" value="#{controller.observePulmEvalLogForm.fvc27}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC27" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate28" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate28}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate28" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV128" value="#{controller.observePulmEvalLogForm.fev128}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV128" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC28" value="#{controller.observePulmEvalLogForm.fvc28}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC28" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate29" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate29}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate29" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV129" value="#{controller.observePulmEvalLogForm.fev129}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV129" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC29" value="#{controller.observePulmEvalLogForm.fvc29}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC29" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                        <div>
+                            <div>
+                            <p:calendar id="pulmEvalDate30" class="calendar" value="#{controller.observePulmEvalLogForm.observePulmonaryFunctionDate30}" disabled="true" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" validatorMessage="Please enter the date when the pulmonary function test was performed." converter="strictDateTimeConverter" >
+                            </p:calendar>
+                            </div>
+                        </div>
+                        <p:message for="pulmEvalDate30" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFEV130" value="#{controller.observePulmEvalLogForm.fev130}" disabled="true" size="3" validatorMessage="Please enter a number between 0.2 and 6.0">
+                                <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFEV130" />
+                        </td>
+                        <td>
+                        <div>
+                            <h:inputText id="pulmEvalFVC30" value="#{controller.observePulmEvalLogForm.fvc30}" disabled="true" size="3" validatorMessage="Please enter a number between 0.4 and 6.5">
+                                <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                                <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                            </h:inputText>
+                        </div>
+                        <p:message for="pulmEvalFVC30" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+        </ui:define>
+    </ui:composition>
+    
+</html>

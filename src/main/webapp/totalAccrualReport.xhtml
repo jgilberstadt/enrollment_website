@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+            <h:form id="form">
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>ECP Refractory BOS Total Accrual Reports</h2>
+           </div>
+
+            <div id="ecpreportdate">
+                <div>
+                    <p></p>
+                    <b style="font-size: medium">Report Date: </b>
+                    <h:outputText value="#{reportsController.currentDate}" style="font-size: medium">
+                        <f:convertDateTime pattern="MM-dd-yyyy"/>
+                    </h:outputText>
+                </div>
+
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+            </div>
+            <br/>
+            
+            <h:panelGroup id="section1" rendered="true">          
+                <div class="sectionFirstHeading" style="padding-top: 20px;">
+                    Table 1. Total Accrual
+                </div>
+                
+                <h:dataTable value="#{reportsController.accrualReportItems}" var="reportItemTable1" rowClasses="odd-row,even-row" columnClasses="none, rightTable1" headerClass="header-class-reports" styleClass="datatable-class-reports"  cellspacing="5px" >
+                    <h:column>
+                        <f:facet name="header">Report Item</f:facet>
+                         <h:outputText value="#{reportItemTable1.reportItemName}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Accrual Count</f:facet>
+                         <h:outputText value="#{reportItemTable1.reportItemCount}" />
+                    </h:column>
+                </h:dataTable>
+
+            </h:panelGroup>
+<!--
+            <h:panelGroup id="section2" rendered="true">          
+                <div class="sectionFirstHeading" style="padding-top: 40px;">
+                    Table 2. Total Accrual for Last 30 Days
+                </div>
+                
+                <h:dataTable value="#{reportsController.accrualLast30DaysReportItems}" var="reportItemTable2" rowClasses="odd-row,even-row" columnClasses="none, rightTable1" headerClass="header-class-reports" styleClass="datatable-class-reports"  cellspacing="5px" >
+                    <h:column>
+                        <f:facet name="header">Report Item</f:facet>
+                         <h:outputText value="#{reportItemTable2.reportItemName}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Accrual Count</f:facet>
+                         <h:outputText value="#{reportItemTable2.reportItemCount}" />
+                    </h:column>
+                </h:dataTable>
+
+             </h:panelGroup>
+-->
+            <h:panelGroup id="section3" rendered="true">
+                <div class="sectionFirstHeading" style="padding-top: 40px;">
+                    Table 2. Total Accrual by Site
+                </div>
+                
+                <h:dataTable value="#{reportsController.accrualBySiteReportItems}" var="reportItemTable3" rowClasses="odd-row,even-row" columnClasses="none, rightTable3, rightTable3, rightTable3, none, rightTable3" headerClass="header-class-reports" styleClass="datatable-class-reports"  cellspacing="5px" >
+                    <h:column>
+                        <f:facet name="header">Site</f:facet>
+                         <h:outputText value="#{reportItemTable3.reportItemSiteName}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">EPI Arm</f:facet>
+                        <h:outputText value="#{reportItemTable3.reportItemEPIArmCount}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Control Arm</f:facet>
+                         <h:outputText value="#{reportItemTable3.reportItemControlArmCount}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Crossed Over</f:facet>
+                         <h:outputText value="#{reportItemTable3.reportItemCrossedOverCount}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">&nbsp;</f:facet>
+                         <h:outputText value="" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Total</f:facet>
+                         <h:outputText value="#{reportItemTable3.reportItemTotalCount}" />
+                    </h:column>
+                </h:dataTable>
+
+            </h:panelGroup>
+            
+<!--            <h:outputText value="#{reportsController.createParticipantFirstPaymentStatus}" style="font-size: medium"/> -->
+            
+<!-- The following Primefaces dataTable code has been commented out because it was created to demonstrate how pulling the data from the database directly without
+    making any changes to the resultset would appear in Table 4. -->
+<!--            <h:panelGroup id="section4" rendered="true">          
+                <div class="sectionFirstHeading" style="padding-top: 20px;">
+                    Table 4. Total Monthly Accrual By Site Raw Database Retrieval
+                </div>
+-->
+            <!-- Primefaces DYNAMIC COLUMN code to create an html table with varying numbers of columns is presented below. -->
+            <!-- To display this totalAccrualReport.xhtml webpage, the "Total Accrual Report" sub-menu item under the "ECP Reports" main menu is selected in the template.xhtml code. -->
+            <!-- The sub-menu item calls the ReportsController action method: TotalAccrualReportAction().  The getAccrualBySiteByMonthReportItems() method in the action method is used to create the columnNames and dataModel. -->
+            <!-- The dataModel contains each 'row' of data to be displayed in a hashMap<String, Object> format, where the String is the columnName and the Object is the column/row datu. -->
+<!--                <p:dataTable id="resultTable" value="#{reportsController.dataModel}" var="row" rendered="true" >
+-->
+            <!-- The columnNames are used to create the table header with the variable 'column', and for pointing to each column in a row to display the datum in each column. -->
+<!--                    <p:columns value="#{reportsController.columnNames}" var="column" sortBy="#{row[column]}">
+                        <f:facet name="header">
+                            <h:outputText value="#{column}" />
+                        </f:facet>
+                        <h:outputText value="#{row[column]}" />
+                    </p:columns>
+                </p:dataTable>
+
+            </h:panelGroup>
+-->
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="./formTemplate.xhtml">
+        <ui:define name="form_title">
+            
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>PULMONARY FUNCTION TEST - Case Report Form (CRF)</h2>
+                <div>
+                    <h2><center><h:outputText value="#{controller.selectedForm.title}" /></center></h2>
+                </div>
+            </div>
+            <div>
+                <h2>Please include the following types of source documents:</h2>
+                <div>
+                <b>1. Pulmonary Function Test Report</b>
+                </div>
+            </div>
+
+        </ui:define>
+       
+        <ui:define name="form_content">
+            <div id="crfcenterparticipantidsdate">
+                <div>
+                <b>Date of Pulmonary Function Test: </b>
+                <p:calendar id="pulmEvalDate" class="calendar" value="#{controller.pulmEvalForm.pulmonaryFunctionTestingDate}" requiredMessage="#{msgs.pulmonaryFunctionTestingDate}" disabled="#{controller.pulmEvalForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                    <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                </p:calendar>
+                </div>
+            </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('pulmonaryFunctionTestingDate')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="DATE: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyTypeDate" value="#{controller.pulmEvalForm.pulmonaryFunctionTestingDateVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.pulmEvalForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.pulmEvalForm.pulmonaryFunctionTestingDateDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+            <p:message for="pulmEvalDate" />
+
+            <br/>
+            <div>          
+
+                <div class="pre-treat-assess">
+                    <b>1. &nbsp;&nbsp;A. Resting oxygen saturation: </b>
+                    <h:inputText id="ques1" required="#{param['VALIDATE']}" requiredMessage="#{msgs.restOxygenSaturation}" value="#{controller.pulmEvalForm.oxygenSaturation}" disabled="#{controller.pulmEvalForm.locked}" size="3" >
+                        <f:validator validatorId="edu.wustl.mir.ctt.validators.OxygenValid" />
+                    </h:inputText>
+                    %
+                </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('oxygenSaturation')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q1: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType1" value="#{controller.pulmEvalForm.oxygenSaturationVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.pulmEvalForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.pulmEvalForm.oxygenSaturationDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <div class="treatment-parameters-string-indent">
+
+                        <b>B. Is the participant receiving supplemental oxygen? </b>
+                        <h:selectOneRadio id="ques1b" class="yesnoanswers" requiredMessage="#{msgs.receivingSupplementalOxygen}" value="#{controller.pulmEvalForm.receivingSupplementalOxygen}" disabled="#{controller.pulmEvalForm.locked}" style="display: inline-table;">
+                            <f:selectItem itemValue="true" itemLabel="YES"/>
+                            <f:selectItem itemValue="false" itemLabel="NO" /> 
+                            <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                        </h:selectOneRadio>
+
+                </div>
+                <div class="treatment-parameters-string-indent">
+                    <b>C. If yes, how much? </b>
+                    <h:inputText value="#{controller.pulmEvalForm.receivingSupplementalOxygenAmount}" disabled="#{controller.pulmEvalForm.locked}" size="3" validatorMessage="Validation Error: Supplemental oxygen ranges between 0 and 100." >
+                        <f:validateLongRange minimum="0" maximum ="100"/>
+                    </h:inputText>
+                    <b> Select delivery method: </b>
+                    <h:selectOneMenu id="ques1c" value="#{controller.pulmEvalForm.receivingSupplementalOxygenDelivery}" rendered="true" disabled="#{controller.pulmEvalForm.locked}">
+                        <f:selectItems value="#{controller.pulmEvalForm.receivingSupplementalOxygenDeliveryTypes}" var="rsodt" itemValue="#{rsodt}" itemLabel="#{rsodt}"/>
+                    </h:selectOneMenu>
+                </div>
+                <p:message for="ques1" />
+                <div class="pre-treat-assess">
+                    <b>2. FEV1 (pre-bronchodilator): </b>
+                    <h:inputText id="ques2" requiredMessage="#{msgs.fev1}" value="#{controller.pulmEvalForm.fev1}" disabled="#{controller.pulmEvalForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </h:inputText>
+                    liters
+                </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('FEV1')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q2: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType2" value="#{controller.pulmEvalForm.fev1VerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.pulmEvalForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.pulmEvalForm.fev1DccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <p:message for="ques2" />
+                <div class="pre-treat-assess">
+                    <b>3. FVC (pre-bronchodilator): </b>
+                    <h:inputText id="ques3" requiredMessage="#{msgs.fvc}" value="#{controller.pulmEvalForm.fvc}" disabled="#{controller.pulmEvalForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />  <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </h:inputText>
+                    liters
+                </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('FVC')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q3: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType3" value="#{controller.pulmEvalForm.fvcVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.pulmEvalForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.pulmEvalForm.fvcDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <p:message for="ques3" />
+                <div class="pre-treat-assess">
+                    <b>4. FEV1/FVC Ratio: </b>
+                    <h:inputText id="ques4" requiredMessage="#{msgs.fev1FvcRatio}" value="#{controller.pulmEvalForm.fev1FvcRatio}" disabled="#{controller.pulmEvalForm.locked}" size="3" validatorMessage="Validation Error: FEV1/FVC ratio ranges between 10% and 100%" >
+                        <f:validateLongRange minimum="10" maximum="100"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    %
+                </div>
+            <h:panelGroup rendered="#{controller.renderVerificationPanel('fev1FvcRatio')}">
+                <div class="selectVerificationStatusIndented">
+                    <h:outputLabel value="Q4: VERIFICATION STATUS " rendered="true"/>
+                    <h:selectOneMenu id="verifyType4" value="#{controller.pulmEvalForm.fev1FvcRatioVerificationStatus}" rendered="true">
+                        <f:selectItems value="#{controller.pulmEvalForm.verificationTypes}" var="v" itemValue="#{v}" itemLabel="#{v.name}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="selectVerificationStatusIndented">
+                    <h:outputText value="DCC Query Comment: " rendered="true" />
+                    <h:inputTextarea value="#{controller.pulmEvalForm.fev1FvcRatioDccComment}" rows="1" cols="50" rendered="true" /> 
+                </div>
+            </h:panelGroup>
+                <p:message for="ques4" />
+
+            </div>
+            
+            <div class="question-radioButton">
+                <b>5. Comments: </b>
+                <h:inputTextarea value="#{controller.pulmEvalForm.comment}" rows="2" cols="80" disabled="#{controller.pulmEvalForm.commentLocked}" style="margin-left: 17px;" />
+            </div>
+
+        </ui:define>
+    </ui:composition>
+    
+</html>

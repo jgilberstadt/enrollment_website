@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <h:form>
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>CROSSOVER ELIGIBILITY OUTCOME</h2>
+            </div>
+
+            <div>
+                <h:outputText style="font-size: medium; font-weight: 900;" value="Participant ID: "/> <h:outputText style="font-size: medium; font-weight: 900;" value="#{controller.selectedParticipant.participantID}"/>
+                <h3>
+                <h:outputText value="Cross Over Determination Results: #{calcController.crossoverEligibilityCalculator.outcomeMessage}" />
+                </h3>
+                <!--
+                <p style="width: 750px; font-size:14px; font-weight: 900;">
+                    <h:outputText rendered="#{calcController.crossoverEligibilityCalculator.overrideEligible}" 
+                                  value="This patient still does not meet the Protocol’s statistical criteria for the rate of 
+                                  FEV-1 decline (see Protocol Section 3.6).  You may either: A) continue to follow the patient 
+                                  in the Observation Arm (Keeping the participant in the observational arm starts a two month 
+                                  long holding period during which the participant will not be eligible to crossover into the  
+                                  treatment arm.  The participant can next be evaluated for crossover on 
+                                  #{calcController.crossoverEligibilityCalculator.nextCrossoverDate}); OR B) if the patient’s 
+                                  physician strongly wishes him/her to receive ECP, he/she may clinically override this algorithm 
+                                  and cross the patient over now into the ECP Treatment Arm.  Please contact your CCC nurse 
+                                  coordinator if you have questions."/>
+                </p>
+                -->
+                <p>
+                    Eligibility determination made based on the following criterion:
+                    <h:outputText value="#{calcController.crossoverEligibilityCalculator.outcomeRule}"/>
+                </p>
+                
+                <h:panelGrid columns="1" rendered="#{calcController.crossoverEligibilityCalculator.displayCalculatorResults }">
+                    <p>
+                        <h:outputText value="Rate of lung function decline (Slope) = #{calcController.crossoverEligibilityCalculator.slope} ml / month"/>
+                    </p>
+                    <p>
+                        <h:outputText value="Statistically significant rate of decline (P-Value less than 0.05) = #{calcController.crossoverEligibilityCalculator.PValue}"/>
+                    </p>
+                    <p>
+                        <h:outputText value="The minimum FEV1 value = #{calcController.crossoverEligibilityCalculator.minFev} ml"/>
+                    </p>
+                </h:panelGrid>
+
+                <div class="clear"></div>
+                <p></p>
+
+            </div>
+            
+            <h:panelGrid columns="1" rendered="#{calcController.crossoverEligibilityCalculator.notCrossoverEligible}">
+                <h:commandButton value="Return to Registry" action="#{calcController.crossoverAcknowledgeAction()}" />
+            </h:panelGrid>
+            <h:panelGrid columns="2" rendered="#{calcController.crossoverEligibilityCalculator.crossoverEligible}">
+                <h:commandButton value="Transfer Participant to New Arm..." action="#{calcController.crossoverAcceptAction()}" />
+                <h:commandButton value="Cancel" action="# {calcController.crossoverCancelAction()}" immediate="true"/> 
+            </h:panelGrid>
+            <!--
+            <h:panelGrid columns="3" rendered="#{calcController.crossoverEligibilityCalculator.keepParticipantInObservationalArmEligible}">
+                <h:commandButton value="Keep Participant in Observation Arm..." action="#{calcController.crossoverOverrideRejectAction()}" />
+                <h:commandButton value="Cancel" action="# {calcController.crossoverCancelAction()}" immediate="true"/> 
+            </h:panelGrid>
+            -->
+            <!--
+            <h:panelGrid columns="3" rendered="#{calcController.crossoverEligibilityCalculator.overrideEligible}">
+                <h:commandButton value="Override and Transfer Participant to ECP Treatment Arm..." action="#{calcController.crossoverOverrideAcceptAction()}" />
+                <h:commandButton value="Keep Participant in Observation Arm..." action="#{calcController.crossoverOverrideRejectAction()}" />
+                <h:commandButton value="Cancel" action="# {calcController.crossoverCancelAction()}" immediate="true"/> 
+            </h:panelGrid>
+            -->
+            
+            </h:form>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>

@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <h:form>
+            <h:outputStylesheet library="css" name="ecpregistry.css" />
+            
+            <div id="#{controller.style.header}">
+                <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                <h2>PULMONARY EVALUATIONS FOR CROSSOVER ELIGIBILITY CALCULATOR</h2>
+            </div>
+
+            <div>          
+                <h:outputText style="font-size: medium; font-weight: 900;" value="Participant ID: "/> <h:outputText style="font-size: medium; font-weight: 900;" value="#{controller.selectedParticipant.participantID}"/>
+                <div class="confelig-question">
+                    1. ELIGIBLE PULMONARY EVALUATIONS - This is the subset of evaluations that will be used to determine the patient's crossover eligibility.
+                    <ul>
+                        <li>A maximum of 15 evaluations are used.</li>
+                        <li>All evaluations must be DCC verified before calculation can be done.</li>
+                    </ul>
+                </div>
+            
+            <h:panelGrid columns="2">
+                <h:commandButton value="Determine Study Arm Eligibility..." action="#{calcController.calculateCrossoverEligibilityAction()}" />
+<!--               <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" immediate="true"/> -->
+            </h:panelGrid>
+                
+                <p></p>
+            
+            <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+            <table cellspacing="10px">
+                    
+                <tr>
+                    <td >
+                        <b><h:outputText value="A. Date "/></b>
+                        <p:calendar id="dateOfFEV11" class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date1}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td >
+                        <b>FEV1 </b>
+                        <h:inputText id="fev11" value="#{calcController.crossoverEligibilityWorkSheet.fev11}" disabled="true" size="3" validatorMessage="FEV1 ranges between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </td>
+                    <td >
+                        <b>FVC </b>
+                        <h:inputText id="fvc1" value="#{calcController.crossoverEligibilityWorkSheet.fvc1}" disabled="true"  size="3" validatorMessage="FVC ranges between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="B. Date "/></b>
+                        <p:calendar id="dateOfFEV12" class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date2}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev12" value="#{calcController.crossoverEligibilityWorkSheet.fev12}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc2" value="#{calcController.crossoverEligibilityWorkSheet.fvc2}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="C. Date "/></b>
+                        <p:calendar id="dateOfFEV13" class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date3}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev13" value="#{calcController.crossoverEligibilityWorkSheet.fev13}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc3" value="#{calcController.crossoverEligibilityWorkSheet.fvc3}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="D. Date "/></b>
+                        <p:calendar id="dateOfFEV14" class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date4}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev14" value="#{calcController.crossoverEligibilityWorkSheet.fev14}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc4" value="#{calcController.crossoverEligibilityWorkSheet.fvc4}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="E. Date " style="margin-left: 1px;"/></b>
+                        <p:calendar id="dateOfFEV15" class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date5}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText id="fev15" value="#{calcController.crossoverEligibilityWorkSheet.fev15}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText id="fvc5" value="#{calcController.crossoverEligibilityWorkSheet.fvc5}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="F. Date "/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date6}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 2px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev16}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc6}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+                
+                <tr>
+                    <td>
+                        <b><h:outputText value="G. Date "/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date7}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev17}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc7}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="H. Date "/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date8}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev18}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc8}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="I. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date9}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev19}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc9}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="J. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date10}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev110}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc10}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="K. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date11}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev111}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc11}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="L. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date12}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev112}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc12}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="M. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date13}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev113}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc13}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="N. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date14}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev114}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc14}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+
+                <tr>
+                    <td>
+                        <b><h:outputText value="O. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar class="calendar" value="#{calcController.crossoverEligibilityWorkSheet.date15}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </td>
+                    <td>
+                        <b>FEV1 </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fev115}" disabled="true" size="3" />
+                        liters
+                    </td>
+                    <td>
+                        <b>FVC </b>
+                        <h:inputText value="#{calcController.crossoverEligibilityWorkSheet.fvc15}" disabled="true"  size="3" />
+                        liters
+                    </td>
+                </tr> 
+            </table>
+                <p></p>
+            </div>
+            
+            <h:panelGrid columns="2">
+                <h:commandButton value="Determine Study Arm Eligibility..." action="#{calcController.calculateCrossoverEligibilityAction()}" />
+<!--               <h:commandButton value="Cancel" action="# {calcController.cancelCalculationAction()}" immediate="true"/> -->
+            </h:panelGrid>
+            
+            </h:form>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>

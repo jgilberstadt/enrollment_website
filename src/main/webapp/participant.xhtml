@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+            
+            <h:panelGrid columns="3">
+                <h:link value="All-Sites Summary > " outcome="/index.xhtml" rendered="#{securityManager.canViewAllSites()}"/>
+                <h:link value="Site Summary - nBOS > " outcome="/site.xhtml"/>
+                <h:outputText value="Participant Summary" />
+            </h:panelGrid>
+<!--
+            <h:panelGrid columns="2" class="center_content">
+                <a href="http://ecpregistry.wustl.edu" > <button>Home</button></a>
+                <h:button value="Investigator Resources" outcome="siteResources" />
+            </h:panelGrid>
+-->
+            <h3>Participant Summary</h3>
+            
+            <h:form>
+
+                <table>
+                    <tr><td>Site Name - ID:</td><td><h:outputText value="#{controller.selectedSite.name} - #{controller.selectedSite.siteID}"/></td></tr>
+                    <tr><td>Participant ID:</td><td><h:outputText value="#{controller.selectedParticipant.participantID}"/></td></tr>
+                    <tr><td>Study Arm:</td><td><h:outputText value="#{controller.selectedParticipant.studyArmStatus.name}"/></td></tr>
+                    <tr><td>Participant Status:</td><td><h:outputText value="#{controller.selectedParticipant.status}"/></td></tr>
+                    <tr><td>Enrolled Date:</td><td><h:outputText value="#{controller.selectedParticipant.enrolledDate}" > <f:convertDateTime type='date' pattern="MM-dd-yyyy"/> </h:outputText></td></tr>
+<!--                <h:outputText value="Site: # {controller.selectedSite.name}"/> <br/>
+                <h:outputText value="Participant ID: # {controller.selectedParticipant.participantID}"/> <br/>-->
+                </table>
+                <p></p>
+                <h:commandButton value="Add New Event..." onclick="PF('addEventDlg').show()" type="button"/>
+                
+                <h:dataTable value="#{controller.events}" var="event" rowClasses="odd-row,even-row" headerClass="header-class" styleClass="datatable-class"  cellspacing="5px">
+                    <h:column>
+                        <f:facet name="header">Event Type</f:facet>
+                        <h:outputText value="#{event.type.name}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Event Title</f:facet>
+                         <h:outputText value="#{event.name}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Event Label</f:facet>
+                         <h:outputText value="#{event.label}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                         <h:outputText value="#{event.status}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Projected Date</f:facet>
+                        <h:outputText value="#{event.projectedDate}" >
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Overdue Date</f:facet>
+                        <h:outputText value="#{event.lastAvailableDate}" rendered="#{event.showLastAvailableDate}" >
+                            <f:convertDateTime pattern="MM-dd-yyyy" /> 
+                        </h:outputText>
+                    </h:column>
+<!--
+                    <h:column>
+                        <h:outputText value="# {event.showLastAvailableDate}" />
+                    </h:column>
+-->
+                    <h:column>
+                        <f:facet name="header">Event Date</f:facet>
+                        <h:outputText value="#{event.actualDate}" >
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="View" action="#{controller.viewEventAction(event.id)}" />
+                    </h:column>
+                </h:dataTable>
+                <p></p>
+                 <h:commandButton value="Add New Event..." onclick="PF('addEventDlg').show()" type="button"/>
+                
+             </h:form>
+            
+                
+            <p:dialog id="dlg" header="Add New Event" widgetVar="addEventDlg" modal="true">
+                <h:form id="addEventForm">
+                    <p:panel id="panelId">
+                    <h:messages  style="color:red;margin:8px;" />
+                    <table>
+                        <tr>
+                            <td style="vertical-align:center"><h:outputLabel for="eventType" value="Event Type: " /></td>
+                            <td>
+                                <h:selectOneListbox id="eventType" value="#{addEventBean.eventType}" required='true' requiredMessage="#{msgs.eventType}">
+                                    <f:selectItems value="#{addEventBean.eventTypes}" var="etype" itemLabel="#{etype.name}" itemValue="#{etype}"/>
+                                </h:selectOneListbox>
+                            </td>
+                        </tr>
+<!--
+                        <tr>
+                            <td><h:outputLabel for="title" value="Event Title: "/></td>
+                            <td><h:inputText id="title" value="# {addEventBean.title}" required="true" requiredMessage="# {msgs.eventTitle}"/></td>
+                        </tr>
+-->
+<!--
+                        <tr>
+                            <td><h:outputLabel for="occuranceDate" value="Event Date: " /></td>
+                            <td><p:calendar id="occuranceDate" class="calendar" value="#{addEventBean.dateOfOccurance}" required="true" requiredMessage="#{msgs.eventOccuranceDate}" mode="popup" 
+                                            showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10"/>
+                            </td>
+                        </tr>
+-->
+                        <tr>
+                            <td colspan="2" align="center">
+                                <table>
+                                    <tr>
+                                        <td><p:commandButton value="Cancel" type="submit" 
+                                                             update="addEventForm" 
+                                                             immediate="true"
+                                                             resetValues="true"
+                                                             oncomplete="PF('addEventDlg').hide()"/>
+                                        </td>
+                                        <td><p:commandButton value="Submit" action="#{addEventBean.addEventAction()}" type="submit"
+                                                             update=":addEventForm"
+                                                             oncomplete="if(args &amp;&amp; !args.validationFailed) PF('addEventDlg').hide()"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+                
+        </ui:define>
+    </ui:composition>
+    
+</html>

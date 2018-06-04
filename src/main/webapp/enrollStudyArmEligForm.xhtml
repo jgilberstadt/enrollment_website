@@ -1,0 +1,1247 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+
+            <h:form id="form">
+                <h:outputStylesheet library="css" name="ecpregistry.css" />
+
+                <div id="#{controller.style.header}">
+                    <h3>Extracorporeal Photopheresis (ECP) for the Management of Progressive Bronchiolitis Obliterans Syndrome (BOS) in Medicare-Eligible Recipients of Lung Allografts</h3>
+                    <h2>ENROLLMENT ASSESSMENT AND STUDY ARM ELIGIBILITY</h2>
+                </div>
+
+                <div id="crfcenterparticipantidsdate">
+                    <b>Current Date: </b>
+                    <p:calendar id="enrollmentDate" class="calendar" value="#{calcController.enrollmentForm.enrollmentDate}" required="true" requiredMessage="#{msgs.enrollmentDate}" disabled="true" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />   <!-- The value for the param variable VALIDATE is determined in the formTemplate.xhtml file under c:if test -->
+                    </p:calendar>
+                    <p:message for="enrollmentDate" />
+                    <!--
+                                        Today's Date: <h:outputText value="# {calcController.enrollmentForm.enrollmentDate}" style="margin-left: 3px;">
+                                        <f:convertDateTime pattern="MM-dd-yyyy"/>
+                                        </h:outputText>
+                    -->
+                </div>
+                
+                <div class="confelig-question">
+                    SECTION A. TRANSPLANT AND BASELINE
+                </div>
+                <div class="outputText-indented">
+                    <b>1. Date of lung transplantation: </b>
+                    <p:calendar id="quesTransplant" class="calendar" value="#{calcController.studyArmEligibilityForm.lungTransplantationDate}" requiredMessage="#{msgs.lungTransplantationDate}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <div class="ishlt-directions">
+                    <b>2. ISHLT BASELINE FEV1 MEASUREMENTS - Please provide the baseline FEV1 measurements using the ISHLT definition (The average of the two highest FEV1 measurements obtained at least three weeks apart after transplantation). The system will calculate the mean FEV1. Please enter the laboratory based FEV1 measurements below:</b>
+                </div>
+                <div class="outputText-indented">
+                    <h:outputText value="a. First PFT assessment: " />
+                </div>
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="i. Date: " />
+                    <p:calendar id="ques18ai" class="calendar" requiredMessage="#{msgs.firstComponentFEV1Date}" value="#{calcController.studyArmEligibilityForm.firstComponentFEV1Date}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="ques18ai" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="ii. FEV1 (pre-bronchodilator): " />
+                    <h:inputText id="ques18aii" requiredMessage="#{msgs.firstComponentFEV1}" value="#{calcController.studyArmEligibilityForm.firstComponentFEV1}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:ajax listener="#{calcController.calculateISHLTBaselineListener()}" render="ques18c" />
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques18aii" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="iii. FVC (pre-bronchodilator): " />
+                    <h:inputText id="ques18aiii" requiredMessage="#{msgs.firstComponentFVC}" value="#{calcController.studyArmEligibilityForm.firstComponentFVC}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques18aiii" />
+                
+                <div class="outputText-indented">
+                    <h:outputText value="b. Second PFT assessment: " />
+                </div>
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="i. Date: " />
+                    <p:calendar id="ques18bi" class="calendar" requiredMessage="#{msgs.secondComponentFEV1Date}" value="#{calcController.studyArmEligibilityForm.secondComponentFEV1Date}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="ques18bi" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="ii. FEV1 (pre-bronchodilator): " />
+                    <h:inputText id="ques18bii" requiredMessage="#{msgs.secondComponentFEV1}" value="#{calcController.studyArmEligibilityForm.secondComponentFEV1}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:ajax listener="#{calcController.calculateISHLTBaselineListener()}" render="ques18c" />
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques18bii" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="iii. FVC (pre-bronchodilator): " />
+                    <h:inputText id="ques18biii" requiredMessage="#{msgs.secondComponentFVC}" value="#{calcController.studyArmEligibilityForm.secondComponentFVC}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques18biii" />
+                
+                <div class="outputText-indented">
+                    <h:outputText value="c. Baseline FEV1 (pre-bronchodilator)(mean FEV1 values above): " />
+                    <h:inputText id="ques18c" class="inputText-baselineFEV1" requiredMessage="#{msgs.baselineFEV1}" value="#{calcController.studyArmEligibilityForm.baselineFEV1}" disabled="true" size="3" />
+                    liters
+                </div>
+                <p:message for="ques18c" />
+                
+                <p></p>
+                <div class="clear"></div>
+
+                <div class="confelig-question">
+                    SECTION B. INCLUSION CRITERIA - All answers must be "YES" for the subject to be eligible for study inclusion:
+                </div>
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques1" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.age}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Age 18 years or older" />
+                </h:panelGrid>
+                <p:message for="ques1" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques2" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.medicare}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Medicare-eligible (i.e. patients with both Part A and B) status" />
+                </h:panelGrid>
+                <p:message for="ques2" />
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques3" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.lungTransplant}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Lung transplant recipient (combined organ transplant recipients, e.g. heart-lung or liver-lung recipients, are eligible)" />
+                </h:panelGrid>
+                <p:message for="ques3" />
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques4" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.labBasedNewBOSDiagnosis}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Diagnosis of new BOS (i.e., 'new BOS' is defined as within six weeks of enrollment) based on laboratory-based spirometric FEV1 measurements obtained on at least two separate occasions (i.e., at least 3 weeks apart) that have declined by more than 20% from post-transplant baseline values (i.e., using ISHLT definition). Inherent to the diagnosis of new BOS is the exclusion of other potential causes of allograft dysfunction such as acute rejection, respiratory tract infection, and airway anastomotic complications." />
+                </h:panelGrid>
+                <p:message for="ques4" />
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques5" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.fiveFEV1sPostTrans}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="At minimum five recorded FEV1 measurements obtained at intervals of at least two weeks apart over the six months preceding study enrollment, of which one FEV1 must be within two weeks prior to enrollment" />
+                </h:panelGrid>
+                <p:message for="ques5" />
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques5b" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.preDiagnosisMonitoring}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="History of frequent spirometry monitoring, defined as having had regular FEV1 measurements during the preceding four months prior to enrollment with no time interval between FEV1 measurements that exceeds eight weeks" />
+                </h:panelGrid>
+                <p:message for="ques5b" />
+                <h:panelGrid columns="2">
+                    <h:selectOneRadio id="ques5c" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.documentedClinicalAssessment}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="A documented clinical assessment including a physical assessment and CBC with WBC within two weeks prior to enrollment" />
+                </h:panelGrid>
+                <p:message for="ques5c" />
+
+                <p></p>
+                <div class="confelig-question">
+                    SECTION C. EXCLUSION CRITERIA - All answers must be "NO" for the subject to be eligible:
+                </div>
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques6" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.anotherTrial}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Current participation in another clinical treatment trial with an investigational agent" />
+                </h:panelGrid>
+                <p:message for="ques6" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques7" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.interfereCondition}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Any condition that may interfere with subject's ability to perform pulmonary function testing" />
+                </h:panelGrid>
+                <p:message for="ques7" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques8" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.knownAllergy}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Known allergy or hypersensitivity to pharmacologic agents used during ECP" />
+                </h:panelGrid>
+                <p:message for="ques8" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques9" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.acuteCondition}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Has a) a specific acute contraindication to receiving ECP due to any acute condition such as new or evolving myocardial infarction or central nervous system disorder, hemodynamic instability or hypovolemia, acute bleeding, respiratory distress; b) lupus erythematosus, porphyria cutanea tarda, erythropoietic protoporphyria, variegate porphyria, xeroderma pigmentosum, albinism, or other dermatologic or ocular condition that contraindicates the use of methoxsalen or markedly enhances photosensitivity in the investigator's judgment; or c) other condition that puts the participant at unacceptable risk for study-related complications as judged by the referring clinician" />
+                </h:panelGrid>
+                <p:message for="ques9" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques10" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.otherCondition}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Any condition that would significantly interfere with the participant's ability to adhere to the protocol or affect interpretation of the study results" />
+                </h:panelGrid>
+                <p:message for="ques10" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques11" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.aphakia}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Aphakia or absence of ocular lenses" />
+                </h:panelGrid>
+                <p:message for="ques11" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques12" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.pregnancy}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Pregnancy (positive pregancy test- a urine or blood pregnancy test must be obtained within two weeks prior to enrollment in women of childbearing potential)" />
+                </h:panelGrid>
+                <p:message for="ques12" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques13" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.noInformedConsent}" style="display: inline-table;">
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Inability to provide informed consent or to comply with study treatments or assessments (e.g. due to cognitive impairment or geographic distance)" />
+                </h:panelGrid>
+                <p:message for="ques13" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques14" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.leukopenia3000}" style="display: inline-table;" >
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Recent (i.e., within two weeks prior to enrollment) leukopenia (white blood cell count less than 3 K/cumm)" />
+                </h:panelGrid>
+                <p:message for="ques14" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques15" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.declineNotBOS}" style="display: inline-table;" >
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Decline in lung function (FEV1) is related to either Restrictive CLAD or other causes that do not represent BOS such as pneumonia, heart failure, etc" />
+                </h:panelGrid>
+                <p:message for="ques15" />
+                <h:panelGrid columns="2" >
+                    <h:selectOneRadio id="ques16" class="yesnoanswers" required="true" requiredMessage="#{msgs.yesOrNoRequired}" value="#{calcController.enrollmentForm.acuteDeclineTreatment}" style="display: inline-table;" >
+                        <f:selectItem itemValue="true" itemLabel="YES"/>
+                        <f:selectItem itemValue="false" itemLabel="NO" /> 
+                    </h:selectOneRadio>
+                    <h:outputLabel class="yesno-questions" value="Any patient who at least one year after transplant is treated with either lymphocyte depleting therapy or with an escalated dose of steroids (i.e., prednisone greater that 30mg/day) for more than one month for an acute decline in lung function that is suspected to be secondary to acute cellular rejection" />
+                </h:panelGrid>
+                <p:message for="ques16" />
+
+                <p></p>
+                <div class="clear"></div>
+                
+                <div class="confelig-question">
+                    SECTION D. BOS DIAGNOSIS INFORMATION
+                </div>
+                <div class="outputText-indented">
+                <b>1. Date of diagnosis of post-transplantation BOS: </b>
+                    <p:calendar id="ques20" class="calendar" value="#{calcController.studyArmEligibilityForm.postTransBOSDiagDate}" requiredMessage="#{msgs.postTransBOSDiagDate}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="ques20" />
+                
+                <div class="outputText-indented">
+                    <b>2. Laboratory-based FEV1 values used to confirm the initial diagnosis of BOS:</b>
+                </div>
+                
+                
+                <div class="outputText-indented">
+                    <h:outputText value="a. First PFT assessment: " />
+                </div>
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="i. Date: " />
+                    <p:calendar id="ques21bi" class="calendar" requiredMessage="#{msgs.firstPostTransBOSDiagFEV1Date}" value="#{calcController.studyArmEligibilityForm.firstPostTransBOSDiagFEV1Date}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="ques21bi" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="ii. FEV1 (pre-bronchodilator): " />
+                    <h:inputText id="ques21bii" requiredMessage="#{msgs.firstPostTransBOSDiagFEV1}" value="#{calcController.studyArmEligibilityForm.firstPostTransBOSDiagFEV1}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques21bii" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="iii. FVC (pre-bronchodilator): " />
+                    <h:inputText id="ques21biii" requiredMessage="#{msgs.firstPostTransBOSDiagFVC}" value="#{calcController.studyArmEligibilityForm.firstPostTransBOSDiagFVC}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques21biii" />
+                
+                <div class="outputText-indented">
+                    <h:outputText value="b. Second PFT assessment: " />
+                </div>
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="i. Date: " />
+                    <p:calendar id="ques21ci" class="calendar" requiredMessage="#{msgs.secondPostTransBOSDiagFEV1Date}" value="#{calcController.studyArmEligibilityForm.secondPostTransBOSDiagFEV1Date}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="ques21ci" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="ii. FEV1 (pre-bronchodilator): " />
+                    <h:inputText id="ques21cii" requiredMessage="#{msgs.secondPostTransBOSDiagFEV1}" value="#{calcController.studyArmEligibilityForm.secondPostTransBOSDiagFEV1}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques21cii" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="iii. FVC (pre-bronchodilator): " />
+                    <h:inputText id="ques21ciii" requiredMessage="#{msgs.secondPostTransBOSDiagFVC}" value="#{calcController.studyArmEligibilityForm.secondPostTransBOSDiagFVC}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques21ciii" />
+				
+		<div class="outputText-indented">
+                    <h:outputText value="c. Third PFT assessment (if needed): " />
+                </div>
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="i. Date: " />
+                    <p:calendar id="ques21di" class="calendar" requiredMessage="#{msgs.thirdPostTransBOSDiagFEV1Date}" value="#{calcController.studyArmEligibilityForm.thirdPostTransBOSDiagFEV1Date}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                </div>
+                <p:message for="ques21di" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="ii. FEV1 (pre-bronchodilator): " />
+                    <h:inputText id="ques21dii" requiredMessage="#{msgs.thirdPostTransBOSDiagFEV1}" value="#{calcController.studyArmEligibilityForm.thirdPostTransBOSDiagFEV1}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FEV1 ranges between 0.2 and 6.0 liters">
+                        <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques21dii" />
+                
+                <div class="outputText-indentedTwice">
+                    <h:outputText value="iii. FVC (pre-bronchodilator): " />
+                    <h:inputText id="ques21diii" requiredMessage="#{msgs.thirdPostTransBOSDiagFVC}" value="#{calcController.studyArmEligibilityForm.thirdPostTransBOSDiagFVC}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: FVC ranges between 0.4 and 6.5 liters">
+                        <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                    </h:inputText>
+                    liters
+                </div>
+                <p:message for="ques21diii" />
+                <div class="clear"></div>
+                    
+                <div class="confelig-question">
+                    SECTION E. PULMONARY EVALUATIONS<br/>
+                    1. Please enter all available FEV1 measurements obtained in the past year.<br/>
+                    2. Please enter the FEV1 measurements from the oldest date at the top to the newest date at the bottom.<br/>
+                    3. Frequent laboratory based spirometry defined as having had regular FEV1 measurements during the preceding six months prior to the diagnosis of new BOS with no time interval between FEV1 measurements that exceeds eight weeks.<br/>
+                    4. At least five recorded FEV1 measurements obtained at intervals of at least two weeks apart, over the six months preceding study enrollment.<br/>
+                    5. Diagnosis of NEW BOS is within six weeks of enrollment based on laboratory base FEV1 measurements obtained on at least two separate occasions (at least three weeks apart) that have declined by more than 20% from post transplant baseline values using ISHLT definition.<br/>
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="A. Date "/></b>
+                        <p:calendar id="dateOfFEV11" class="calendar" value="#{calcController.studyArmEligibilityForm.date1}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev11" value="#{calcController.studyArmEligibilityForm.fev11}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc1" value="#{calcController.studyArmEligibilityForm.fvc1}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+                <div class="clear"></div> <!-- The clear style is needed to reset the floating column element in css so that other elements don't line up with the last column. --> 
+                <div>
+                    <p:message for="dateOfFEV11" />
+                    <p:message for="fev11" />
+                    <p:message for="fvc1" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="B. Date "/></b>
+                        <p:calendar id="dateOfFEV12" class="calendar" value="#{calcController.studyArmEligibilityForm.date2}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev12" value="#{calcController.studyArmEligibilityForm.fev12}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc2" value="#{calcController.studyArmEligibilityForm.fvc2}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV12" />
+                    <p:message for="fev12" />
+                    <p:message for="fvc2" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="C. Date "/></b>
+                        <p:calendar id="dateOfFEV13" class="calendar" value="#{calcController.studyArmEligibilityForm.date3}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev13" value="#{calcController.studyArmEligibilityForm.fev13}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc3" value="#{calcController.studyArmEligibilityForm.fvc3}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV13" />
+                    <p:message for="fev13" />
+                    <p:message for="fvc3" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="D. Date "/></b>
+                        <p:calendar id="dateOfFEV14" class="calendar" value="#{calcController.studyArmEligibilityForm.date4}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev14" value="#{calcController.studyArmEligibilityForm.fev14}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc4" value="#{calcController.studyArmEligibilityForm.fvc4}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV14" />
+                    <p:message for="fev14" />
+                    <p:message for="fvc4" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="E. Date " style="margin-left: 1px;"/></b>
+                        <p:calendar id="dateOfFEV15" class="calendar" value="#{calcController.studyArmEligibilityForm.date5}" required="true" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev15" value="#{calcController.studyArmEligibilityForm.fev15}" size="3" required="true" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc5" value="#{calcController.studyArmEligibilityForm.fvc5}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV15" />
+                    <p:message for="fev15" />
+                    <p:message for="fvc5" />
+                </div>
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="F. Date "/></b>
+                        <p:calendar id="dateOfFEV16" class="calendar" value="#{calcController.studyArmEligibilityForm.date6}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 2px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev16" value="#{calcController.studyArmEligibilityForm.fev16}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc6" value="#{calcController.studyArmEligibilityForm.fvc6}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV16" />
+                    <p:message for="fev16" />
+                    <p:message for="fvc6" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="G. Date "/></b>
+                        <p:calendar id="dateOfFEV17" class="calendar" value="#{calcController.studyArmEligibilityForm.date7}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev17" value="#{calcController.studyArmEligibilityForm.fev17}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc7" value="#{calcController.studyArmEligibilityForm.fvc7}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV17" />
+                    <p:message for="fev17" />
+                    <p:message for="fvc7" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="H. Date "/></b>
+                        <p:calendar id="dateOfFEV18" class="calendar" value="#{calcController.studyArmEligibilityForm.date8}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev18" value="#{calcController.studyArmEligibilityForm.fev18}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc8" value="#{calcController.studyArmEligibilityForm.fvc8}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV18" />
+                    <p:message for="fev18" />
+                    <p:message for="fvc8" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="I. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV19" class="calendar" value="#{calcController.studyArmEligibilityForm.date9}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev19" value="#{calcController.studyArmEligibilityForm.fev19}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc9" value="#{calcController.studyArmEligibilityForm.fvc9}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV19" />
+                    <p:message for="fev19" />
+                    <p:message for="fvc9" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="J. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV110" class="calendar" value="#{calcController.studyArmEligibilityForm.date10}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev110" value="#{calcController.studyArmEligibilityForm.fev110}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc10" value="#{calcController.studyArmEligibilityForm.fvc10}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV110" />
+                    <p:message for="fev110" />
+                    <p:message for="fvc10" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="K. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV111" class="calendar" value="#{calcController.studyArmEligibilityForm.date11}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev111" value="#{calcController.studyArmEligibilityForm.fev111}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc11" value="#{calcController.studyArmEligibilityForm.fvc11}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV111" />
+                    <p:message for="fev111" />
+                    <p:message for="fvc11" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="L. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV112" class="calendar" value="#{calcController.studyArmEligibilityForm.date12}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev112" value="#{calcController.studyArmEligibilityForm.fev112}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc12" value="#{calcController.studyArmEligibilityForm.fvc12}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV112" />
+                    <p:message for="fev112" />
+                    <p:message for="fvc12" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="M. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV113" class="calendar" value="#{calcController.studyArmEligibilityForm.date13}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev113" value="#{calcController.studyArmEligibilityForm.fev113}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc13" value="#{calcController.studyArmEligibilityForm.fvc13}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV113" />
+                    <p:message for="fev113" />
+                    <p:message for="fvc13" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="N. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV114" class="calendar" value="#{calcController.studyArmEligibilityForm.date14}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev114" value="#{calcController.studyArmEligibilityForm.fev114}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc14" value="#{calcController.studyArmEligibilityForm.fvc14}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV114" />
+                    <p:message for="fev114" />
+                    <p:message for="fvc14" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="O. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV115" class="calendar" value="#{calcController.studyArmEligibilityForm.date15}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev">
+                        <b>FEV1 </b>
+                        <h:inputText id="fev115" value="#{calcController.studyArmEligibilityForm.fev115}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc15" value="#{calcController.studyArmEligibilityForm.fvc15}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div> 
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV115" />
+                    <p:message for="fev115" />
+                    <p:message for="fvc15" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="P. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV116" class="calendar" value="#{calcController.studyArmEligibilityForm.date16}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev116" value="#{calcController.studyArmEligibilityForm.fev116}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc16" value="#{calcController.studyArmEligibilityForm.fvc16}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV116" />
+                    <p:message for="fev116" />
+                    <p:message for="fvc16" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="Q. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV117" class="calendar" value="#{calcController.studyArmEligibilityForm.date17}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev117" value="#{calcController.studyArmEligibilityForm.fev117}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc17" value="#{calcController.studyArmEligibilityForm.fvc17}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV117" />
+                    <p:message for="fev117" />
+                    <p:message for="fvc17" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="R. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV118" class="calendar" value="#{calcController.studyArmEligibilityForm.date18}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev118" value="#{calcController.studyArmEligibilityForm.fev118}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc18" value="#{calcController.studyArmEligibilityForm.fvc18}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV118" />
+                    <p:message for="fev118" />
+                    <p:message for="fvc18" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="S. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV119" class="calendar" value="#{calcController.studyArmEligibilityForm.date19}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev119" value="#{calcController.studyArmEligibilityForm.fev119}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc19" value="#{calcController.studyArmEligibilityForm.fvc19}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV119" />
+                    <p:message for="fev119" />
+                    <p:message for="fvc19" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="T. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV120" class="calendar" value="#{calcController.studyArmEligibilityForm.date20}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev120" value="#{calcController.studyArmEligibilityForm.fev120}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc20" value="#{calcController.studyArmEligibilityForm.fvc20}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV120" />
+                    <p:message for="fev120" />
+                    <p:message for="fvc20" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="U. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV121" class="calendar" value="#{calcController.studyArmEligibilityForm.date21}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev121" value="#{calcController.studyArmEligibilityForm.fev121}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc21" value="#{calcController.studyArmEligibilityForm.fvc21}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV121" />
+                    <p:message for="fev121" />
+                    <p:message for="fvc21" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="V. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV122" class="calendar" value="#{calcController.studyArmEligibilityForm.date22}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev122" value="#{calcController.studyArmEligibilityForm.fev122}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc22" value="#{calcController.studyArmEligibilityForm.fvc22}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV122" />
+                    <p:message for="fev122" />
+                    <p:message for="fvc22" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="W. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV123" class="calendar" value="#{calcController.studyArmEligibilityForm.date23}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev123" value="#{calcController.studyArmEligibilityForm.fev123}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc23" value="#{calcController.studyArmEligibilityForm.fvc23}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV123" />
+                    <p:message for="fev123" />
+                    <p:message for="fvc23" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="X. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV124" class="calendar" value="#{calcController.studyArmEligibilityForm.date24}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev124" value="#{calcController.studyArmEligibilityForm.fev124}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc24" value="#{calcController.studyArmEligibilityForm.fvc24}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV124" />
+                    <p:message for="fev124" />
+                    <p:message for="fvc24" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="Y. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV125" class="calendar" value="#{calcController.studyArmEligibilityForm.date25}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev125" value="#{calcController.studyArmEligibilityForm.fev125}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc25" value="#{calcController.studyArmEligibilityForm.fvc25}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV125" />
+                    <p:message for="fev125" />
+                    <p:message for="fvc25" />
+                </div>
+
+                <div class="datefevfvc">
+                    <div class="date">
+                        <b><h:outputText value="Z. Date " style="margin-left: 3px;"/></b>
+                        <p:calendar id="dateOfFEV126" class="calendar" value="#{calcController.studyArmEligibilityForm.date26}" required="" requiredMessage="#{msgs.dateRequired}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" style="margin-left: 1px;" converter="strictDateTimeConverter" />
+                    </div>
+                    <div class="fev"> 
+                        <b>FEV1 </b>
+                        <h:inputText id="fev126" value="#{calcController.studyArmEligibilityForm.fev126}" size="3" required="" requiredMessage="#{msgs.fev1Required}" validatorMessage="Please enter a FEV1 number between 0.2 and 6.0">
+                            <f:validateDoubleRange minimum="0.2" maximum="6.0"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                    <div class="fvc">
+                        <b>FVC </b>
+                        <h:inputText id="fvc26" value="#{calcController.studyArmEligibilityForm.fvc26}"  size="3" required="" requiredMessage="#{msgs.fvc}" validatorMessage="Please enter a FVC number between 0.4 and 6.5">
+                            <f:validateDoubleRange minimum="0.4" maximum="6.5"/>
+                        </h:inputText>
+                        liters
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateOfFEV126" />
+                    <p:message for="fev126" />
+                    <p:message for="fvc26" />
+                </div>
+
+                <!-- enrollmentDate input component is disabled so value is not sent as parameter in request. Insure that it is sent as 'screenDate' parameter. -->
+                <h:inputHidden id="screenDate" value="#{calcController.enrollmentForm.enrollmentDate}">
+                    <!-- The hidden variable is of type string. JSF needs to know how to convert the date type to a string -->
+                    <!-- the long format is MMMM dd, yyyy -->
+                    <f:convertDateTime dateStyle="long" />
+                </h:inputHidden>
+                
+        <!-- NOTE: It appears the o:validateMultiple validator is executed immediately after the 'Determine Enrollment and Study Arm Eligibility...' button (see commandbutton code below) is selected
+            instead of going directly to the action="#{calcController.deterEnrollStudyArmEligAction()}" method.  The validateEvaluationQuantity validator runs the 
+            ValidateEvaluationQuantity.java object to determine if there are not enough FEV1 to perform the declining FEV1 calculation.  -->
+                <o:validateMultiple id="validateEvaluationFreshnessId" 
+                                    components="dateOfFEV11 dateOfFEV12 dateOfFEV13 dateOfFEV14 dateOfFEV15 dateOfFEV16 dateOfFEV17 dateOfFEV18 dateOfFEV19 dateOfFEV110 dateOfFEV111 dateOfFEV112 dateOfFEV113 dateOfFEV114 dateOfFEV115 dateOfFEV116 dateOfFEV117 dateOfFEV118 dateOfFEV119 dateOfFEV120 dateOfFEV121 dateOfFEV122 dateOfFEV123 dateOfFEV124 dateOfFEV125 dateOfFEV126 fev11 fev12 fev13 fev14 fev15 fev16 fev17 fev18 fev19 fev110 fev111 fev112 fev113 fev114 fev115 fev116 fev117 fev118 fev119 fev120 fev121 fev122 fev123 fev124 fev125 fev126" 
+                                    message="The most recent evaluation is more than two weeks old."
+                                    validator="#{validateEvaluationFreshness}"/>
+                <p:message for="validateEvaluationFreshnessId" />
+                <o:validateMultiple id="validateEvaluationQuantityId" 
+                                    components="dateOfFEV11 dateOfFEV12 dateOfFEV13 dateOfFEV14 dateOfFEV15 dateOfFEV16 dateOfFEV17 dateOfFEV18 dateOfFEV19 dateOfFEV110 dateOfFEV111 dateOfFEV112 dateOfFEV113 dateOfFEV114 dateOfFEV115 dateOfFEV116 dateOfFEV117 dateOfFEV118 dateOfFEV119 dateOfFEV120 dateOfFEV121 dateOfFEV122 dateOfFEV123 dateOfFEV124 dateOfFEV125 dateOfFEV126 fev11 fev12 fev13 fev14 fev15 fev16 fev17 fev18 fev19 fev110 fev111 fev112 fev113 fev114 fev115 fev116 fev117 fev118 fev119 fev120 fev121 fev122 fev123 fev124 fev125 fev126" 
+                                    message="A minimum of 5 FEV1s, separated by at least two weeks, and within the last 6 months (after #{validateEvaluationQuantity.fev1OldestPossibleDate}) are required."
+                                    validator="#{validateEvaluationQuantity}"/>
+                <p:message for="validateEvaluationQuantityId" />
+                
+<!--                <h:outputText value="FEV1 date must be after: #{calcController.fev1OldestPossibleDate}" />  -->
+
+                <div class="clear"></div>
+                <p></p>
+
+                <div class="confelig-question">
+                    SECTION F. CLINICAL ASSESSMENTS
+                </div>
+                <div class="confirmeligquestions">
+                    <h:outputText class="outputText-indented" value="1. Date of most recent physical exam " />
+                    <p:calendar id="quesExamDate" class="calendar" requiredMessage="#{msgs.mostRecentExamDate}" value="#{calcController.studyArmEligibilityForm.mostRecentExamDate}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                        <f:validateRequired disabled="#{!param['VALIDATE']}" />
+                    </p:calendar>
+                </div>
+                <p:message for="quesExamDate" />
+                <div class="confirmeligquestions">
+                    <h:outputText class="outputText-indented" value="2. Most Recent Complete Blood Count (CBC)" />
+                </div>
+                <div class="pre-treat-assess-cbc">
+                    <b>Date of CBC: </b>
+                    <p:calendar id="quesCBC" class="calendar" value="#{calcController.studyArmEligibilityForm.completeBloodCountDate}" disabled="#{calcController.studyArmEligibilityForm.locked}" mode="popup" showOn="button" pattern="MM/dd/yyyy" navigator="true" size="10"  validatorMessage="Validation Error: A date is required." converter="strictDateTimeConverter">
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or calcController.studyArmEligibilityForm.isAttributeOptional('completeBloodCountDate')}" />
+                    </p:calendar>
+                </div>
+                <p:message for="quesCBC" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>WBCs: </b>
+                    <h:inputText id="quesCBCa" requiredMessage="#{msgs.wbcs}" value="#{calcController.studyArmEligibilityForm.wbcs}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: WBC ranges between 1.0 and 40.0." >
+                        <f:validateLongRange minimum="1" maximum ="40"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or calcController.studyArmEligibilityForm.isAttributeOptional('wbcs')}" />
+                    </h:inputText>
+                    (K/cumm)
+                </div>
+                <p:message for="quesCBCa" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>RBCs: </b>
+                    <h:inputText id="quesCBCb" requiredMessage="#{msgs.rbcs}" value="#{calcController.studyArmEligibilityForm.rbcs}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" >
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or calcController.studyArmEligibilityForm.isAttributeOptional('rbcs')}" />
+                    </h:inputText>
+                    (M/cumm)
+                </div>
+                <p:message for="quesCBCb" />
+
+                <div class="pre-treat-assess-cbc">
+                    <b>Hemoglobin: </b>
+                    <h:inputText id="quesCBCc" requiredMessage="#{msgs.hemoglobin}" value="#{calcController.studyArmEligibilityForm.hemoglobin}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: Hemoglobin ranges between 5.0 and 17.0." >
+                        <f:validateLongRange minimum="5" maximum ="17"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or calcController.studyArmEligibilityForm.isAttributeOptional('hemoglobin')}" />
+                    </h:inputText>
+                    (g/dl)
+                </div>
+                <p:message for="quesCBCc" />
+                
+                <div class="pre-treat-assess-cbc">
+                    <b>Hematocrit: </b>
+                    <h:inputText id="quesCBCd" requiredMessage="#{msgs.hematocrit}" value="#{calcController.studyArmEligibilityForm.hematocrit}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: Hematocrit ranges between 20.0 and 55.0." >
+                        <f:validateLongRange minimum="20" maximum ="55"/>
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or calcController.studyArmEligibilityForm.isAttributeOptional('hematocrit')}" />
+                    </h:inputText>
+                    (%)
+                </div>
+                <p:message for="quesCBCd" />
+                
+                <div class="pre-treat-assess-cbc">
+                    <b>Platelets: </b>
+                    <h:inputText id="quesCBCe" requiredMessage="#{msgs.platelets}" value="#{calcController.studyArmEligibilityForm.platelets}" disabled="#{calcController.studyArmEligibilityForm.locked}" size="3" validatorMessage="Validation Error: Platelets range between 25 and 1,000." >
+                        <f:validateLongRange minimum="25" maximum ="1000" />
+                        <f:validateRequired disabled="#{!param['VALIDATE'] or calcController.studyArmEligibilityForm.isAttributeOptional('platelets')}" />
+                    </h:inputText>
+                    (K/cumm)
+                </div>
+                <p:message for="quesCBCe" />
+                
+                <div class="clear"></div>
+                
+                <p></p>
+                <div class="confelig-question">
+                    SECTION G. CONFIRMATION OF ENROLLMENT
+                </div>
+
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="A. Date the approved Informed Consent Form was signed by the subject " />
+                    </div>
+                    <div class="cal">
+                        <p:calendar id="dateInformedConsentSigned" class="calendar" value="#{calcController.enrollmentForm.dateInformedConsentSigned}" required="true" requiredMessage="#{msgs.dateInformedConsentSigned}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                            <p:ajax event="dateSelect" listener="#{calcController.compareConsentAndFormDates}" update="dateTest1"/>
+                        </p:calendar>
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateInformedConsentSigned" />
+                </div>
+                <div class="confirmeligquestions">
+                    <div class="ques">
+                        <h:outputLabel class="yesno-questions" value="B. Informed Consent Form Version Date" />
+                    </div>
+                    <div class="cal">
+                        <p:calendar id="dateInformedConsentVersion" class="calendar" value="#{calcController.enrollmentForm.dateInformedConsentVersion}" required="true" requiredMessage="#{msgs.dateInformedConsentVersion}" mode="popup" showOn="button" showButtonPanel="false" pattern="MM/dd/yyyy" navigator="true" size="10" converter="strictDateTimeConverter" >
+                            <p:ajax event="dateSelect" listener="#{calcController.compareTwoConsentFormDates}" update="dateTest1"/>
+                        </p:calendar>
+                    </div>
+                </div> 
+                <div class="clear"></div>
+                <div>
+                    <p:message for="dateInformedConsentVersion" />
+                    <p style="width: 750px; font-size: medium; color: red; font-weight: bold">
+                        <p:outputLabel id="dateTest1"  value="#{calcController.compareDatesErrorMessage}"/>
+                    </p>
+                </div>
+                <p></p>
+                
+<!--                <p:messages />   This Primefaces command causes the error message to also be displayed at the bottom of the form in addition to within the question. -->
+
+                <h:panelGrid columns="2">
+                    <h:commandButton value="Determine Enrollment and Study Arm Eligibility..." action="#{calcController.deterEnrollStudyArmEligAction()}" />
+                    <h:commandButton value="Cancel" action="#{calcController.cancelEnrollmentAction()}" immediate="true"/>
+                </h:panelGrid>
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>
